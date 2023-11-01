@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class TouchManager : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private Ball player;
 
     private PlayerInput playerInput;
 
@@ -28,27 +28,39 @@ public class TouchManager : MonoBehaviour
     private void OnEnable()
     {
         touchPressAction.performed += TouchPressed;
+        touchPressAction.canceled += TouchCanceled;
+    }
+
+    private void TouchCanceled(InputAction.CallbackContext obj)
+    {
+        player.IsMove = false;
+        Debug.Log("Завершено");
     }
 
     private void OnDisable()
     {
         touchPressAction.performed -= TouchPressed;
+        touchPressAction.canceled -= TouchCanceled;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
         Vector3 position = mainCamera.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
         position.z = player.transform.position.z;
-        player.transform.position = position;
+        Debug.Log(position);
+        player.IsMove = true;
+        player.Poistion = position;
+        Debug.Log("Запущено");
     }
 
-    private void Update()
-    {
-        if (touchPressAction.WasPerformedThisFrame())
-        {
-            Vector3 position = mainCamera.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
-            position.z = player.transform.position.z;
-            player.transform.position = position;
-        }
-    }
+    //private void Update()
+    //{
+    //    if (touchPressAction.WasPerformedThisFrame())
+    //    {
+    //        Vector3 position = mainCamera.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
+    //        position.z = player.transform.position.z;
+
+    //        player.transform.position = position;
+    //    }
+    //}
 }
