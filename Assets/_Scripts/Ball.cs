@@ -22,9 +22,9 @@ public class Ball : MonoBehaviour
             body.AddForce(Poistion * speed);
             body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 15f);
         }
-        //else
-        //{
-        //    body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 15f);
-        //}
+        else
+        {
+            body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 15f);
+        }
     }
 }
