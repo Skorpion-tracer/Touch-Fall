@@ -33,7 +33,6 @@ public class TouchManager : MonoBehaviour
 
     private void TouchCanceled(InputAction.CallbackContext obj)
     {
-        player.IsMove = false;
         Debug.Log("Завершено");
     }
 
@@ -48,8 +47,6 @@ public class TouchManager : MonoBehaviour
         Vector3 position = mainCamera.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
         position.z = player.transform.position.z;
         Debug.Log(position);
-        player.IsMove = true;
-        player.Poistion = position;
         Debug.Log("Запущено");
     }
 

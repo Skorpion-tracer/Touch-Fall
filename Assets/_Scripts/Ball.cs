@@ -5,26 +5,61 @@ using UnityEngine.Windows;
 public class Ball : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
-    private Rigidbody2D body;
 
-    public bool IsMove { get; set; }
-    public Vector2 Poistion { get; set; }
+    private Rigidbody2D _body;
+
+    private bool _isTouch;
+    private bool _isEndTouch;
+    private Vector2 endPosition;
+
+    private InputManager inputManager;
 
     private void OnValidate()
     {
-        body ??= GetComponent<Rigidbody2D>();
+        inputManager ??= InputManager.Instance;
+        _body ??= GetComponent<Rigidbody2D>();
+    }
+
+    private void OnEnable()
+    {
+        inputManager.StartTouch += OnStartSwipe;
+        inputManager.EndTouch += OnEndSwipe;
+    }
+
+    private void OnDisable()
+    {
+        inputManager.StartTouch -= OnStartSwipe;
+        inputManager.EndTouch -= OnEndSwipe;
+    }
+
+    private void OnStartSwipe(Vector2 position, float time)
+    {
+        _isTouch = true;
+        _isEndTouch = false;
+    }
+
+    private void OnEndSwipe(Vector2 position, float time)
+    {
+        _isTouch = false;
+        _isEndTouch = true;
+        endPosition = position;
     }
 
     private void FixedUpdate()
     {
-        if (IsMove)
+        if (_isTouch)
         {
-            body.AddForce(Poistion * speed);
-            body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 15f);
+            //transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
+            _body.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
         }
-        else
+        else if (_isEndTouch)
         {
-            body.velocity = Vector2.Lerp(body.velocity, Vector2.zero, 15f);
+            //transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            _body.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            if (transform.position == (Vector3)endPosition)
+            {
+                _isEndTouch = false;
+            }
         }
     }
 }
