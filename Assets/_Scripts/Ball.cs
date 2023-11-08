@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Windows;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Ball : MonoBehaviour
+public sealed class Ball : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
 
@@ -50,10 +49,12 @@ public class Ball : MonoBehaviour
         if (_isTouch)
         {
             transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2f, 2f), Mathf.Clamp(transform.position.y, -4f, 4f), transform.position.z);
         }
         else if (_isEndTouch)
         {
             transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2f, 2f), Mathf.Clamp(transform.position.y, -4f, 4f), transform.position.z);
             if (transform.position == (Vector3)endPosition)
             {
                 _isEndTouch = false;
