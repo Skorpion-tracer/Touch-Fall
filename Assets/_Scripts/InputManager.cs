@@ -15,6 +15,7 @@ public class InputManager : Singleton<InputManager>
     {
         playerControl = new PlayerControl();
         mainCamera = Camera.main;
+        EndTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()), 0f);
     }
 
     private void OnEnable()
@@ -36,7 +37,6 @@ public class InputManager : Singleton<InputManager>
 
     private void StartTocuhPrimary(InputAction.CallbackContext ctx)
     {
-        if (playerControl.Touch.PrimaryPosition.ReadValue<Vector2>().x == 0 && playerControl.Touch.PrimaryPosition.ReadValue<Vector2>().y == 0) return;
         StartTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()), (float)ctx.startTime);
     }
 

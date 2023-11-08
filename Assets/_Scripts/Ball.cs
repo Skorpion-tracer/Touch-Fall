@@ -45,17 +45,15 @@ public class Ball : MonoBehaviour
         endPosition = position;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (_isTouch)
         {
-            //transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
-            _body.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
         }
         else if (_isEndTouch)
         {
-            //transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
-            _body.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
             if (transform.position == (Vector3)endPosition)
             {
                 _isEndTouch = false;
