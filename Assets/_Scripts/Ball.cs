@@ -48,17 +48,31 @@ public sealed class Ball : MonoBehaviour
     {
         if (_isTouch)
         {
-            transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
+            //transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2f, 2f), Mathf.Clamp(transform.position.y, -4f, 4f), transform.position.z);
         }
         else if (_isEndTouch)
         {
-            transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            //transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2f, 2f), Mathf.Clamp(transform.position.y, -4f, 4f), transform.position.z);
             if (transform.position == (Vector3)endPosition)
             {
                 _isEndTouch = false;
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isTouch)
+        {
+            //transform.position = Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.deltaTime);
+            _body.MovePosition(Vector3.Lerp(transform.position, inputManager.PrimaryPosition(), speed * Time.fixedDeltaTime));
+        }
+        else if (_isEndTouch)
+        {
+            //transform.position = Vector3.Lerp(transform.position, endPosition, speed * Time.deltaTime);
+            _body.MovePosition(Vector3.Lerp(transform.position, endPosition, speed * Time.fixedDeltaTime));
         }
     }
 }
