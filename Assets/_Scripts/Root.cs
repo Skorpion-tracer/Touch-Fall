@@ -29,6 +29,7 @@ namespace TouchFall
 
         private void Awake()
         {
+            _mainHero.transform.position = _startPointHero.position;
             _mainHeroController = new(_mainHero, _mainHeroModel, _startPointHero.position);
 
             _updaters.Add(_mainHeroController);
