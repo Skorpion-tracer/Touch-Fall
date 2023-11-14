@@ -17,6 +17,8 @@ namespace TouchFall.Controller
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
+
+        private float _downTime = 0f;
         #endregion
 
         #region Constructors
@@ -50,30 +52,47 @@ namespace TouchFall.Controller
         #region Public Methods
         public void Update()
         {
-            switch (_model.InputState)
+            switch (_model.StateMainHero)
             {
-                case InputState.Touch:
+                case StateMainHero.None:
+                case StateMainHero.End: return;
+
+                case StateMainHero.Touch:
                     _heroTransform.position = new Vector3(Mathf.Clamp(_heroTransform.position.x, -2f, 2f), Mathf.Clamp(_heroTransform.position.y, -4f, 4f), _heroTransform.position.z);
                     break;
-                case InputState.EndTouch:
+                case StateMainHero.EndTouch:
                     _heroTransform.position = new Vector3(Mathf.Clamp(_heroTransform.position.x, -2f, 2f), Mathf.Clamp(_heroTransform.position.y, -4f, 4f), _heroTransform.position.z);
-                    if (_heroTransform.position == (Vector3)_endPosition)
+
+                    _downTime += Time.deltaTime;
+                    if (_downTime >= _model.DownTime)
                     {
-                        _model.InputState = InputState.None;
+                        _model.StateMainHero = StateMainHero.End;
+                        _downTime = 0f;
                     }
+
                     break;
             }
         }
 
         public void FixedUpdate()
         {
-            switch (_model.InputState)
+            switch (_model.StateMainHero)
             {
-                case InputState.Touch:
+                case StateMainHero.None:
+                    return;
+                case StateMainHero.Touch:
                     _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _inputManager.PrimaryPosition(), _model.Speed * Time.fixedDeltaTime));
                     break;
-                case InputState.EndTouch:
+                case StateMainHero.EndTouch:
                     _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _endPosition, _model.Speed * Time.fixedDeltaTime));
+                    break;
+                case StateMainHero.End:
+                    if (_heroTransform.position == (Vector3)_startPosition)
+                    {
+                        _model.StateMainHero = StateMainHero.None;
+                        return;
+                    }
+                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _startPosition, _model.Speed * Time.fixedDeltaTime));
                     break;
             }
         }
@@ -92,14 +111,14 @@ namespace TouchFall.Controller
             _inputManager.EndTouch -= OnEndSwipe;
         }
 
-        private void OnStartSwipe(Vector2 position, float time)
+        private void OnStartSwipe(Vector2 position)
         {
-            _model.InputState = InputState.Touch;
+            _model.StateMainHero = StateMainHero.Touch;
         }
 
-        private void OnEndSwipe(Vector2 position, float time)
+        private void OnEndSwipe(Vector2 position)
         {
-            _model.InputState = InputState.EndTouch;
+            _model.StateMainHero = StateMainHero.EndTouch;
             _endPosition = position;
         }
         #endregion

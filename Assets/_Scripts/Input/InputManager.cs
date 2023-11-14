@@ -11,14 +11,14 @@ namespace TouchFall.Input
         private PlayerControl playerControl;
         private Camera mainCamera;
 
-        public event Action<Vector2, float> StartTouch;
-        public event Action<Vector2, float> EndTouch;
+        public event Action<Vector2> StartTouch;
+        public event Action<Vector2> EndTouch;
 
         private void Awake()
         {
             playerControl = new PlayerControl();
             mainCamera = Camera.main;
-            EndTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()), 0f);
+            EndTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()));
         }
 
         private void OnEnable()
@@ -40,12 +40,12 @@ namespace TouchFall.Input
 
         private void StartTocuhPrimary(InputAction.CallbackContext ctx)
         {
-            StartTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()), (float)ctx.startTime);
+            StartTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()));
         }
 
         private void EndTocuhPrimary(InputAction.CallbackContext ctx)
         {
-            EndTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()), (float)ctx.time);
+            EndTouch?.Invoke(Utils.ScreenToWorld(mainCamera, playerControl.Touch.PrimaryPosition.ReadValue<Vector2>()));
         }
 
         public Vector2 PrimaryPosition()
