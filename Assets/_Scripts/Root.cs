@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TouchFall.Controller;
 using TouchFall.Controller.Interfaces;
+using TouchFall.Input;
 using TouchFall.View;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace TouchFall
 
         #region Fields
         private MainHeroController _mainHeroController;
+        private PlayerControl _playerControl;
         private List<IUpdater> _updaters = new();
         private List<IFixedUpdater> _fixeUpdaters = new();
         #endregion
@@ -27,10 +29,22 @@ namespace TouchFall
             _mainHeroModel ??= new MainHeroModel();
         }
 
+        private void OnEnable()
+        {
+            _playerControl.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _playerControl.Disable();
+        }
+
         private void Awake()
         {
-            _mainHero.transform.position = _startPointHero.position;
-            _mainHeroController = new(_mainHero, _mainHeroModel, _startPointHero.position);
+            _playerControl = new();
+
+            _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
+            _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
 
             _updaters.Add(_mainHeroController);
             _fixeUpdaters.Add(_mainHeroController);

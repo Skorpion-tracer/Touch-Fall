@@ -10,29 +10,14 @@ namespace TouchFall.View
         private Rigidbody2D _body;
         #endregion
 
-        #region Events
-        public event Action EnableView;
-        public event Action DisableView;
-        #endregion
-
         #region Properties
         public Rigidbody2D Body => _body;
         #endregion
 
         #region Unity Methods
-        private void OnValidate()
+        private void Awake()
         {
-            _body ??= GetComponent<Rigidbody2D>();
-        }
-
-        private void OnEnable()
-        {
-            EnableView?.Invoke();
-        }
-
-        private void OnDisable()
-        {
-            DisableView?.Invoke();
+            _body = GetComponent<Rigidbody2D>();
         }
         #endregion
     }

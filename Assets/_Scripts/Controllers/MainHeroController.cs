@@ -1,8 +1,10 @@
 using TouchFall.Controller.Interfaces;
+using TouchFall.Helper;
 using TouchFall.Helper.Enums;
 using TouchFall.Input;
 using TouchFall.View;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace TouchFall.Controller
 {
@@ -12,8 +14,9 @@ namespace TouchFall.Controller
         private MainHeroView _view;
         private MainHeroModel _model;
 
-        private InputManager _inputManager;
+        private PlayerControl _playerControl;
         private Transform _heroTransform;
+        private Camera _camera;
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
@@ -28,7 +31,7 @@ namespace TouchFall.Controller
         /// <param name="mainHeroView">—сылка на view геро€</param>
         /// <param name="mainHeroModel">—сылка на модель геро€</param>
         /// <param name="startPosition">—сылка на стартовую позицию геро€</param>
-        public MainHeroController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, Vector2 startPosition)
+        public MainHeroController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
         {
             _view = mainHeroView;
             _model = mainHeroModel;
@@ -36,16 +39,18 @@ namespace TouchFall.Controller
 
             _heroTransform = _view.transform;
 
-            _inputManager = InputManager.Instance;
+            _camera = Camera.main;
 
-            _view.EnableView += OnEnableView;
-            _view.DisableView += OnDisableView;
+            _playerControl = playerControl;
+
+            _playerControl.Touch.PrimaryContact.started += ctx => OnStartTouch(ctx);
+            _playerControl.Touch.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
         }
 
         ~MainHeroController()
         {
-            _view.EnableView -= OnEnableView;
-            _view.DisableView -= OnDisableView;
+            _playerControl.Touch.PrimaryContact.started -= ctx => OnStartTouch(ctx);
+            _playerControl.Touch.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
         }
         #endregion
 
@@ -81,7 +86,7 @@ namespace TouchFall.Controller
                 case StateMainHero.None:
                     return;
                 case StateMainHero.Touch:
-                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _inputManager.PrimaryPosition(), _model.Speed * Time.fixedDeltaTime));
+                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, GetPositionTouch(), _model.Speed * Time.fixedDeltaTime));
                     break;
                 case StateMainHero.EndTouch:
                     _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _endPosition, _model.Speed * Time.fixedDeltaTime));
@@ -99,27 +104,20 @@ namespace TouchFall.Controller
         #endregion
 
         #region Private Mathods
-        private void OnEnableView()
-        {
-            _inputManager.StartTouch += OnStartSwipe;
-            _inputManager.EndTouch += OnEndSwipe;
-        }
-
-        private void OnDisableView()
-        {
-            _inputManager.StartTouch -= OnStartSwipe;
-            _inputManager.EndTouch -= OnEndSwipe;
-        }
-
-        private void OnStartSwipe(Vector2 position)
+        private void OnStartTouch(InputAction.CallbackContext ctx)
         {
             _model.StateMainHero = StateMainHero.Touch;
         }
 
-        private void OnEndSwipe(Vector2 position)
+        private void EndTocuhPrimary(InputAction.CallbackContext ctx)
         {
             _model.StateMainHero = StateMainHero.EndTouch;
-            _endPosition = position;
+            _endPosition = GetPositionTouch();
+        }
+
+        private Vector3 GetPositionTouch()
+        {
+            return Utils.ScreenToWorld(_camera, _playerControl.Touch.PrimaryPosition.ReadValue<Vector2>());
         }
         #endregion
     }
