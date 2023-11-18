@@ -2,6 +2,7 @@ using TouchFall.Controller.Interfaces;
 using TouchFall.Helper;
 using TouchFall.Helper.Enums;
 using TouchFall.Input;
+using TouchFall.Model;
 using TouchFall.View;
 using UnityEngine;
 using UnityEngine.InputSystem;

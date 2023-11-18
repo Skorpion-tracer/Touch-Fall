@@ -2,7 +2,7 @@ using System;
 using TouchFall.Helper.Enums;
 using UnityEngine;
 
-namespace TouchFall
+namespace TouchFall.Model
 {
     [Serializable]
     public sealed class MainHeroModel
