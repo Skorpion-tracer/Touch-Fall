@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 37751441}
   - component: {fileID: 37751440}
   - component: {fileID: 37751442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BottomTrigger
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -453,6 +453,7 @@ MonoBehaviour:
   _boundModel:
     _topBoundPositionOffset: 3
     _distanceBetweenBounds: 3
+    _startPositionBoundOffset: 4
 --- !u!4 &600816536
 Transform:
   m_ObjectHideFlags: 0
@@ -666,7 +667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1506766440}
   - component: {fileID: 1506766439}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TopBound
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}

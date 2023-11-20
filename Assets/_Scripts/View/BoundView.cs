@@ -11,18 +11,30 @@ namespace TouchFall.View
 
         #region Properties
         public (Transform topBound, WindowView window, Transform bottomBound) Bounds => _bounds;
+
+
         #endregion
 
         #region Unity Methods
         private void Awake()
         {
-            Transform[] transforms = GetComponentsInChildren<Transform>().Where(e => e.TryGetComponent<WindowView>(out _) == false).ToArray();
-            if (transforms != null && transforms.Length > 0)
+            Collider2D[] transforms = GetComponentsInChildren<Collider2D>().ToArray();
+
+            foreach (var t in transforms)
             {
-                _bounds.topBound = transforms[0];
-                _bounds.bottomBound = transforms[1];
+                WindowView windowView = t.GetComponentInChildren<WindowView>();
+                if (windowView != null)
+                {
+                    _bounds.window = windowView;
+                    break;
+                }
             }
-            _bounds.window = GetComponentInChildren<WindowView>();
+
+            if (transforms != null && transforms.Length == 3)
+            {
+                _bounds.topBound = transforms[0].GetComponentInChildren<Transform>();
+                _bounds.bottomBound = transforms[1].GetComponentInChildren<Transform>();
+            }            
         }
         #endregion
     }

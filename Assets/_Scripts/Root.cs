@@ -43,24 +43,24 @@ namespace TouchFall
 
         private void OnEnable()
         {
-            _playerControl.Enable();
+            _playerControl?.Enable();
         }
 
         private void OnDisable()
         {
-            _playerControl.Disable();
+            _playerControl?.Disable();
         }
 
         private void Awake()
         {
+            _playerControl = new();
+
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
             BoundView leftBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
             BoundView rightBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
 
             _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
-
-            _playerControl = new();
 
             _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
             _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
