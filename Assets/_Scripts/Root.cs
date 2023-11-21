@@ -21,6 +21,7 @@ namespace TouchFall
         [SerializeField] private Transform _postionTopBound;
         [SerializeField] private BoundView _boundView;
         [SerializeField] private BoundModel _boundModel;
+        [SerializeField] private BottomTriggerView _bottomTriggerView;
         #endregion
 
         #region Fields
@@ -61,6 +62,8 @@ namespace TouchFall
             BoundView rightBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
 
             _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
+
+            _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
             _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
             _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);

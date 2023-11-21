@@ -11,8 +11,6 @@ namespace TouchFall.View
 
         #region Properties
         public (Transform topBound, WindowView window, Transform bottomBound) Bounds => _bounds;
-
-
         #endregion
 
         #region Unity Methods

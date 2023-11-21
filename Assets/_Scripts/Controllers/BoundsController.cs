@@ -58,14 +58,14 @@ namespace TouchFall.Controller
             topBound.position = new Vector2(0, _screenBounds.y + _model.TopBoundPositionOffset);
             topBound.localScale = new Vector2(_screenBounds.x * 2, topBound.localScale.y);
 
-            _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _screenBounds.y + _model.StartPositionBoundOffset);
+            _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _screenBounds.y + _model.BoundsVerticalOffset);
             _leftTop.localScale = new Vector2(_leftTop.localScale.x, _screenBounds.y * 2);
             _leftBottom.localScale = new Vector2(_leftBottom.localScale.x, _screenBounds.y * 2);
             _leftBottom.position = new Vector2(_leftBottom.position.x, (_leftTop.position.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds);
             _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _model.DistnaceBetweenBounds);
             _leftView.transform.position = new Vector2(_leftView.transform.position.x, _leftTop.position.y - (_leftTop.localScale.y * 0.5f) - (_leftView.transform.localScale.y * 0.5f));
 
-            _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _screenBounds.y + _model.StartPositionBoundOffset);
+            _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _screenBounds.y + _model.BoundsVerticalOffset);
             _rightTop.localScale = new Vector2(_rightTop.localScale.x, _screenBounds.y * 2);
             _rightBottom.localScale = new Vector2(_rightBottom.localScale.x, _screenBounds.y * 2);
             _rightBottom.position = new Vector2(_rightBottom.position.x, (_rightTop.position.y - _rightTop.localScale.y) - _model.DistnaceBetweenBounds);

@@ -1,4 +1,5 @@
 ﻿using System;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -10,12 +11,13 @@ namespace TouchFall.View
         #endregion
 
         #region UnityMethods
-        private void OnTriggerEnter2D(Collider2D collision) //TODO: реализовать проверку на падающий объект
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            //if (collision.TryGetComponent<FallObject>())
-            //{
-            //    Caught?.Invoke();
-            //}
+            if (collision.TryGetComponent(out IFallingObject fallingObject))
+            {
+                fallingObject.ApplyMod();
+                fallingObject.DropObject();
+            }
         }
         #endregion
     }

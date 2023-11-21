@@ -7,11 +7,4 @@ namespace TouchFall.Helper.Enums
         EndTouch,
         End
     }
-
-    public enum BoundChild : byte
-    {
-        Top,
-        Window,
-        Bottom
-    }
 }

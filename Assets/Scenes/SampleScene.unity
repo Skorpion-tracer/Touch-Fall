@@ -165,7 +165,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 4.19}
   m_EdgeRadius: 0
 --- !u!4 &37751441
 Transform:
@@ -175,8 +175,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37751439}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.21, z: 0}
-  m_LocalScale: {x: 107.07, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 315297908}
   - component: {fileID: 315297907}
   - component: {fileID: 315297909}
+  - component: {fileID: 315297910}
   m_Layer: 7
   m_Name: Triangle (1)
   m_TagString: Untagged
@@ -330,6 +331,18 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &315297910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315297904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f533eb1a698a7c64fa14278a88219327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +466,10 @@ MonoBehaviour:
   _boundModel:
     _topBoundPositionOffset: 3
     _distanceBetweenBounds: 3
-    _startPositionBoundOffset: 4
+    _boundsVerticalOffset: 2.5
+    _bottomTriggerPositionOffset: 4
+    _bottomTriggerWidth: 30
+  _bottomTriggerView: {fileID: 37751442}
 --- !u!4 &600816536
 Transform:
   m_ObjectHideFlags: 0
@@ -546,6 +562,7 @@ GameObject:
   - component: {fileID: 1317080111}
   - component: {fileID: 1317080110}
   - component: {fileID: 1317080112}
+  - component: {fileID: 1317080113}
   m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
@@ -657,6 +674,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1317080113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317080107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f533eb1a698a7c64fa14278a88219327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1506766438
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,6 +756,7 @@ GameObject:
   - component: {fileID: 1643500425}
   - component: {fileID: 1643500423}
   - component: {fileID: 1643500426}
+  - component: {fileID: 1643500427}
   m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
@@ -851,3 +881,15 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &1643500427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643500421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f533eb1a698a7c64fa14278a88219327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
