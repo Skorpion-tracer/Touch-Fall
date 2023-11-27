@@ -1,15 +1,11 @@
-﻿using System;
-using TouchFall.View.Interfaces;
+﻿using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public sealed class WindowView : MonoBehaviour
     {
-        #region Events
-        public event Action Caught;
-        #endregion
-
         #region UnityMethods
         private void OnTriggerEnter2D(Collider2D collision)
         {

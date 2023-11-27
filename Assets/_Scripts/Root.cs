@@ -22,12 +22,17 @@ namespace TouchFall
         [SerializeField] private BoundView _boundView;
         [SerializeField] private BoundModel _boundModel;
         [SerializeField] private BottomTriggerView _bottomTriggerView;
+
+        [Space(5f), Header("Spawner")]
+        [SerializeField] private ObjectPool _objectPool;
+        [SerializeField] private SpawnFallObjectModel _spawnModel;
         #endregion
 
         #region Fields
         private MainHeroController _mainHeroController;
         private BoundsController _boundsController;
         private PlayerControl _playerControl;
+        private SpawnFallObjectController _spawnController;
         private List<IUpdater> _updaters = new();
         private List<IFixedUpdater> _fixeUpdaters = new();
 
@@ -40,6 +45,7 @@ namespace TouchFall
         {
             _mainHeroModel ??= new MainHeroModel();
             _boundModel ??= new BoundModel();
+            _spawnModel ??= new SpawnFallObjectModel();
         }
 
         private void OnEnable()
@@ -58,6 +64,8 @@ namespace TouchFall
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
+            _objectPool.InitPool();
+
             BoundView leftBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
             BoundView rightBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
 
@@ -68,8 +76,11 @@ namespace TouchFall
             _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
             _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
 
+            _spawnController = new(_spawnModel, _objectPool, _screenBounds);
+
             _updaters.Add(_mainHeroController);
             _updaters.Add(_boundsController);
+            _updaters.Add(_spawnController);
 
             _fixeUpdaters.Add(_mainHeroController);
         }

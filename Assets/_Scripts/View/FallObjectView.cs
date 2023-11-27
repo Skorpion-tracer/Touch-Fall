@@ -14,7 +14,7 @@ namespace TouchFall.View
 
         public void DropObject()
         {
-            Debug.Log("Вернуть в пулл");
+            gameObject.SetActive(false);
         }
         #endregion
     }
