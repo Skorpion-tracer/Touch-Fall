@@ -65,10 +65,6 @@ namespace TouchFall.Controller
             _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _model.DistnaceBetweenBounds);
             _leftView.transform.position = new Vector2(_leftView.transform.position.x, _leftTop.position.y - (_leftTop.localScale.y * 0.5f) - (_leftView.transform.localScale.y * 0.5f));
 
-            BoxCollider2D collider = _rightView.GetComponent<BoxCollider2D>();
-            if (collider != null)
-                collider.offset = new Vector2(collider.offset.x * -1, collider.offset.y);
-            
             _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _screenBounds.y + _model.BoundsVerticalOffset);
             _rightTop.localScale = new Vector2(_rightTop.localScale.x, _screenBounds.y * 2);
             _rightBottom.localScale = new Vector2(_rightBottom.localScale.x, _screenBounds.y * 2);

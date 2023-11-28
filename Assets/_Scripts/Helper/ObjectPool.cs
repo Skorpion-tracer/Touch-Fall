@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using TouchFall.View;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.Helper
 {
-    public sealed class ObjectPool : MonoBehaviour
+    public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IFallingObject
     {
         #region Fields
-        [SerializeField] private FallObjectView _fallObjectPrefab;
+        [SerializeField] private T _fallObjectPrefab;
 
-        private List<FallObjectView> _pooledObjects = new();
+        private List<T> _pooledObjects = new();
         private int _count = 20;
         #endregion
 
@@ -18,13 +18,13 @@ namespace TouchFall.Helper
         {
             for (int i = 0; i < _count; i++)
             {
-                FallObjectView fallObject = Instantiate(_fallObjectPrefab);
+                T fallObject = Instantiate(_fallObjectPrefab);
                 fallObject.gameObject.SetActive(false);
                 _pooledObjects.Add(fallObject);
             }
         }
 
-        public FallObjectView GetPooledObject()
+        public T GetPooledObject()
         {
             for (int i = 0; i < _pooledObjects.Count; i++)
             {

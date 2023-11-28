@@ -19,12 +19,14 @@ namespace TouchFall
 
         [Space(5f), Header("Bounds")]
         [SerializeField] private Transform _postionTopBound;
-        [SerializeField] private BoundView _boundView;
-        [SerializeField] private BoundModel _boundModel;
+        [SerializeField] private BoundView _leftBoundView;
+        [SerializeField] private BoundView _rightBoundView;
         [SerializeField] private BottomTriggerView _bottomTriggerView;
+        [SerializeField] private BoundModel _boundModel;
 
         [Space(5f), Header("Spawner")]
-        [SerializeField] private ObjectPool _objectPool;
+        [SerializeField] private PoolEmptyObject _poolEmptyObject;
+        [SerializeField] private PoolModifyObject _poolModifyObject;
         [SerializeField] private SpawnFallObjectModel _spawnModel;
         #endregion
 
@@ -35,6 +37,7 @@ namespace TouchFall
         private SpawnFallObjectController _spawnController;
         private List<IUpdater> _updaters = new();
         private List<IFixedUpdater> _fixeUpdaters = new();
+        private PoolContainer _poolContainer;
 
         private Vector2 _screenBounds;
         #endregion
@@ -64,10 +67,13 @@ namespace TouchFall
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
-            _objectPool.InitPool();
+            _poolEmptyObject.InitPool();
+            _poolModifyObject.InitPool();
 
-            BoundView leftBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
-            BoundView rightBound = Instantiate(_boundView, Vector2.zero, Quaternion.identity);
+            _poolContainer = new(_poolEmptyObject, _poolModifyObject);
+
+            BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
+            BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
 
             _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
 
@@ -76,7 +82,7 @@ namespace TouchFall
             _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
             _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
 
-            _spawnController = new(_spawnModel, _objectPool, _screenBounds);
+            _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
 
             _updaters.Add(_mainHeroController);
             _updaters.Add(_boundsController);

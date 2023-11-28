@@ -16,7 +16,7 @@ namespace TouchFall.View
         #region Unity Methods
         private void Awake()
         {
-            Collider2D[] transforms = GetComponentsInChildren<Collider2D>().ToArray();
+            Collider2D[] transforms = GetComponentsInChildren<Collider2D>().Where(e => e.usedByEffector == false).ToArray();
 
             foreach (var t in transforms)
             {

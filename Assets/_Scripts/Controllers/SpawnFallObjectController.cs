@@ -10,19 +10,20 @@ namespace TouchFall.Controller
     {
         #region Fields
         private SpawnFallObjectModel _model;
-        private ObjectPool _pool;
+        private PoolContainer _pool;
 
         private float _time;
         private float _minPositionX;
         private float _maxPositionX;
         private float _posY;
+        private float _probability = 3;
         #endregion
 
         #region Constructor
-        public SpawnFallObjectController(SpawnFallObjectModel spawnFallObjectModel, ObjectPool objectPool, Vector2 screenBounds)
+        public SpawnFallObjectController(SpawnFallObjectModel spawnFallObjectModel, PoolContainer poolContainer, Vector2 screenBounds)
         {
             _model = spawnFallObjectModel;
-            _pool = objectPool;
+            _pool = poolContainer;
 
             _minPositionX = -screenBounds.x;
             _maxPositionX = screenBounds.x;
@@ -36,7 +37,11 @@ namespace TouchFall.Controller
             _time += Time.deltaTime;
             if (_time >= _model.TimeSpawn)
             {
-                InstantiateObject();
+                float result = Random.Range(0, 5);
+                if (result >= _probability)
+                    InstantiateObject();
+                else
+                    InstantiateModifyObject();
                 _time = 0;
             }
         }
@@ -45,12 +50,23 @@ namespace TouchFall.Controller
         #region Private Methods
         private void InstantiateObject()
         {
-            FallObjectView fallObjectView = _pool.GetPooledObject();
+            FallObjectView fallObjectView = _pool.PoolEmptyObjects.GetPooledObject();
 
             if (fallObjectView != null)
             {
                 fallObjectView.gameObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
                 fallObjectView.gameObject.SetActive(true);
+            }
+        }
+
+        private void InstantiateModifyObject()
+        {
+            FallObjectModifyView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
+
+            if (fallObjectModifyView != null)
+            {
+                fallObjectModifyView.gameObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
+                fallObjectModifyView.gameObject.SetActive(true);
             }
         }
         #endregion
