@@ -23,6 +23,7 @@ namespace TouchFall.Controller
         private Vector2 _endPosition;
 
         private float _downTime = 0f;
+        private float a;
         #endregion
 
         #region Constructors
@@ -101,6 +102,9 @@ namespace TouchFall.Controller
                     _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _startPosition, _model.Speed * Time.fixedDeltaTime));
                     break;
             }
+            a += 3f;
+            if (a >= 365) a = 0;
+            _view.Body.MoveRotation(a);
         }
         #endregion
 
