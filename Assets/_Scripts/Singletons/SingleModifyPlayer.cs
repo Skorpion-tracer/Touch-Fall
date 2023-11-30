@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using TouchFall.Helper.Enums;
 
 namespace TouchFall
 {
@@ -11,7 +12,7 @@ namespace TouchFall
         #endregion
 
         #region Events
-        public event Action Modify;
+        public event Action<ModifyHero> Modify;
         #endregion
 
         #region Constructor
@@ -23,9 +24,9 @@ namespace TouchFall
         #endregion
 
         #region Public Methods
-        public void ApplyModify()
+        public void ApplyModify(ModifyHero modifyHero)
         {
-            Modify?.Invoke();
+            Modify?.Invoke(modifyHero);
         }
         #endregion
     }

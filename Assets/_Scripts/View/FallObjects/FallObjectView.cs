@@ -10,7 +10,6 @@ namespace TouchFall.View
         public void ApplyMod()
         {
             Debug.Log("Применить модификатор");
-            SingleModifyPlayer.Instance.ApplyModify();
         }
 
         public void DropObject()

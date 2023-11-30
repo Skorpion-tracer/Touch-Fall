@@ -31,7 +31,8 @@ namespace TouchFall
         #endregion
 
         #region Fields
-        private MainHeroController _mainHeroController;
+        private MainHeroMoveController _mainHeroMoveController;
+        private MainHeroBehavoiurController _mainHeroBehavoiurController;
         private BoundsController _boundsController;
         private PlayerControl _playerControl;
         private SpawnFallObjectController _spawnController;
@@ -79,16 +80,18 @@ namespace TouchFall
 
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
-            _mainHero = Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
-            _mainHeroController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
+            _mainHero.InstantiateHeroes(_startPointHero.position); //= Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
+            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
+            _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
             _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
 
-            _updaters.Add(_mainHeroController);
+            _updaters.Add(_mainHeroMoveController);
             _updaters.Add(_boundsController);
             _updaters.Add(_spawnController);
 
-            _fixeUpdaters.Add(_mainHeroController);
+            _fixeUpdaters.Add(_mainHeroMoveController);
+            _fixeUpdaters.Add(_mainHeroBehavoiurController);
         }
 
         private void Update()

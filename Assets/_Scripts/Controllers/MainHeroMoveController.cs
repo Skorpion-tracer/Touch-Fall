@@ -9,14 +9,14 @@ using UnityEngine.InputSystem;
 
 namespace TouchFall.Controller
 {
-    public sealed class MainHeroController : IUpdater, IFixedUpdater
+    public sealed class MainHeroMoveController : IUpdater, IFixedUpdater
     {
         #region Fields
         private MainHeroView _view;
         private MainHeroModel _model;
 
         private PlayerControl _playerControl;
-        private Transform _heroTransform;
+        //private Transform _heroTransform;
         private Camera _camera;
 
         private Vector2 _startPosition;
@@ -33,13 +33,13 @@ namespace TouchFall.Controller
         /// <param name="mainHeroView">—сылка на view геро€</param>
         /// <param name="mainHeroModel">—сылка на модель геро€</param>
         /// <param name="startPosition">—сылка на стартовую позицию геро€</param>
-        public MainHeroController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
+        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
         {
             _view = mainHeroView;
             _model = mainHeroModel;
             _startPosition = startPosition;
 
-            _heroTransform = _view.transform;
+            //_heroTransform = _view.transform;
 
             _camera = Camera.main;
 
@@ -49,7 +49,7 @@ namespace TouchFall.Controller
             _playerControl.Touch.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
         }
 
-        ~MainHeroController()
+        ~MainHeroMoveController()
         {
             _playerControl.Touch.PrimaryContact.started -= ctx => OnStartTouch(ctx);
             _playerControl.Touch.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
@@ -61,19 +61,22 @@ namespace TouchFall.Controller
         {
             switch (_model.StateMainHero)
             {
-                case StateMainHero.None:
-                case StateMainHero.End: return;
+                case StateMoveMainHero.None:
+                case StateMoveMainHero.End: return;
 
-                case StateMainHero.Touch:
-                    _heroTransform.position = new Vector3(Mathf.Clamp(_heroTransform.position.x, -2f, 2f), Mathf.Clamp(_heroTransform.position.y, -4f, 4f), _heroTransform.position.z);
+                case StateMoveMainHero.Touch:
+                    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -_model.ClampMove, _model.ClampMove), 
+                        Mathf.Clamp(_view.Transform.position.y, -(_model.ClampMove * 2), (_model.ClampMove * 2)), _view.Transform.position.z);
+                    Debug.Log(_view.Transform.position);
                     break;
-                case StateMainHero.EndTouch:
-                    _heroTransform.position = new Vector3(Mathf.Clamp(_heroTransform.position.x, -2f, 2f), Mathf.Clamp(_heroTransform.position.y, -4f, 4f), _heroTransform.position.z);
+                case StateMoveMainHero.EndTouch:
+                    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -_model.ClampMove, _model.ClampMove), 
+                        Mathf.Clamp(_view.Transform.position.y, -(_model.ClampMove * 2), (_model.ClampMove * 2)), _view.transform.position.z);
 
                     _downTime += Time.deltaTime;
                     if (_downTime >= _model.DownTime)
                     {
-                        _model.StateMainHero = StateMainHero.End;
+                        _model.StateMainHero = StateMoveMainHero.End;
                         _downTime = 0f;
                     }
 
@@ -85,38 +88,35 @@ namespace TouchFall.Controller
         {
             switch (_model.StateMainHero)
             {
-                case StateMainHero.None:
+                case StateMoveMainHero.None:
                     return;
-                case StateMainHero.Touch:
-                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, GetPositionTouch(), _model.Speed * Time.fixedDeltaTime));
+                case StateMoveMainHero.Touch:
+                    _view.Body.MovePosition(Vector3.Lerp(_view.Transform.position, GetPositionTouch(), _model.Speed * Time.fixedDeltaTime));
                     break;
-                case StateMainHero.EndTouch:
-                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _endPosition, _model.Speed * Time.fixedDeltaTime));
+                case StateMoveMainHero.EndTouch:
+                    _view.Body.MovePosition(Vector3.Lerp(_view.Transform.position, _endPosition, _model.Speed * Time.fixedDeltaTime));
                     break;
-                case StateMainHero.End:
-                    if (_heroTransform.position == (Vector3)_startPosition)
+                case StateMoveMainHero.End:
+                    if (_view.Transform.position == (Vector3)_startPosition)
                     {
-                        _model.StateMainHero = StateMainHero.None;
+                        _model.StateMainHero = StateMoveMainHero.None;
                         return;
                     }
-                    _view.Body.MovePosition(Vector3.Lerp(_heroTransform.position, _startPosition, _model.Speed * Time.fixedDeltaTime));
+                    _view.Body.MovePosition(Vector3.Lerp(_view.Transform.position, _startPosition, _model.Speed * Time.fixedDeltaTime));
                     break;
             }
-            a += 3f;
-            if (a >= 365) a = 0;
-            _view.Body.MoveRotation(a);
         }
         #endregion
 
         #region Private Mathods
         private void OnStartTouch(InputAction.CallbackContext ctx)
         {
-            _model.StateMainHero = StateMainHero.Touch;
+            _model.StateMainHero = StateMoveMainHero.Touch;
         }
 
         private void EndTocuhPrimary(InputAction.CallbackContext ctx)
         {
-            _model.StateMainHero = StateMainHero.EndTouch;
+            _model.StateMainHero = StateMoveMainHero.EndTouch;
             _endPosition = GetPositionTouch();
         }
 

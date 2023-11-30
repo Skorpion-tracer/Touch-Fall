@@ -1,10 +1,26 @@
 namespace TouchFall.Helper.Enums
 {
-    public enum StateMainHero : byte
+    public enum StateMoveMainHero : byte
     {
         None,
         Touch,
         EndTouch,
         End
+    }
+
+    public enum StateBehaviourHero : byte
+    {
+        None,
+        Rotate
+    }
+
+    public enum ModifyHero : byte
+    {
+        Drop,
+        Elastic,
+        Spinning,
+        Magnetic,
+        Repulsive,
+        Square
     }
 }
