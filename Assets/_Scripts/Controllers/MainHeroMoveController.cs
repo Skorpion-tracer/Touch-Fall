@@ -21,9 +21,9 @@ namespace TouchFall.Controller
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
+        private Vector2 _screenBounds;
 
         private float _downTime = 0f;
-        private float a;
         #endregion
 
         #region Constructors
@@ -33,11 +33,12 @@ namespace TouchFall.Controller
         /// <param name="mainHeroView">—сылка на view геро€</param>
         /// <param name="mainHeroModel">—сылка на модель геро€</param>
         /// <param name="startPosition">—сылка на стартовую позицию геро€</param>
-        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
+        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition, Vector2 screenBounds)
         {
             _view = mainHeroView;
             _model = mainHeroModel;
             _startPosition = startPosition;
+            _screenBounds = screenBounds;
 
             //_heroTransform = _view.transform;
 
@@ -61,17 +62,21 @@ namespace TouchFall.Controller
         {
             switch (_model.StateMainHero)
             {
-                case StateMoveMainHero.None:
-                case StateMoveMainHero.End: return;
+                //case StateMoveMainHero.None:
+                //case StateMoveMainHero.End: return;
 
-                case StateMoveMainHero.Touch:
-                    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -_model.ClampMove, _model.ClampMove), 
-                        Mathf.Clamp(_view.Transform.position.y, -(_model.ClampMove * 2), (_model.ClampMove * 2)), _view.Transform.position.z);
-                    Debug.Log(_view.Transform.position);
-                    break;
+                //case StateMoveMainHero.Touch:
+                //    float x = _screenBounds.x - (_model.ClampMove + _view.Bounds.x);
+                //    float y = _screenBounds.y - (_model.ClampMove + _view.Bounds.y);
+                //    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -x, x),
+                //        Mathf.Clamp(_view.Transform.position.y, -y, y), _view.Transform.position.z);
+                //    break;
+
                 case StateMoveMainHero.EndTouch:
-                    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -_model.ClampMove, _model.ClampMove), 
-                        Mathf.Clamp(_view.Transform.position.y, -(_model.ClampMove * 2), (_model.ClampMove * 2)), _view.transform.position.z);
+                    //x = _screenBounds.x - (_model.ClampMove + _view.Bounds.x);
+                    //y = _screenBounds.y - (_model.ClampMove + _view.Bounds.y);
+                    //_view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -x, x),
+                    //    Mathf.Clamp(_view.Transform.position.y, -y, y), _view.transform.position.z);
 
                     _downTime += Time.deltaTime;
                     if (_downTime >= _model.DownTime)
@@ -79,7 +84,6 @@ namespace TouchFall.Controller
                         _model.StateMainHero = StateMoveMainHero.End;
                         _downTime = 0f;
                     }
-
                     break;
             }
         }
@@ -89,6 +93,7 @@ namespace TouchFall.Controller
             switch (_model.StateMainHero)
             {
                 case StateMoveMainHero.None:
+                    _view.Body.MovePosition(Vector3.Lerp(_view.Transform.position, _startPosition, _model.Speed * Time.fixedDeltaTime));
                     return;
                 case StateMoveMainHero.Touch:
                     _view.Body.MovePosition(Vector3.Lerp(_view.Transform.position, GetPositionTouch(), _model.Speed * Time.fixedDeltaTime));

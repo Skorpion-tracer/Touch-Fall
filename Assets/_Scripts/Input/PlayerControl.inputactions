@@ -31,7 +31,7 @@
                     "path": "<Touchscreen>/primaryTouch/press",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TouchScheme",
                     "action": "PrimaryContact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -42,7 +42,55 @@
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "TouchScheme",
+                    "action": "PrimaryPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Click",
+            "id": "78b1d5fd-0088-40ce-8473-842f634b3e9a",
+            "actions": [
+                {
+                    "name": "PrimaryContact",
+                    "type": "PassThrough",
+                    "id": "679d6c63-89d1-4a09-a470-a1da91dd63cb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryPosition",
+                    "type": "PassThrough",
+                    "id": "91adee1a-dde6-4e34-9adb-aca728e54062",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d90b7c39-1388-4150-a07a-54acad0760b6",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseScheme",
+                    "action": "PrimaryContact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "40def37a-225f-4e44-88e3-0ce7ed5c33c9",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseScheme",
                     "action": "PrimaryPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -50,5 +98,16 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "TouchScheme",
+            "bindingGroup": "TouchScheme",
+            "devices": []
+        },
+        {
+            "name": "MouseScheme",
+            "bindingGroup": "MouseScheme",
+            "devices": []
+        }
+    ]
 }

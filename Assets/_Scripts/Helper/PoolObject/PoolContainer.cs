@@ -1,6 +1,6 @@
 ﻿using TouchFall.View;
 
-namespace TouchFall.Helper
+namespace TouchFall.Helper.PoolObject
 {
     public sealed class PoolContainer
     {

@@ -1,5 +1,5 @@
 ﻿using TouchFall.Controller.Interfaces;
-using TouchFall.Helper;
+using TouchFall.Helper.PoolObject;
 using TouchFall.Model;
 using TouchFall.View;
 using UnityEngine;
@@ -54,8 +54,7 @@ namespace TouchFall.Controller
 
             if (fallObjectView != null)
             {
-                fallObjectView.gameObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
-                fallObjectView.gameObject.SetActive(true);
+                InitFallObject(fallObjectView.gameObject);
             }
         }
 
@@ -65,9 +64,14 @@ namespace TouchFall.Controller
 
             if (fallObjectModifyView != null)
             {
-                fallObjectModifyView.gameObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
-                fallObjectModifyView.gameObject.SetActive(true);
+                InitFallObject(fallObjectModifyView.gameObject);
             }
+        }
+
+        private void InitFallObject(GameObject fallObject)
+        {
+            fallObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
+            fallObject.SetActive(true);
         }
         #endregion
     }

@@ -311,9 +311,9 @@ MonoBehaviour:
   _mainHero: {fileID: 1092146914}
   _mainHeroModel:
     _speed: 5
-    _speedRotation: 7
+    _speedRotation: 15
     _downTime: 1
-    _clampMove: 2
+    _clampMove: 0.3
   _postionTopBound: {fileID: 1506766440}
   _leftBoundView: {fileID: 1986636280980587232, guid: 5c8238d417345dd4b8520ced23911572, type: 3}
   _rightBoundView: {fileID: 1986636280980587232, guid: c759f0b18d8624d4aa52c778ee119a14, type: 3}
@@ -325,7 +325,7 @@ MonoBehaviour:
     _bottomTriggerPositionOffset: 4
     _bottomTriggerWidth: 30
   _poolEmptyObject: {fileID: 1017053813}
-  _poolModifyObject: {fileID: 953991175}
+  _poolModifyObject: {fileID: 953991177}
   _spawnModel:
     _timeSpawn: 0.5
     _offsetVerticalPositionSpawn: 1.99
@@ -353,7 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 953991176}
-  - component: {fileID: 953991175}
+  - component: {fileID: 953991177}
   m_Layer: 0
   m_Name: SpawnerFallModifyObject
   m_TagString: Untagged
@@ -361,19 +361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &953991175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953991174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcc11341a23ede74c8bb226cc915b8b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fallObjectPrefab: {fileID: 6122764757163722882, guid: d0ec0c16eec2c01429ef524b53e04974, type: 3}
 --- !u!4 &953991176
 Transform:
   m_ObjectHideFlags: 0
@@ -389,6 +376,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &953991177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953991174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bfbccd81301b944a44ce05fd24efdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 30
+  _fallObjectsPrefab:
+  - {fileID: 6122764757163722882, guid: 363c6d02aec02364288c9522970c521a, type: 3}
+  - {fileID: 6122764757163722882, guid: d0ec0c16eec2c01429ef524b53e04974, type: 3}
+  - {fileID: 6122764757163722882, guid: 96fbbed8c96901940af4f92966ccf09e, type: 3}
+  - {fileID: 6122764757163722882, guid: 8c5289b7d6115444d94e75851fc50bc9, type: 3}
+  - {fileID: 6122764757163722882, guid: 0bef630c4980e744f863d16f3a0a4691, type: 3}
+  - {fileID: 6122764757163722882, guid: 8db663f0f583c694d901447aebf1d3bd, type: 3}
 --- !u!1 &1017053810
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,9 +437,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1017053810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ccfedaa4774be1469dd9a618f1feb64, type: 3}
+  m_Script: {fileID: 11500000, guid: 13c50e5d399139a43887f8bc861e3421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _count: 10
   _fallObjectPrefab: {fileID: 1058704974769555195, guid: 74c096db8ccf92442adb61a602937ac8, type: 3}
 --- !u!1 &1065447459
 GameObject:

@@ -1,30 +1,27 @@
-﻿using System.Collections.Generic;
-using TouchFall.View.Interfaces;
+﻿using TouchFall.View;
 using UnityEngine;
+using UnityEngine.Pool;
 
-namespace TouchFall.Helper
+namespace TouchFall.Helper.PoolObject
 {
-    public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IFallingObject
+    public sealed class PoolEmptyObject : ObjectPool<FallObjectView>
     {
         #region Fields
-        [SerializeField] private T _fallObjectPrefab;
-
-        private List<T> _pooledObjects = new();
-        private int _count = 20;
+        [SerializeField] private FallObjectView _fallObjectPrefab;
         #endregion
 
         #region Public Methods
-        public void InitPool()
+        public override void InitPool()
         {
             for (int i = 0; i < _count; i++)
             {
-                T fallObject = Instantiate(_fallObjectPrefab);
+                FallObjectView fallObject = Instantiate(_fallObjectPrefab);
                 fallObject.gameObject.SetActive(false);
                 _pooledObjects.Add(fallObject);
             }
         }
 
-        public T GetPooledObject()
+        public override FallObjectView GetPooledObject()
         {
             for (int i = 0; i < _pooledObjects.Count; i++)
             {

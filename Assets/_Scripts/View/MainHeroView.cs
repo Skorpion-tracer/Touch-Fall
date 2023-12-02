@@ -11,6 +11,7 @@ namespace TouchFall.View
 
         private Rigidbody2D _currentBodyHero;
         private Transform _currentTransformHero;
+        private Vector2 _bounds;
 
         private Dictionary<ModifyHero, HeroModifyType> _modifiersHeroes = new(6);
 
@@ -20,20 +21,10 @@ namespace TouchFall.View
         #region Properties
         public Rigidbody2D Body => _currentBodyHero;
         public Transform Transform => _currentTransformHero;
+        public Vector2 Bounds => _bounds;
         #endregion
 
         #region Unity Methods
-        //private void Awake()
-        //{
-        //    for (int i = 0; i < _bodies.Length; i++)
-        //    {
-        //        HeroModifyType typeHero = _bodies[i].GetComponent<HeroModifyType>();
-        //        _modifiersHeroes.Add(typeHero.ModifyHero, typeHero);
-        //        typeHero.gameObject.SetActive(false);
-        //    }
-        //    _currentBodyHero = _modifiersHeroes[ModifyHero.Drop].Body;
-        //}
-
         private void OnEnable()
         {
             SingleModifyPlayer.Instance.Modify += OnModify;
@@ -56,9 +47,11 @@ namespace TouchFall.View
                 typeHero.gameObject.SetActive(false);
             }
             _currentModify = ModifyHero.Drop;
+            _bounds = _modifiersHeroes[_currentModify].SpriteRenderer.sprite.bounds.size / 2;
             _currentBodyHero = _modifiersHeroes[_currentModify].Body;
             _currentBodyHero.gameObject.SetActive(true);
             _currentTransformHero = _currentBodyHero.gameObject.transform;
+            
         }
         #endregion
 
@@ -72,6 +65,7 @@ namespace TouchFall.View
             DeactivateAllHero();
 
             _currentBodyHero = _modifiersHeroes[modifyHero].Body;
+            _bounds = _modifiersHeroes[modifyHero].SpriteRenderer.sprite.bounds.size / 2;
             if (_currentBodyHero != null)
             {
                 _currentBodyHero.transform.position = lastPos;

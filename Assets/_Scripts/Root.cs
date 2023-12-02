@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TouchFall.Controller;
 using TouchFall.Controller.Interfaces;
 using TouchFall.Helper;
+using TouchFall.Helper.PoolObject;
 using TouchFall.Input;
 using TouchFall.Model;
 using TouchFall.View;
@@ -81,7 +82,7 @@ namespace TouchFall
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
             _mainHero.InstantiateHeroes(_startPointHero.position); //= Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
-            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
+            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
             _spawnController = new(_spawnModel, _poolContainer, _screenBounds);

@@ -55,7 +55,7 @@ namespace TouchFall.Input
                     ""path"": ""<Touchscreen>/primaryTouch/press"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""TouchScheme"",
                     ""action"": ""PrimaryContact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -66,7 +66,55 @@ namespace TouchFall.Input
                     ""path"": ""<Touchscreen>/primaryTouch/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""TouchScheme"",
+                    ""action"": ""PrimaryPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Click"",
+            ""id"": ""78b1d5fd-0088-40ce-8473-842f634b3e9a"",
+            ""actions"": [
+                {
+                    ""name"": ""PrimaryContact"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""679d6c63-89d1-4a09-a470-a1da91dd63cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryPosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""91adee1a-dde6-4e34-9adb-aca728e54062"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d90b7c39-1388-4150-a07a-54acad0760b6"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseScheme"",
+                    ""action"": ""PrimaryContact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40def37a-225f-4e44-88e3-0ce7ed5c33c9"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseScheme"",
                     ""action"": ""PrimaryPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -74,12 +122,27 @@ namespace TouchFall.Input
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""TouchScheme"",
+            ""bindingGroup"": ""TouchScheme"",
+            ""devices"": []
+        },
+        {
+            ""name"": ""MouseScheme"",
+            ""bindingGroup"": ""MouseScheme"",
+            ""devices"": []
+        }
+    ]
 }");
             // Touch
             m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
             m_Touch_PrimaryContact = m_Touch.FindAction("PrimaryContact", throwIfNotFound: true);
             m_Touch_PrimaryPosition = m_Touch.FindAction("PrimaryPosition", throwIfNotFound: true);
+            // Click
+            m_Click = asset.FindActionMap("Click", throwIfNotFound: true);
+            m_Click_PrimaryContact = m_Click.FindAction("PrimaryContact", throwIfNotFound: true);
+            m_Click_PrimaryPosition = m_Click.FindAction("PrimaryPosition", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -176,7 +239,71 @@ namespace TouchFall.Input
             }
         }
         public TouchActions @Touch => new TouchActions(this);
+
+        // Click
+        private readonly InputActionMap m_Click;
+        private IClickActions m_ClickActionsCallbackInterface;
+        private readonly InputAction m_Click_PrimaryContact;
+        private readonly InputAction m_Click_PrimaryPosition;
+        public struct ClickActions
+        {
+            private @PlayerControl m_Wrapper;
+            public ClickActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+            public InputAction @PrimaryContact => m_Wrapper.m_Click_PrimaryContact;
+            public InputAction @PrimaryPosition => m_Wrapper.m_Click_PrimaryPosition;
+            public InputActionMap Get() { return m_Wrapper.m_Click; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(ClickActions set) { return set.Get(); }
+            public void SetCallbacks(IClickActions instance)
+            {
+                if (m_Wrapper.m_ClickActionsCallbackInterface != null)
+                {
+                    @PrimaryContact.started -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryContact;
+                    @PrimaryContact.performed -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryContact;
+                    @PrimaryContact.canceled -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryContact;
+                    @PrimaryPosition.started -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
+                    @PrimaryPosition.performed -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
+                    @PrimaryPosition.canceled -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
+                }
+                m_Wrapper.m_ClickActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @PrimaryContact.started += instance.OnPrimaryContact;
+                    @PrimaryContact.performed += instance.OnPrimaryContact;
+                    @PrimaryContact.canceled += instance.OnPrimaryContact;
+                    @PrimaryPosition.started += instance.OnPrimaryPosition;
+                    @PrimaryPosition.performed += instance.OnPrimaryPosition;
+                    @PrimaryPosition.canceled += instance.OnPrimaryPosition;
+                }
+            }
+        }
+        public ClickActions @Click => new ClickActions(this);
+        private int m_TouchSchemeSchemeIndex = -1;
+        public InputControlScheme TouchSchemeScheme
+        {
+            get
+            {
+                if (m_TouchSchemeSchemeIndex == -1) m_TouchSchemeSchemeIndex = asset.FindControlSchemeIndex("TouchScheme");
+                return asset.controlSchemes[m_TouchSchemeSchemeIndex];
+            }
+        }
+        private int m_MouseSchemeSchemeIndex = -1;
+        public InputControlScheme MouseSchemeScheme
+        {
+            get
+            {
+                if (m_MouseSchemeSchemeIndex == -1) m_MouseSchemeSchemeIndex = asset.FindControlSchemeIndex("MouseScheme");
+                return asset.controlSchemes[m_MouseSchemeSchemeIndex];
+            }
+        }
         public interface ITouchActions
+        {
+            void OnPrimaryContact(InputAction.CallbackContext context);
+            void OnPrimaryPosition(InputAction.CallbackContext context);
+        }
+        public interface IClickActions
         {
             void OnPrimaryContact(InputAction.CallbackContext context);
             void OnPrimaryPosition(InputAction.CallbackContext context);
