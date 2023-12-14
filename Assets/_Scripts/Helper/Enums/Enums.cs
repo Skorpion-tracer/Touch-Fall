@@ -23,4 +23,11 @@ namespace TouchFall.Helper.Enums
         Repulsive,
         Square
     }
+
+    public enum ModifyBounds : byte
+    {
+        Stay,
+        IncreaseDistance,
+        Moving
+    }
 }
