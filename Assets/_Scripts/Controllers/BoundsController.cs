@@ -9,6 +9,12 @@ namespace TouchFall.Controller
     public sealed class BoundsController : IUpdater
     {
         #region Fields
+        private enum MoveBound
+        {
+            Up,
+            Down
+        }
+
         private BoundView _leftBound;
         private BoundView _rightBound;
 
@@ -24,20 +30,16 @@ namespace TouchFall.Controller
         private Vector2 _screenBounds;
 
         private ModifyBounds _currentMod = ModifyBounds.Moving;
+        private MoveBound _moveBoundLeft = MoveBound.Down;
+        private MoveBound _moveBoundRight = MoveBound.Down;
+
         private float _startY;
         private float _endY;
-        private float _diffY;
         private float _timeRightBoundMove;
-        private float _maxTimeRightBoundMove = 3f;
+        private float _maxTimeRightBoundMove = 2.5f;
         private float _moveLeft;
-        private float _t;
-        private float _tR;
-        private float _amp = 0.05f;
-        private float _frequency =1.5f;
         private float _moveRight;
         private bool _startMoveRightBound;
-
-        private Vector2 _posLeft;
         #endregion
 
         #region Constructor
@@ -70,7 +72,7 @@ namespace TouchFall.Controller
                 case ModifyBounds.Stay:
                     return;
                 case ModifyBounds.Moving:
-                    MoveLeftBound();
+                    Moving();
                     break;
             }
         }
@@ -83,8 +85,7 @@ namespace TouchFall.Controller
             topBound.localScale = new Vector2(_screenBounds.x * 2, topBound.localScale.y);
 
             _startY = _screenBounds.y + _model.BoundsVerticalOffset;
-            _endY = _screenBounds.y - _model.BoundsVerticalOffset;
-            _diffY = _startY - _endY;
+            _endY = _startY - _model.DistnaceBetweenBounds; //_screenBounds.y + (_screenBounds.y - _model.BoundsVerticalOffset);
 
             _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _startY);
             _leftTop.localScale = new Vector2(_leftTop.localScale.x, _screenBounds.y * 2);
@@ -92,8 +93,6 @@ namespace TouchFall.Controller
             _leftBottom.position = new Vector2(_leftBottom.position.x, (_leftTop.position.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds);
             _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _model.DistnaceBetweenBounds);
             _leftView.transform.position = new Vector2(_leftView.transform.position.x, _leftTop.position.y - (_leftTop.localScale.y * 0.5f) - (_leftView.transform.localScale.y * 0.5f));
-
-            _posLeft = _leftBound.transform.position;
 
             _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _startY);
             _rightTop.localScale = new Vector2(_rightTop.localScale.x, _screenBounds.y * 2);
@@ -103,20 +102,46 @@ namespace TouchFall.Controller
             _rightView.transform.position = new Vector2(_rightView.transform.position.x, _rightTop.position.y - (_rightTop.localScale.y * 0.5f) - (_rightView.transform.localScale.y * 0.5f));
         }
 
-        private void MoveLeftBound()
+        private void Moving()
         {
-            _t += Time.deltaTime;
-            _moveLeft = Mathf.Cos(_t) * 3f;
-            Debug.Log(_moveLeft);
-
+            if (_moveBoundLeft == MoveBound.Down)
+            {
+                _moveLeft = Mathf.MoveTowards(_moveLeft, _endY, _model.SpeedMove * Time.deltaTime);
+                if (_moveLeft >= _endY)
+                {
+                    _moveBoundLeft = MoveBound.Up;
+                }
+            }
+            else
+            {
+                _moveLeft = Mathf.MoveTowards(_moveLeft, 0f, _model.SpeedMove * Time.deltaTime);
+                if (_moveLeft <= 0f)
+                {
+                    _moveBoundLeft = MoveBound.Down;
+                }
+            }
             _leftBound.transform.position = new Vector2(_leftBound.transform.position.x, _startY - _moveLeft);
 
             if (_startMoveRightBound)
             {
-                _tR += Time.deltaTime;
-                _moveRight += _amp * Mathf.Sin(_tR * _frequency);
-
+                if (_moveBoundRight == MoveBound.Down)
+                {
+                    _moveRight = Mathf.MoveTowards(_moveRight, _endY, _model.SpeedMove * Time.deltaTime);
+                    if (_moveRight >= _endY)
+                    {
+                        _moveBoundRight = MoveBound.Up;
+                    }
+                }
+                else
+                {
+                    _moveRight = Mathf.MoveTowards(_moveRight, 0f, _model.SpeedMove * Time.deltaTime);
+                    if (_moveRight <= 0f)
+                    {
+                        _moveBoundRight = MoveBound.Down;
+                    }
+                }
                 _rightBound.transform.position = new Vector2(_rightBound.transform.position.x, _startY - _moveRight);
+
                 return;
             }
 
@@ -128,11 +153,6 @@ namespace TouchFall.Controller
                 _timeRightBoundMove = 0f;
             }
         }
-
-        //private void MoveRightBound()
-        //{
-        //    _rightBound.transform.position = new Vector2(_rightBound.transform.position.x, _startY - Mathf.PingPong(Time.time, _diffY));
-        //}
         #endregion
     }
 }

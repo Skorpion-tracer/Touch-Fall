@@ -12,6 +12,7 @@ namespace TouchFall.Model
         [Header("Side Bounds")]
         [SerializeField] private float _distanceBetweenBounds = 3f;
         [SerializeField] private float _boundsVerticalOffset = 2.5f;
+        [SerializeField] private float _speedMove = 2.5f;
         [Header("Bottom Trigger")]
         [SerializeField] private float _bottomTriggerPositionOffset = 4f;
         [SerializeField] private float _bottomTriggerWidth = 30f;
@@ -23,6 +24,7 @@ namespace TouchFall.Model
         public float BoundsVerticalOffset => _boundsVerticalOffset;
         public float BottomTriggerPositionOffset => _bottomTriggerPositionOffset;
         public float BottomTriggerWidth => _bottomTriggerWidth;
+        public float SpeedMove => _speedMove;
         #endregion
     }
 }
