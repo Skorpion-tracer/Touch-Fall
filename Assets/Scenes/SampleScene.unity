@@ -789,7 +789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1750411051}
-  - component: {fileID: 1750411050}
+  - component: {fileID: 1750411052}
   m_Layer: 0
   m_Name: SpawnerFallModifyBounds
   m_TagString: Untagged
@@ -797,22 +797,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1750411050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750411049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3493ecc32481b4c46896a7ba0ed5009e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _count: 20
-  _objectStay: {fileID: 0}
-  _objectMove: {fileID: 0}
-  _objectDistance: {fileID: 0}
 --- !u!4 &1750411051
 Transform:
   m_ObjectHideFlags: 0
@@ -828,3 +812,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1750411052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750411049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86557491aa2a8644db851c3e5704f8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 20
+  _objectStay: {fileID: 144415727114221918, guid: 76c1e01a3b75b8a468745f321f6c39bc, type: 3}
+  _objectMove: {fileID: 144415727114221918, guid: 71b788e6ee0d94a4c9caa64a9afd9261, type: 3}
+  _objectDistance: {fileID: 144415727114221918, guid: 104eb9fadd4595c4a88f18dceef0c812, type: 3}
