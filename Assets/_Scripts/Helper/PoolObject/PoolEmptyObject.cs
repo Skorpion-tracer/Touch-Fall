@@ -1,6 +1,5 @@
 ﻿using TouchFall.View;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace TouchFall.Helper.PoolObject
 {
@@ -16,6 +15,7 @@ namespace TouchFall.Helper.PoolObject
             for (int i = 0; i < _count; i++)
             {
                 FallObjectView fallObject = Instantiate(_fallObjectPrefab);
+                fallObject.transform.SetParent(transform);
                 fallObject.gameObject.SetActive(false);
                 _pooledObjects.Add(fallObject);
             }

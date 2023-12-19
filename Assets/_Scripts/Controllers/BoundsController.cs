@@ -1,6 +1,7 @@
 ﻿using TouchFall.Controller.Interfaces;
 using TouchFall.Helper.Enums;
 using TouchFall.Model;
+using TouchFall.Singletons;
 using TouchFall.View;
 using UnityEngine;
 
@@ -33,13 +34,18 @@ namespace TouchFall.Controller
         private MoveBound _moveBoundLeft = MoveBound.Down;
         private MoveBound _moveBoundRight = MoveBound.Down;
 
+        private float _startDistanceBound;
         private float _startY;
         private float _endY;
         private float _timeRightBoundMove;
         private float _maxTimeRightBoundMove = 2.5f;
         private float _moveLeft;
         private float _moveRight;
+        private float _newPosYBottomBound;
+        private float _newScale;
+        private float _newPos;
         private bool _startMoveRightBound;
+        private bool _isDeacreaseDistanceBounds;
         #endregion
 
         #region Constructor
@@ -60,20 +66,29 @@ namespace TouchFall.Controller
             _rightView = _rightBound.Bounds.window;
             _rightBottom = _rightBound.Bounds.bottomBound;
 
+            _startDistanceBound = _model.DistnaceBetweenBounds;
+
             InitBounds(topBound);
+
+            ModifyBound.Instance.Modify += OnModifyBounds;
+        }
+
+        ~BoundsController()
+        {
+            ModifyBound.Instance.Modify -= OnModifyBounds;
         }
         #endregion
 
         #region Public Methods
         public void Update()
         {
-            switch (_currentMod)
+            if (_currentMod == ModifyBounds.Moving)
             {
-                case ModifyBounds.Stay:
-                    return;
-                case ModifyBounds.Moving:
-                    Moving();
-                    break;
+                Moving();
+            }
+            if (_isDeacreaseDistanceBounds)
+            {
+                DeacreaseDistanceBound();
             }
         }
         #endregion
@@ -85,7 +100,7 @@ namespace TouchFall.Controller
             topBound.localScale = new Vector2(_screenBounds.x * 2, topBound.localScale.y);
 
             _startY = _screenBounds.y + _model.BoundsVerticalOffset;
-            _endY = _startY - _model.DistnaceBetweenBounds; //_screenBounds.y + (_screenBounds.y - _model.BoundsVerticalOffset);
+            _endY = _startY - _model.DistnaceBetweenBounds;
 
             _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _startY);
             _leftTop.localScale = new Vector2(_leftTop.localScale.x, _screenBounds.y * 2);
@@ -151,6 +166,42 @@ namespace TouchFall.Controller
             {
                 _startMoveRightBound = true;
                 _timeRightBoundMove = 0f;
+            }
+        }
+
+        private void OnModifyBounds(ModifyBounds modify)
+        {
+            if (_currentMod == ModifyBounds.Stay && modify == ModifyBounds.Stay) return;
+
+            if (modify == ModifyBounds.Moving)
+            {
+                _currentMod = ModifyBounds.Moving;
+                return;
+            }
+
+            if (modify == ModifyBounds.IncreaseDistance)
+            {
+                _isDeacreaseDistanceBounds = true;
+                _model.DecreaseDistanceBound();
+                _newPosYBottomBound = _leftView.transform.position.y - _model.DistnaceBetweenBounds;
+                return;
+            }
+        }
+
+        private void DeacreaseDistanceBound()
+        {
+            _newScale = Mathf.MoveTowards(_leftView.transform.localScale.y, _model.DistnaceBetweenBounds, _model.SpeedMove * Time.deltaTime);
+            _newPos = Mathf.MoveTowards(_leftView.transform.position.y, _newPosYBottomBound, _model.SpeedMove * Time.deltaTime);
+
+            _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _newScale);
+            _rightView.transform.localScale = new Vector2(_rightView.transform.localScale.x, _newScale);
+
+            _leftView.transform.position = new Vector2(_leftView.transform.position.x, _newPos);
+            _rightView.transform.position = new Vector2(_rightView.transform.position.x, _newPos);
+
+            if (_newScale <= _model.DistnaceBetweenBounds && _newPos <= _newPosYBottomBound)
+            {
+                _isDeacreaseDistanceBounds = false;
             }
         }
         #endregion

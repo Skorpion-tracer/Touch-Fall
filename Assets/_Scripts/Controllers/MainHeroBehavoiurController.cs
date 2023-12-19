@@ -1,6 +1,7 @@
 ﻿using TouchFall.Controller.Interfaces;
 using TouchFall.Helper.Enums;
 using TouchFall.Model;
+using TouchFall.Singletons;
 using TouchFall.View;
 
 namespace TouchFall.Controller
@@ -23,12 +24,12 @@ namespace TouchFall.Controller
             _heroView = mainHeroView;
             _heroModel = mainHeroModel;
 
-            SingleModifyPlayer.Instance.Modify += OnModify;
+            ModifyPlayer.Instance.Modify += OnModify;
         }
 
         ~MainHeroBehavoiurController()
         {
-            SingleModifyPlayer.Instance.Modify -= OnModify;
+            ModifyPlayer.Instance.Modify -= OnModify;
         }
         #endregion
 

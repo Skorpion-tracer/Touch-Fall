@@ -46,14 +46,30 @@ namespace TouchFall.Controller
 
             _playerControl = playerControl;
 
-            _playerControl.Touch.PrimaryContact.started += ctx => OnStartTouch(ctx);
-            _playerControl.Touch.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
+            if (Application.isMobilePlatform)
+            {
+                _playerControl.Touch.PrimaryContact.started += ctx => OnStartTouch(ctx);
+                _playerControl.Touch.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
+            }
+            else
+            {
+                _playerControl.Click.PrimaryContact.started += ctx => OnStartTouch(ctx);
+                _playerControl.Click.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
+            }
         }
 
         ~MainHeroMoveController()
         {
-            _playerControl.Touch.PrimaryContact.started -= ctx => OnStartTouch(ctx);
-            _playerControl.Touch.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
+            if (Application.isMobilePlatform)
+            {
+                _playerControl.Touch.PrimaryContact.started -= ctx => OnStartTouch(ctx);
+                _playerControl.Touch.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
+            }
+            else
+            {
+                _playerControl.Click.PrimaryContact.started -= ctx => OnStartTouch(ctx);
+                _playerControl.Click.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
+            }
         }
         #endregion
 
@@ -62,22 +78,7 @@ namespace TouchFall.Controller
         {
             switch (_model.StateMainHero)
             {
-                //case StateMoveMainHero.None:
-                //case StateMoveMainHero.End: return;
-
-                //case StateMoveMainHero.Touch:
-                //    float x = _screenBounds.x - (_model.ClampMove + _view.Bounds.x);
-                //    float y = _screenBounds.y - (_model.ClampMove + _view.Bounds.y);
-                //    _view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -x, x),
-                //        Mathf.Clamp(_view.Transform.position.y, -y, y), _view.Transform.position.z);
-                //    break;
-
                 case StateMoveMainHero.EndTouch:
-                    //x = _screenBounds.x - (_model.ClampMove + _view.Bounds.x);
-                    //y = _screenBounds.y - (_model.ClampMove + _view.Bounds.y);
-                    //_view.Transform.position = new Vector3(Mathf.Clamp(_view.Transform.position.x, -x, x),
-                    //    Mathf.Clamp(_view.Transform.position.y, -y, y), _view.transform.position.z);
-
                     _downTime += Time.deltaTime;
                     if (_downTime >= _model.DownTime)
                     {
@@ -127,7 +128,10 @@ namespace TouchFall.Controller
 
         private Vector3 GetPositionTouch()
         {
-            return Utils.ScreenToWorld(_camera, _playerControl.Touch.PrimaryPosition.ReadValue<Vector2>());
+            if (Application.isMobilePlatform)
+                return Utils.ScreenToWorld(_camera, _playerControl.Touch.PrimaryPosition.ReadValue<Vector2>());
+            else
+                return Utils.ScreenToWorld(_camera, _playerControl.Click.PrimaryPosition.ReadValue<Vector2>());
         }
         #endregion
     }

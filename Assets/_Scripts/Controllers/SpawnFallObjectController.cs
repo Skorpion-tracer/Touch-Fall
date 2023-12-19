@@ -60,7 +60,7 @@ namespace TouchFall.Controller
 
         private void InstantiateModifyObject()
         {
-            FallObjectModifyView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
+            FallObjectModifyHeroView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
 
             if (fallObjectModifyView != null)
             {

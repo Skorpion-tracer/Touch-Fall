@@ -28,6 +28,7 @@ namespace TouchFall
         [Space(5f), Header("Spawner")]
         [SerializeField] private PoolEmptyObject _poolEmptyObject;
         [SerializeField] private PoolModifyObject _poolModifyObject;
+        [SerializeField] private PoolModifyBoundObject _poolModifyBoundObject;
         [SerializeField] private SpawnFallObjectModel _spawnModel;
         #endregion
 
@@ -71,8 +72,9 @@ namespace TouchFall
 
             _poolEmptyObject.InitPool();
             _poolModifyObject.InitPool();
+            _poolModifyBoundObject.InitPool();
 
-            _poolContainer = new(_poolEmptyObject, _poolModifyObject);
+            _poolContainer = new(_poolEmptyObject, _poolModifyObject, _poolModifyBoundObject);
 
             BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
             BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);

@@ -276,7 +276,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -404,12 +404,15 @@ MonoBehaviour:
   _bottomTriggerView: {fileID: 37751442}
   _boundModel:
     _topBoundPositionOffset: 3
-    _distanceBetweenBounds: 1.95
+    _distanceBetweenBounds: 4
     _boundsVerticalOffset: 3.19
+    _speedMove: 2.5
+    _coeffDecrease: 0.3
     _bottomTriggerPositionOffset: 4
     _bottomTriggerWidth: 30
   _poolEmptyObject: {fileID: 1017053813}
   _poolModifyObject: {fileID: 953991177}
+  _poolModifyBoundObject: {fileID: 0}
   _spawnModel:
     _timeSpawn: 0.5
     _offsetVerticalPositionSpawn: 1.99
@@ -606,7 +609,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490947507
 GameObject:
@@ -717,7 +720,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506766438
 GameObject:
@@ -776,4 +779,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1750411049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1750411051}
+  - component: {fileID: 1750411050}
+  m_Layer: 0
+  m_Name: SpawnerFallModifyBounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1750411050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750411049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3493ecc32481b4c46896a7ba0ed5009e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 20
+  _objectStay: {fileID: 0}
+  _objectMove: {fileID: 0}
+  _objectDistance: {fileID: 0}
+--- !u!4 &1750411051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750411049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

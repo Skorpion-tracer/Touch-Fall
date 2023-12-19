@@ -2,13 +2,13 @@ using System;
 using System.Threading;
 using TouchFall.Helper.Enums;
 
-namespace TouchFall
+namespace TouchFall.Singletons
 {
-    public sealed class SingleModifyPlayer
+    public sealed class ModifyPlayer
     {
         #region Fields
-        private static readonly Lazy<SingleModifyPlayer> _instance =
-            new(() => new SingleModifyPlayer(), LazyThreadSafetyMode.ExecutionAndPublication);
+        private static readonly Lazy<ModifyPlayer> _instance =
+            new(() => new ModifyPlayer(), LazyThreadSafetyMode.ExecutionAndPublication);
         #endregion
 
         #region Events
@@ -16,11 +16,11 @@ namespace TouchFall
         #endregion
 
         #region Constructor
-        private SingleModifyPlayer() { }
+        private ModifyPlayer() { }
         #endregion
 
         #region Properties
-        public static SingleModifyPlayer Instance => _instance.Value;
+        public static ModifyPlayer Instance => _instance.Value;
         #endregion
 
         #region Public Methods

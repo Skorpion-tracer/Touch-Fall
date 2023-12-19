@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TouchFall.Helper.Enums;
+using TouchFall.Singletons;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -27,12 +28,12 @@ namespace TouchFall.View
         #region Unity Methods
         private void OnEnable()
         {
-            SingleModifyPlayer.Instance.Modify += OnModify;
+            ModifyPlayer.Instance.Modify += OnModify;
         }
 
         private void OnDisable()
         {
-            SingleModifyPlayer.Instance.Modify -= OnModify;
+            ModifyPlayer.Instance.Modify -= OnModify;
         }
         #endregion
 

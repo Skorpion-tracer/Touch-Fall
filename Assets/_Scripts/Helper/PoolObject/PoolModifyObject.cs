@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace TouchFall.Helper.PoolObject
 {
-    public sealed class PoolModifyObject : ObjectPool<FallObjectModifyView>
+    public sealed class PoolModifyObject : ObjectPool<FallObjectModifyHeroView>
     {
         #region Fields
-        [SerializeField] private FallObjectModifyView[] _fallObjectsPrefab;
+        [SerializeField] private FallObjectModifyHeroView[] _fallObjectsPrefab;
         #endregion
 
         #region Public Methods
@@ -16,8 +16,7 @@ namespace TouchFall.Helper.PoolObject
             int j = 0;
             for (int i = 0; i < _count; i++)
             {
-
-                FallObjectModifyView fallObject = Instantiate(_fallObjectsPrefab[j]);
+                FallObjectModifyHeroView fallObject = Instantiate(_fallObjectsPrefab[j]);
                 fallObject.transform.SetParent(transform);
                 fallObject.gameObject.SetActive(false);
                 _pooledObjects.Add(fallObject);
@@ -33,9 +32,9 @@ namespace TouchFall.Helper.PoolObject
             }
         }
 
-        public override FallObjectModifyView GetPooledObject()
+        public override FallObjectModifyHeroView GetPooledObject()
         {
-            FallObjectModifyView fallObject = _pooledObjects[Random.Range(0, _pooledObjects.Count - 1)];
+            FallObjectModifyHeroView fallObject = _pooledObjects[Random.Range(0, _pooledObjects.Count - 1)];
 
             if (!fallObject.gameObject.activeInHierarchy)
             {
