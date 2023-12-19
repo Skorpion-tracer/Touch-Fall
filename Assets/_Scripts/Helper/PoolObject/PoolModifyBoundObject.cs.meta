@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/_Scripts/Controllers/BoundsController.cs.meta
+guid: 86557491aa2a8644db851c3e5704f8a8
+=======
 guid: 3493ecc32481b4c46896a7ba0ed5009e
+>>>>>>> Создана базовая логика изменения поведения границ.:Assets/_Scripts/Helper/PoolObject/PoolModifyBoundObject.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
