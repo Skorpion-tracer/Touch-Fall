@@ -11,6 +11,8 @@ namespace TouchFall.Helper.PoolObject
         [SerializeField] private FallObjectModifyBoundView _objectStay;
         [SerializeField] private FallObjectModifyBoundView _objectMove;
         [SerializeField] private FallObjectModifyBoundView _objectDistance;
+
+        private const int _countObjectType = 3;
         #endregion
 
         #region Unity Methods
@@ -26,12 +28,43 @@ namespace TouchFall.Helper.PoolObject
         #region Public Methods
         public override void InitPool()
         {
-            throw new NotImplementedException();
+            int step = _count / _countObjectType;
+            for (int i = 0; i < step; i++)
+            {
+                InitFalObject(_objectStay);
+            }
+            for (int i = 0; i < step; i++)
+            {
+                InitFalObject(_objectMove);
+            }
+            for (int i = 0; i < step; i++)
+            {
+                InitFalObject(_objectDistance);
+            }
         }
 
         public override FallObjectModifyBoundView GetPooledObject()
         {
-            throw new NotImplementedException();
+            FallObjectModifyBoundView fallObject = _pooledObjects[UnityEngine.Random.Range(0, _pooledObjects.Count - 1)];
+
+            if (!fallObject.gameObject.activeInHierarchy)
+            {
+                return fallObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region Private methods
+        private void InitFalObject(FallObjectModifyBoundView fallObjectPrototype)
+        {
+            FallObjectModifyBoundView fallObject = Instantiate(fallObjectPrototype);
+            fallObject.transform.SetParent(transform);
+            fallObject.gameObject.SetActive(false);
+            _pooledObjects.Add(fallObject);
         }
         #endregion
     }

@@ -16,7 +16,9 @@ namespace TouchFall.Controller
         private float _minPositionX;
         private float _maxPositionX;
         private float _posY;
-        private float _probability = 3;
+        private float _probabilityEmpty = 1f;
+        private float _probabilityHero = 2f;
+        private float _probabilityBound = 0.1f;
         #endregion
 
         #region Constructor
@@ -37,11 +39,9 @@ namespace TouchFall.Controller
             _time += Time.deltaTime;
             if (_time >= _model.TimeSpawn)
             {
-                float result = Random.Range(0, 5);
-                if (result >= _probability)
-                    InstantiateObject();
-                else
-                    InstantiateModifyObject();
+                InstantiateObject();
+                InstantiateModifyHeroObject();
+                InstantiateModifyBoundObject();
                 _time = 0;
             }
         }
@@ -50,21 +50,43 @@ namespace TouchFall.Controller
         #region Private Methods
         private void InstantiateObject()
         {
-            FallObjectView fallObjectView = _pool.PoolEmptyObjects.GetPooledObject();
-
-            if (fallObjectView != null)
+            float result = Random.Range(0, 5);
+            if (result >= _probabilityEmpty)
             {
-                InitFallObject(fallObjectView.gameObject);
+                FallObjectView fallObjectView = _pool.PoolEmptyObjects.GetPooledObject();
+
+                if (fallObjectView != null)
+                {
+                    InitFallObject(fallObjectView.gameObject);
+                }
+            }  
+        }
+
+        private void InstantiateModifyHeroObject()
+        {
+            float result = Random.Range(0, 5);
+            if (result >= _probabilityHero)
+            {
+                FallObjectModifyHeroView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
+
+                if (fallObjectModifyView != null)
+                {
+                    InitFallObject(fallObjectModifyView.gameObject);
+                } 
             }
         }
 
-        private void InstantiateModifyObject()
+        private void InstantiateModifyBoundObject()
         {
-            FallObjectModifyHeroView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
-
-            if (fallObjectModifyView != null)
+            float result = Random.Range(0, 10);
+            if (result >= _probabilityBound)
             {
-                InitFallObject(fallObjectModifyView.gameObject);
+                FallObjectModifyBoundView fallObjectModifyBoundView = _pool.PoolModifyBoundObjects.GetPooledObject();
+
+                if (fallObjectModifyBoundView != null)
+                {
+                    InitFallObject(fallObjectModifyBoundView.gameObject);
+                }
             }
         }
 

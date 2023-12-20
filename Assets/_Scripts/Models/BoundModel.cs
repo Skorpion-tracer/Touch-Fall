@@ -7,7 +7,7 @@ namespace TouchFall.Model
     public sealed class BoundModel
     {
         #region Fields
-        private float _minDistanceBetweenBounds = 3f;
+        private float _minDistanceBetweenBounds = 1.85f;
 
         [Header("Top Bound")]
         [SerializeField] private float _topBoundPositionOffset = 5f;
@@ -15,7 +15,7 @@ namespace TouchFall.Model
         [SerializeField] private float _distanceBetweenBounds = 3f;
         [SerializeField] private float _boundsVerticalOffset = 2.5f;
         [SerializeField] private float _speedMove = 2.5f;
-        [SerializeField] private float _coeffDecrease = 0.3f;
+        [SerializeField] private float _coeffDecrease = 0.1f;
         [Header("Bottom Trigger")]
         [SerializeField] private float _bottomTriggerPositionOffset = 4f;
         [SerializeField] private float _bottomTriggerWidth = 30f;
@@ -32,7 +32,7 @@ namespace TouchFall.Model
                 {
                     value = _minDistanceBetweenBounds;
                 }
-                _minDistanceBetweenBounds = value;
+                _distanceBetweenBounds = value;
             }
         }
         public float BoundsVerticalOffset => _boundsVerticalOffset;
