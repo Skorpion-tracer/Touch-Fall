@@ -46,14 +46,6 @@ namespace TouchFall
         #endregion
 
         #region Unity Methods
-
-        private void OnValidate()
-        {
-            _mainHeroModel ??= new MainHeroModel();
-            _boundModel ??= new BoundModel();
-            _spawnModel ??= new SpawnFallObjectModel();
-        }
-
         private void OnEnable()
         {
             _playerControl?.Enable();
@@ -66,6 +58,11 @@ namespace TouchFall
 
         private void Awake()
         {
+            _mainHeroModel ??= new MainHeroModel();
+            _boundModel ??= new BoundModel();
+            _boundModel.SetStartDistanceBound();
+            _spawnModel ??= new SpawnFallObjectModel();
+
             _playerControl = new();
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));

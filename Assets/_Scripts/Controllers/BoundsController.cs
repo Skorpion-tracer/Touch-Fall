@@ -34,7 +34,6 @@ namespace TouchFall.Controller
         private MoveBound _moveBoundLeft = MoveBound.Down;
         private MoveBound _moveBoundRight = MoveBound.Down;
 
-        private float _startDistanceBound;
         private float _startY;
         private float _endY;
         private float _timeRightBoundMove;
@@ -48,6 +47,8 @@ namespace TouchFall.Controller
         private float _posView;
         private bool _startMoveRightBound;
         private bool _isDeacreaseDistanceBounds;
+        private bool _isStayBounds;
+        private bool _isStartPosition;
         #endregion
 
         #region Constructor
@@ -68,8 +69,6 @@ namespace TouchFall.Controller
             _rightView = _rightBound.Bounds.window;
             _rightBottom = _rightBound.Bounds.bottomBound;
 
-            _startDistanceBound = _model.DistnaceBetweenBounds;
-
             InitBounds(topBound);
 
             ModifyBound.Instance.Modify += OnModifyBounds;
@@ -84,14 +83,16 @@ namespace TouchFall.Controller
         #region Public Methods
         public void Update()
         {
+            if (_isStartPosition)
+                MoveToStartPoint();
+            if (_isStayBounds)
+                DeacreaseDistanceBound(ref _isStayBounds);
+
             if (_currentMod == ModifyBounds.Moving)
-            {
                 Moving();
-            }
+
             if (_isDeacreaseDistanceBounds)
-            {
-                DeacreaseDistanceBound();
-            }
+                DeacreaseDistanceBound(ref _isDeacreaseDistanceBounds);
         }
         #endregion
 
@@ -171,27 +172,51 @@ namespace TouchFall.Controller
             }
         }
 
+        private void MoveToStartPoint()
+        {
+            //_moveLeft = Mathf.MoveTowards(_moveLeft, _startY, _model.SpeedMove * Time.deltaTime);
+            //_moveRight = Mathf.MoveTowards(_moveRight, _startY, _model.SpeedMove * Time.deltaTime);
+
+            _leftBound.transform.position = Vector2.Lerp(_leftBound.transform.position, new Vector2(_leftBound.transform.position.x, _startY), _model.SpeedMove * Time.deltaTime);
+            _rightBound.transform.position = Vector2.Lerp(_rightBound.transform.position, new Vector2(_rightBound.transform.position.x, _startY), _model.SpeedMove * Time.deltaTime);
+
+            if (_leftBound.transform.position.y >= _startY && _rightBound.transform.position.y >= _startY)
+                _isStartPosition = false;
+        }
+
         private void OnModifyBounds(ModifyBounds modify)
         {
-            if (_currentMod == ModifyBounds.Stay && modify == ModifyBounds.Stay) return;
+            //if (_isStayBounds && modify == ModifyBounds.Stay) return;
 
-            if (modify == ModifyBounds.Moving)
+            switch (modify)
             {
-                _currentMod = ModifyBounds.Moving;
-                return;
-            }
-
-            if (modify == ModifyBounds.IncreaseDistance)
-            {
-                _isDeacreaseDistanceBounds = true;
-                _model.DecreaseDistanceBound();
-                _newPosYBottomBound = (_leftTop.localPosition.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds;
-                _newPosYView = _leftTop.localPosition.y - (_leftTop.localScale.y * 0.5f) - (_model.DistnaceBetweenBounds * 0.5f);
-                return;
+                case ModifyBounds.Moving:
+                    if (_currentMod == ModifyBounds.Moving) return;
+                    _currentMod = ModifyBounds.Moving;
+                    _moveLeft = 0f;
+                    _moveRight = 0f;
+                    _timeRightBoundMove = 0f;
+                    _startMoveRightBound = false;
+                    return;
+                case ModifyBounds.IncreaseDistance:
+                    //_currentMod = ModifyBounds.IncreaseDistance;
+                    _isDeacreaseDistanceBounds = true;
+                    _model.DecreaseDistanceBound();
+                    CalculateNewPosBottomBound();
+                    return;
+                case ModifyBounds.Stay:
+                    _isStayBounds = true;
+                    _isStartPosition = true;
+                    _currentMod = ModifyBounds.Stay;
+                    //_moveLeft = _leftBound.transform.position.y;
+                    //_moveRight = _rightBound.transform.position.y;
+                    _model.ResetDistanceBound();
+                    CalculateNewPosBottomBound();
+                    return;
             }
         }
 
-        private void DeacreaseDistanceBound()
+        private void DeacreaseDistanceBound(ref bool isChangeDistance)
         {
             _newScale = Mathf.MoveTowards(_leftView.transform.localScale.y, _model.DistnaceBetweenBounds, _model.SpeedMove * Time.deltaTime);
             _newPos = Mathf.MoveTowards(_leftBottom.localPosition.y, _newPosYBottomBound, _model.SpeedMove * Time.deltaTime);
@@ -207,8 +232,14 @@ namespace TouchFall.Controller
 
             if (_newScale <= _model.DistnaceBetweenBounds && _newPos <= _newPosYBottomBound && _posView <= _newPosYView)
             {
-                _isDeacreaseDistanceBounds = false;
+                isChangeDistance = false;
             }
+        }
+
+        private void CalculateNewPosBottomBound()
+        {
+            _newPosYBottomBound = (_leftTop.localPosition.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds;
+            _newPosYView = _leftTop.localPosition.y - (_leftTop.localScale.y * 0.5f) - (_model.DistnaceBetweenBounds * 0.5f);
         }
         #endregion
     }

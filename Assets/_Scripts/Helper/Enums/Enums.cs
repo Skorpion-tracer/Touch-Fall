@@ -26,6 +26,7 @@ namespace TouchFall.Helper.Enums
 
     public enum ModifyBounds : byte
     {
+        None,
         Stay,
         IncreaseDistance,
         Moving

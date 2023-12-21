@@ -8,6 +8,7 @@ namespace TouchFall.Model
     {
         #region Fields
         private float _minDistanceBetweenBounds = 1.85f;
+        private float _startDistanceBound;
 
         [Header("Top Bound")]
         [SerializeField] private float _topBoundPositionOffset = 5f;
@@ -45,6 +46,16 @@ namespace TouchFall.Model
         public void DecreaseDistanceBound()
         {
             DistnaceBetweenBounds -= _coeffDecrease;
+        }
+
+        public void ResetDistanceBound()
+        {
+            DistnaceBetweenBounds = _startDistanceBound;
+        }
+
+        public void SetStartDistanceBound()
+        {
+            _startDistanceBound = DistnaceBetweenBounds;
         }
         #endregion
     }
