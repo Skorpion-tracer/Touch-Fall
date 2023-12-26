@@ -19,6 +19,7 @@ namespace TouchFall.View
         public void ApplyMod()
         {
             ModifyBound.Instance.ApplyModify(_modifyBounds);
+            gameObject.SetActive(false);
         }
 
         public void DropObject()

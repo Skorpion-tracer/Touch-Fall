@@ -19,6 +19,8 @@ namespace TouchFall.Controller
         private float _probabilityEmpty = 1f;
         private float _probabilityHero = 2f;
         private float _probabilityBound = 0.1f;
+        private float _probabilityEnemy = 1f;
+        private float _probabilitySave = 1f;
         #endregion
 
         #region Constructor
@@ -42,6 +44,8 @@ namespace TouchFall.Controller
                 InstantiateObject();
                 InstantiateModifyHeroObject();
                 InstantiateModifyBoundObject();
+                InstantiateEnemyObject();
+                InstantiateNeedToSaveObject();
                 _time = 0;
             }
         }
@@ -86,6 +90,34 @@ namespace TouchFall.Controller
                 if (fallObjectModifyBoundView != null)
                 {
                     InitFallObject(fallObjectModifyBoundView.gameObject);
+                }
+            }
+        }
+
+        private void InstantiateEnemyObject()
+        {
+            float result = Random.Range(0, 5);
+            if (result >= _probabilityEnemy)
+            {
+                FallObjectEnemyView fallObjectEnemyView = _pool.PoolEnemyObjects.GetPooledObject();
+
+                if (fallObjectEnemyView != null)
+                {
+                    InitFallObject(fallObjectEnemyView.gameObject);
+                }
+            }
+        }
+
+        private void InstantiateNeedToSaveObject()
+        {
+            float result = Random.Range(0, 5);
+            if (result >= _probabilitySave)
+            {
+                FallObjectNeedToSaveView fallObjectNeedToSaveView = _pool.PoolNeedToSaveObjects.GetPooledObject();
+
+                if (fallObjectNeedToSaveView != null)
+                {
+                    InitFallObject(fallObjectNeedToSaveView.gameObject);
                 }
             }
         }

@@ -123,6 +123,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &25451117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 25451119}
+  - component: {fileID: 25451118}
+  m_Layer: 0
+  m_Name: SpawnerEnemyObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &25451118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25451117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f232bf64decbc1f49bf40d6e3481ffe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 10
+  _enemyObject: {fileID: -6204068254910131701, guid: 1df77cf76d35d68488fe49384104b9f0, type: 3}
+--- !u!4 &25451119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25451117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &37751439
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +322,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -447,8 +493,10 @@ MonoBehaviour:
   _poolEmptyObject: {fileID: 1017053813}
   _poolModifyObject: {fileID: 953991177}
   _poolModifyBoundObject: {fileID: 1750411052}
+  _poolEnemyObject: {fileID: 25451118}
+  _poolNeedToSaveObject: {fileID: 1915988765}
   _spawnModel:
-    _timeSpawn: 1.77
+    _timeSpawn: 2.43
     _offsetVerticalPositionSpawn: 1.99
 --- !u!4 &600816536
 Transform:
@@ -643,7 +691,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490947507
 GameObject:
@@ -754,7 +802,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506766438
 GameObject:
@@ -862,3 +910,49 @@ MonoBehaviour:
   _objectStay: {fileID: 144415727114221918, guid: 76c1e01a3b75b8a468745f321f6c39bc, type: 3}
   _objectMove: {fileID: 144415727114221918, guid: 71b788e6ee0d94a4c9caa64a9afd9261, type: 3}
   _objectDistance: {fileID: 144415727114221918, guid: 104eb9fadd4595c4a88f18dceef0c812, type: 3}
+--- !u!1 &1915988763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915988764}
+  - component: {fileID: 1915988765}
+  m_Layer: 0
+  m_Name: SpawnerNeedToSaveObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1915988764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915988763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915988765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915988763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4baf2f82a1856a48ba99dcdf7536166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _count: 10
+  _enemyObject: {fileID: -8905673864337638776, guid: f0dc0963cd3755247848294612e0617a, type: 3}

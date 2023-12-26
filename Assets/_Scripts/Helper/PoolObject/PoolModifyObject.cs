@@ -16,10 +16,7 @@ namespace TouchFall.Helper.PoolObject
             int j = 0;
             for (int i = 0; i < _count; i++)
             {
-                FallObjectModifyHeroView fallObject = Instantiate(_fallObjectsPrefab[j]);
-                fallObject.transform.SetParent(transform);
-                fallObject.gameObject.SetActive(false);
-                _pooledObjects.Add(fallObject);
+                SetPool(_fallObjectsPrefab[j]);
 
                 if (i > 0)
                 {

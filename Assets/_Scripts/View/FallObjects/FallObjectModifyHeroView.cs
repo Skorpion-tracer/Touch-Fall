@@ -15,6 +15,7 @@ namespace TouchFall.View
         public void ApplyMod()
         {
             ModifyPlayer.Instance.ApplyModify(_modifyHero);
+            gameObject.SetActive(false);
         }
 
         public void DropObject()

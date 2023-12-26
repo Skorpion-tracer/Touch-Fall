@@ -12,7 +12,6 @@ namespace TouchFall.View
             if (collision.TryGetComponent(out IFallingObject fallingObject))
             {
                 fallingObject.ApplyMod();
-                fallingObject.DropObject();
             }
         }
         #endregion

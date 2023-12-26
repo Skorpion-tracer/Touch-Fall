@@ -29,6 +29,8 @@ namespace TouchFall
         [SerializeField] private PoolEmptyObject _poolEmptyObject;
         [SerializeField] private PoolModifyObject _poolModifyObject;
         [SerializeField] private PoolModifyBoundObject _poolModifyBoundObject;
+        [SerializeField] private PoolEnemyObject _poolEnemyObject;
+        [SerializeField] private PoolNeedToSaveObject _poolNeedToSaveObject;
         [SerializeField] private SpawnFallObjectModel _spawnModel;
         #endregion
 
@@ -39,7 +41,7 @@ namespace TouchFall
         private PlayerControl _playerControl;
         private SpawnFallObjectController _spawnController;
         private List<IUpdater> _updaters = new();
-        private List<IFixedUpdater> _fixeUpdaters = new();
+        private List<IFixedUpdater> _fixedUpdaters = new();
         private PoolContainer _poolContainer;
 
         private Vector2 _screenBounds;
@@ -70,8 +72,10 @@ namespace TouchFall
             _poolEmptyObject.InitPool();
             _poolModifyObject.InitPool();
             _poolModifyBoundObject.InitPool();
+            _poolEnemyObject.InitPool();
+            _poolNeedToSaveObject.InitPool();
 
-            _poolContainer = new(_poolEmptyObject, _poolModifyObject, _poolModifyBoundObject);
+            _poolContainer = new(_poolEmptyObject, _poolModifyObject, _poolModifyBoundObject, _poolEnemyObject, _poolNeedToSaveObject);
 
             BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
             BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
@@ -80,7 +84,7 @@ namespace TouchFall
 
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
-            _mainHero.InstantiateHeroes(_startPointHero.position); //= Instantiate(_mainHero, _startPointHero.position, Quaternion.identity);
+            _mainHero.InstantiateHeroes(_startPointHero.position);
             _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
@@ -90,8 +94,8 @@ namespace TouchFall
             _updaters.Add(_boundsController);
             _updaters.Add(_spawnController);
 
-            _fixeUpdaters.Add(_mainHeroMoveController);
-            _fixeUpdaters.Add(_mainHeroBehavoiurController);
+            _fixedUpdaters.Add(_mainHeroMoveController);
+            _fixedUpdaters.Add(_mainHeroBehavoiurController);
         }
 
         private void Update()
@@ -104,9 +108,9 @@ namespace TouchFall
 
         private void FixedUpdate()
         {
-            for (int i = 0; i < _fixeUpdaters.Count; i++)
+            for (int i = 0; i < _fixedUpdaters.Count; i++)
             {
-                _fixeUpdaters[i].FixedUpdate();
+                _fixedUpdaters[i].FixedUpdate();
             }
         }
         #endregion

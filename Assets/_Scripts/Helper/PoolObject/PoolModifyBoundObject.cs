@@ -31,15 +31,15 @@ namespace TouchFall.Helper.PoolObject
             int step = _count / _countObjectType;
             for (int i = 0; i < step; i++)
             {
-                InitFalObject(_objectStay);
+                SetPool(_objectStay);
             }
             for (int i = 0; i < step; i++)
             {
-                InitFalObject(_objectMove);
+                SetPool(_objectMove);
             }
             for (int i = 0; i < step; i++)
             {
-                InitFalObject(_objectDistance);
+                SetPool(_objectDistance);
             }
         }
 
@@ -55,16 +55,6 @@ namespace TouchFall.Helper.PoolObject
             {
                 return null;
             }
-        }
-        #endregion
-
-        #region Private methods
-        private void InitFalObject(FallObjectModifyBoundView fallObjectPrototype)
-        {
-            FallObjectModifyBoundView fallObject = Instantiate(fallObjectPrototype);
-            fallObject.transform.SetParent(transform);
-            fallObject.gameObject.SetActive(false);
-            _pooledObjects.Add(fallObject);
         }
         #endregion
     }
