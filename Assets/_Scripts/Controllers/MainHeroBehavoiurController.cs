@@ -9,13 +9,13 @@ namespace TouchFall.Controller
     public sealed class MainHeroBehavoiurController : IFixedUpdater
     {
         #region Fields
-        private MainHeroView _heroView;
-        private MainHeroModel _heroModel;
+        private readonly MainHeroView _heroView;
+        private readonly MainHeroModel _heroModel;
+        private readonly float _maxAngle = 365f;
 
         private StateBehaviourHero _stateBehaviourHero = StateBehaviourHero.None;
 
-        private float _angle;
-        private float _maxAngle = 365f;
+        private float _angle;        
         #endregion
 
         #region Constructor

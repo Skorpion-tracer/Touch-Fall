@@ -32,6 +32,9 @@ namespace TouchFall
         [SerializeField] private PoolEnemyObject _poolEnemyObject;
         [SerializeField] private PoolNeedToSaveObject _poolNeedToSaveObject;
         [SerializeField] private SpawnFallObjectModel _spawnModel;
+
+        [Space(5f), Header("GameLevel")]
+        [SerializeField] private TimerGameModel _timerGameModel;
         #endregion
 
         #region Fields
@@ -40,6 +43,7 @@ namespace TouchFall
         private BoundsController _boundsController;
         private PlayerControl _playerControl;
         private SpawnFallObjectController _spawnController;
+        private TimerGameController _timerGameController;
         private List<IUpdater> _updaters = new();
         private List<IFixedUpdater> _fixedUpdaters = new();
         private PoolContainer _poolContainer;
@@ -64,6 +68,7 @@ namespace TouchFall
             _boundModel ??= new BoundModel();
             _boundModel.SetStartDistanceBound();
             _spawnModel ??= new SpawnFallObjectModel();
+            _timerGameModel ??= new TimerGameModel();
 
             _playerControl = new();
 
@@ -89,10 +94,12 @@ namespace TouchFall
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
             _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
+            _timerGameController = new(_timerGameModel);
 
             _updaters.Add(_mainHeroMoveController);
             _updaters.Add(_boundsController);
             _updaters.Add(_spawnController);
+            _updaters.Add(_timerGameController);
 
             _fixedUpdaters.Add(_mainHeroMoveController);
             _fixedUpdaters.Add(_mainHeroBehavoiurController);

@@ -496,8 +496,10 @@ MonoBehaviour:
   _poolEnemyObject: {fileID: 25451118}
   _poolNeedToSaveObject: {fileID: 1915988765}
   _spawnModel:
-    _timeSpawn: 2.43
+    _timeSpawn: 3
     _offsetVerticalPositionSpawn: 1.99
+  _timerGameModel:
+    _timeLimit: 60
 --- !u!4 &600816536
 Transform:
   m_ObjectHideFlags: 0

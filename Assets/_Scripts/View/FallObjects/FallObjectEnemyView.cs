@@ -1,4 +1,5 @@
-﻿using TouchFall.View.Interfaces;
+﻿using TouchFall.Singletons;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -8,7 +9,8 @@ namespace TouchFall.View
         #region Public Methods
         public void ApplyMod()
         {
-            Debug.Log($"<color=Red>Враг!!! Минус Жизнь!!!</color>");
+            Debug.Log($"Враг!!!<color=Red>Минус Жизнь!!!</color>");
+            GameLevel.Instance.ApplyDamage();
             gameObject.SetActive(false);
         }
 

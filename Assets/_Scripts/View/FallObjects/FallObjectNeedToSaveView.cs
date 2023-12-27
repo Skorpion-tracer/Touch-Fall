@@ -1,4 +1,5 @@
-﻿using TouchFall.View.Interfaces;
+﻿using TouchFall.Singletons;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -9,13 +10,14 @@ namespace TouchFall.View
         #region Public Methods
         public void ApplyMod()
         {
-            Debug.Log("Объект спасён");
+            Debug.Log("<color=Green>Объект спасён</color>");
             gameObject.SetActive(false);
         }
 
         public void DropObject()
         {
             Debug.Log($"Не удалось спасти. <color=Red>Минус жизнь!!!</color>");
+            GameLevel.Instance.ApplyDamage();
             gameObject.SetActive(false);
         }
         #endregion

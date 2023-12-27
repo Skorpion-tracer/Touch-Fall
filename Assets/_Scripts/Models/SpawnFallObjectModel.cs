@@ -1,4 +1,5 @@
 ﻿using System;
+using TouchFall.Singletons;
 using UnityEngine;
 
 namespace TouchFall.Model
@@ -12,6 +13,19 @@ namespace TouchFall.Model
 
         private float _minTimeSpawn = 0.5f;
         private float _maxTimeSpawn = 3f;
+        private float _decrementTime = 0.65f;
+        #endregion
+
+        #region Constructor
+        public SpawnFallObjectModel()
+        {
+            GameLevel.Instance.ChangeLevel += OnChangeLevel;
+        }
+
+        ~SpawnFallObjectModel()
+        {
+            GameLevel.Instance.ChangeLevel -= OnChangeLevel;
+        }
         #endregion
 
         #region Properties
@@ -36,6 +50,14 @@ namespace TouchFall.Model
         }
 
         public float OffsetVerticalPositionSpawn => _offsetVerticalPositionSpawn;
+        #endregion
+
+        #region Private Methods
+        private void OnChangeLevel()
+        {
+            TimeSpawn -= _decrementTime;
+            Debug.Log("<color=Blue>Повышен уровень!</color>");
+        }
         #endregion
     }
 }

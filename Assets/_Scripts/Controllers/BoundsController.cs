@@ -174,9 +174,6 @@ namespace TouchFall.Controller
 
         private void MoveToStartPoint()
         {
-            //_moveLeft = Mathf.MoveTowards(_moveLeft, _startY, _model.SpeedMove * Time.deltaTime);
-            //_moveRight = Mathf.MoveTowards(_moveRight, _startY, _model.SpeedMove * Time.deltaTime);
-
             _leftBound.transform.position = Vector2.Lerp(_leftBound.transform.position, new Vector2(_leftBound.transform.position.x, _startY), _model.SpeedMove * Time.deltaTime);
             _rightBound.transform.position = Vector2.Lerp(_rightBound.transform.position, new Vector2(_rightBound.transform.position.x, _startY), _model.SpeedMove * Time.deltaTime);
 
@@ -186,8 +183,6 @@ namespace TouchFall.Controller
 
         private void OnModifyBounds(ModifyBounds modify)
         {
-            //if (_isStayBounds && modify == ModifyBounds.Stay) return;
-
             switch (modify)
             {
                 case ModifyBounds.Moving:
@@ -199,7 +194,6 @@ namespace TouchFall.Controller
                     _startMoveRightBound = false;
                     return;
                 case ModifyBounds.IncreaseDistance:
-                    //_currentMod = ModifyBounds.IncreaseDistance;
                     _isDeacreaseDistanceBounds = true;
                     _model.DecreaseDistanceBound();
                     CalculateNewPosBottomBound();
@@ -208,8 +202,6 @@ namespace TouchFall.Controller
                     _isStayBounds = true;
                     _isStartPosition = true;
                     _currentMod = ModifyBounds.Stay;
-                    //_moveLeft = _leftBound.transform.position.y;
-                    //_moveRight = _rightBound.transform.position.y;
                     _model.ResetDistanceBound();
                     CalculateNewPosBottomBound();
                     return;
