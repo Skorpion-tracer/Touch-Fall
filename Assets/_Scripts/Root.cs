@@ -64,45 +64,17 @@ namespace TouchFall
 
         private void Awake()
         {
-            _mainHeroModel ??= new MainHeroModel();
-            _boundModel ??= new BoundModel();
-            _boundModel.SetStartDistanceBound();
-            _spawnModel ??= new SpawnFallObjectModel();
-            _timerGameModel ??= new TimerGameModel();
+            InitModels();
 
             _playerControl = new();
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
-            _poolEmptyObject.InitPool();
-            _poolModifyObject.InitPool();
-            _poolModifyBoundObject.InitPool();
-            _poolEnemyObject.InitPool();
-            _poolNeedToSaveObject.InitPool();
+            InitPools();
 
-            _poolContainer = new(_poolEmptyObject, _poolModifyObject, _poolModifyBoundObject, _poolEnemyObject, _poolNeedToSaveObject);
+            InitControllers();
 
-            BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
-            BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
-
-            _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
-
-            _bottomTriggerView.Initialized(_boundModel, _screenBounds);
-
-            _mainHero.InstantiateHeroes(_startPointHero.position);
-            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
-            _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
-
-            _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
-            _timerGameController = new(_timerGameModel);
-
-            _updaters.Add(_mainHeroMoveController);
-            _updaters.Add(_boundsController);
-            _updaters.Add(_spawnController);
-            _updaters.Add(_timerGameController);
-
-            _fixedUpdaters.Add(_mainHeroMoveController);
-            _fixedUpdaters.Add(_mainHeroBehavoiurController);
+            InitUpdaters();
         }
 
         private void Update()
@@ -119,6 +91,54 @@ namespace TouchFall
             {
                 _fixedUpdaters[i].FixedUpdate();
             }
+        }
+
+        private void InitModels()
+        {
+            _mainHeroModel ??= new MainHeroModel();
+            _boundModel ??= new BoundModel();
+            _boundModel.SetStartDistanceBound();
+            _spawnModel ??= new SpawnFallObjectModel();
+            _timerGameModel ??= new TimerGameModel();
+        }
+
+        private void InitPools()
+        {
+            _poolEmptyObject.InitPool();
+            _poolModifyObject.InitPool();
+            _poolModifyBoundObject.InitPool();
+            _poolEnemyObject.InitPool();
+            _poolNeedToSaveObject.InitPool();
+
+            _poolContainer = new(_poolEmptyObject, _poolModifyObject, _poolModifyBoundObject, _poolEnemyObject, _poolNeedToSaveObject);
+        }
+
+        private void InitControllers()
+        {
+            BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
+            BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
+
+            _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
+
+            _bottomTriggerView.Initialized(_boundModel, _screenBounds);
+
+            _mainHero.InstantiateHeroes(_startPointHero.position);
+            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
+            _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
+
+            _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
+            _timerGameController = new(_timerGameModel);
+        }
+
+        private void InitUpdaters()
+        {
+            _updaters.Add(_mainHeroMoveController);
+            _updaters.Add(_boundsController);
+            _updaters.Add(_spawnController);
+            _updaters.Add(_timerGameController);
+
+            _fixedUpdaters.Add(_mainHeroMoveController);
+            _fixedUpdaters.Add(_mainHeroBehavoiurController);
         }
         #endregion
     }
