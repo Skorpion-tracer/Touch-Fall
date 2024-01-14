@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 namespace TouchFall.View
 {
@@ -12,6 +15,8 @@ namespace TouchFall.View
 
         private Rigidbody2D _currentBodyHero;
         private Transform _currentTransformHero;
+        TextMeshPro f;
+        TMP_Text c;
         //private Vector2 _bounds;
 
         private Dictionary<ModifyHero, HeroModifyType> _modifiersHeroes = new(6);
