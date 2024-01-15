@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using TouchFall.Controller;
 using TouchFall.Controller.Interfaces;
 using TouchFall.Helper;
+using TouchFall.Helper.Enums;
 using TouchFall.Helper.PoolObject;
 using TouchFall.Input;
 using TouchFall.Model;
+using TouchFall.Singletons;
 using TouchFall.View;
 using UnityEngine;
 
@@ -79,17 +81,23 @@ namespace TouchFall
 
         private void Update()
         {
-            for (int i = 0; i < _updaters.Count; i++)
+            if (GameLoop.Instance.GameState == GameState.GamePlay)
             {
-                _updaters[i].Update();
+                for (int i = 0; i < _updaters.Count; i++)
+                {
+                    _updaters[i].Update();
+                }
             }
         }
 
         private void FixedUpdate()
         {
-            for (int i = 0; i < _fixedUpdaters.Count; i++)
+            if (GameLoop.Instance.GameState == GameState.GamePlay)
             {
-                _fixedUpdaters[i].FixedUpdate();
+                for (int i = 0; i < _fixedUpdaters.Count; i++)
+                {
+                    _fixedUpdaters[i].FixedUpdate();
+                }
             }
         }
 

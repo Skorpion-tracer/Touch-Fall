@@ -31,4 +31,12 @@ namespace TouchFall.Helper.Enums
         IncreaseDistance,
         Moving
     }
+
+    public enum GameState : byte
+    {
+        MainMenu,
+        GamePlay,
+        Pause,
+        GameOver
+    }
 }
