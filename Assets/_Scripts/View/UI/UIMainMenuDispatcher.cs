@@ -16,15 +16,11 @@ namespace TouchFall.View.UI
         [SerializeField] private RectTransform _mainMenu;
         [SerializeField] private RectTransform _menuPause;
         [SerializeField] private RectTransform _menuGameOver;
-        [SerializeField] private RectTransform _menuSettings;
         [SerializeField] private RectTransform _menuExit;
 
         [Space(10f)]
-        [SerializeField] private Button _startGame;
-        [SerializeField] private Button _settings;
-        [SerializeField] private Button _exit;
-        [SerializeField] private Button _exitToMainMenu;
-        [SerializeField] private Button _exitConfirm;
+        [SerializeField] private Button _btnAdvirtisment;
+        [SerializeField] private RectTransform _panelPublicity;
 
         [Space(10f)]
         [SerializeField] private float _durationMovePanels = 0.4f;
@@ -33,7 +29,6 @@ namespace TouchFall.View.UI
 
         private Tween _tweenMouseEnter;
 
-        private float _widthContainer;
         private float _heighContainer;
         #endregion
 
@@ -41,26 +36,37 @@ namespace TouchFall.View.UI
         private void OnEnable()
         {
             GameLoop.Instance.PauseBegin += OnPauseBegin;
-            Debug.Log("Подписка");
+            GameLevel.Instance.GameOver += OnGameOver;
         }
 
         private void OnDisable()
         {
             GameLoop.Instance.PauseBegin -= OnPauseBegin;
+            GameLevel.Instance.GameOver -= OnGameOver;
         }
 
         private async void Start()
         {
-            _widthContainer = _mainPanel.rect.xMin;
             _heighContainer = _mainPanel.rect.yMin;
 
             _mainMenu.gameObject.SetActive(false);
             _mainMenu.anchoredPosition = new Vector2(_mainMenu.anchoredPosition.x, _heighContainer + _mainMenu.rect.yMin);
             _menuPause.anchoredPosition = new Vector2(_menuPause.anchoredPosition.x, _heighContainer + _menuPause.rect.yMin);
 
+            _menuExit.localScale = Vector3.zero;
+            _menuExit.gameObject.SetActive(false);
+
+            _menuGameOver.localScale = Vector2.zero;
+            _menuGameOver.gameObject.SetActive(false);
+
             await Task.Delay(1000);
             _mainMenu.gameObject.SetActive(true);
             _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack);
+
+            _btnAdvirtisment.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns)
+                .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
+            _panelPublicity.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns)
+                .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
         }
         #endregion
 
@@ -85,8 +91,44 @@ namespace TouchFall.View.UI
         {
             await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
-            GameLoop.Instance.Resume();
             _menuPause.gameObject.SetActive(false);
+            GameLoop.Instance.Resume();
+        }
+
+        public async void QuiteGame()
+        {
+            await _mainMenu.DOScale(0f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            _mainMenu.gameObject.SetActive(false);
+
+            _menuExit.gameObject.SetActive(true);
+            await _menuExit.DOScale(1f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+        }
+
+        public async void CancelQuit()
+        {            
+            await _menuExit.DOScale(0f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            _menuExit.gameObject.SetActive(false);
+
+            _mainMenu.gameObject.SetActive(true);
+            await _mainMenu.DOScale(1f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+        }
+
+        public async void RestartGame()
+        {
+            await _menuGameOver.DOScale(0f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            _menuGameOver.gameObject.SetActive(false);
+
+            GameLevel.Instance.NewGame();
+        }
+
+        public void Exit()
+        {
+            Application.Quit();
         }
         #endregion
 
@@ -110,8 +152,14 @@ namespace TouchFall.View.UI
                 _menuPause.gameObject.SetActive(true);
                 _menuPause.DOAnchorPosY(1f, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack);
-                Debug.Log("Пауза");
             }
+        }
+
+        private async void OnGameOver()
+        {
+            _menuGameOver.gameObject.SetActive(true);
+            await _menuGameOver.DOScale(1f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
         }
         #endregion
     }

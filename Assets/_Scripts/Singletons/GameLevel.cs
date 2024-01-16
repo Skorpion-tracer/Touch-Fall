@@ -18,6 +18,7 @@ namespace TouchFall.Singletons
         public event Action ChangeLevel;
         public event Action Damage;
         public event Action GameOver;
+        public event Action ExitMenu;
         public event Action CreateGameSession;
         public event Action<int> EarnPoints;
         #endregion

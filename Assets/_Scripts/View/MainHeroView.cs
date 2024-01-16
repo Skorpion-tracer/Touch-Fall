@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using TMPro;
 using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 
 namespace TouchFall.View
 {
@@ -15,9 +12,6 @@ namespace TouchFall.View
 
         private Rigidbody2D _currentBodyHero;
         private Transform _currentTransformHero;
-        TextMeshPro f;
-        TMP_Text c;
-        //private Vector2 _bounds;
 
         private Dictionary<ModifyHero, HeroModifyType> _modifiersHeroes = new(6);
 
@@ -27,7 +21,6 @@ namespace TouchFall.View
         #region Properties
         public Rigidbody2D Body => _currentBodyHero;
         public Transform Transform => _currentTransformHero;
-        //public Vector2 Bounds => _bounds;
         #endregion
 
         #region Unity Methods
@@ -53,11 +46,22 @@ namespace TouchFall.View
                 typeHero.gameObject.SetActive(false);
             }
             _currentModify = ModifyHero.Drop;
-            //_bounds = _modifiersHeroes[_currentModify].SpriteRenderer.sprite.bounds.size / 2;
             _currentBodyHero = _modifiersHeroes[_currentModify].Body;
-            _currentBodyHero.gameObject.SetActive(true);
             _currentTransformHero = _currentBodyHero.gameObject.transform;
-            
+        }
+
+        public void ResetPlayer(Vector2 position)
+        {
+            ModifyPlayerStart(ModifyHero.Drop);
+            _currentBodyHero.transform.position = position;
+        }
+
+        public void DeactivateAllHero()
+        {
+            foreach (KeyValuePair<ModifyHero, HeroModifyType> modifiers in _modifiersHeroes)
+            {
+                modifiers.Value.gameObject.SetActive(false);
+            }
         }
         #endregion
 
@@ -66,25 +70,21 @@ namespace TouchFall.View
         {
             if (_currentModify == modifyHero) return;
 
+            ModifyPlayerStart(modifyHero);
+        }
+
+        private void ModifyPlayerStart(ModifyHero modifyHero)
+        {
             _currentModify = modifyHero;
             Vector2 lastPos = _currentTransformHero.position;
             DeactivateAllHero();
 
             _currentBodyHero = _modifiersHeroes[modifyHero].Body;
-            //_bounds = _modifiersHeroes[modifyHero].SpriteRenderer.sprite.bounds.size / 2;
             if (_currentBodyHero != null)
             {
                 _currentBodyHero.transform.position = lastPos;
                 _currentBodyHero.gameObject.SetActive(true);
                 _currentTransformHero = _currentBodyHero.gameObject.transform;
-            }
-        }
-
-        private void DeactivateAllHero()
-        {
-            foreach (KeyValuePair<ModifyHero, HeroModifyType> modifiers in _modifiersHeroes)
-            {
-                modifiers.Value.gameObject.SetActive(false);
             }
         }
         #endregion

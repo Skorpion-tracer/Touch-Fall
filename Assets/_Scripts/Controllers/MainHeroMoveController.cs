@@ -3,8 +3,10 @@ using TouchFall.Helper;
 using TouchFall.Helper.Enums;
 using TouchFall.Input;
 using TouchFall.Model;
+using TouchFall.Singletons;
 using TouchFall.View;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace TouchFall.Controller
@@ -117,11 +119,16 @@ namespace TouchFall.Controller
         #region Private Mathods
         private void OnStartTouch(InputAction.CallbackContext ctx)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
             _model.StateMainHero = StateMoveMainHero.Touch;
         }
 
         private void EndTocuhPrimary(InputAction.CallbackContext ctx)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+
             _model.StateMainHero = StateMoveMainHero.EndTouch;
             _endPosition = GetPositionTouch();
         }

@@ -16,7 +16,7 @@ namespace TouchFall.Helper.PoolObject
             int j = 0;
             for (int i = 0; i < _count; i++)
             {
-                SetPool(_fallObjectsPrefab[j]);
+                InitIobject(_fallObjectsPrefab[j]);
 
                 if (i > 0)
                 {

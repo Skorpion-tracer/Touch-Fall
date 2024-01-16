@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using TouchFall.Input;
 using TouchFall.Singletons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,7 +59,32 @@ namespace TouchFall.View.UI
         }
         #endregion
 
+        #region Public Methods
+        public void ButtonMouseEnter()
+        {
+            _tweenMouseEnter = _pauseBtn.gameObject.transform.DOScale(_scaleBtn, _durationEnterBtn)
+                .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
+        }
+
+        public void ButtonMouseExit()
+        {
+            _tweenMouseEnter.Kill();
+            _pauseBtn.gameObject.transform.DOScale(1f, _durationEnterBtn);
+        }
+        #endregion
+
         #region Private Methods
+        private void HidePanel()
+        {
+            _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel)
+                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack);
+        }
+
+        private void ShowPanel()
+        {
+            _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
+        }
+
         private void OnDamage()
         {
 
@@ -99,31 +125,6 @@ namespace TouchFall.View.UI
         private void OnGameOver()
         {
             HidePanel();
-        }
-        #endregion
-
-        #region Public Methods
-        public void ButtonMouseEnter()
-        {
-            _tweenMouseEnter = _pauseBtn.gameObject.transform.DOScale(_scaleBtn, _durationEnterBtn)
-                .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
-        }
-
-        public void ButtonMouseExit()
-        {
-            _tweenMouseEnter.Kill();
-            _pauseBtn.gameObject.transform.DOScale(1f, _durationEnterBtn);
-        }
-
-        private void HidePanel()
-        {
-            _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel)
-                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack);
-        }
-
-        private void ShowPanel()
-        {
-            _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
         }
         #endregion
     }

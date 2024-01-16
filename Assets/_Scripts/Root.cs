@@ -8,6 +8,7 @@ using TouchFall.Input;
 using TouchFall.Model;
 using TouchFall.Singletons;
 using TouchFall.View;
+using TouchFall.View.UI;
 using UnityEngine;
 
 namespace TouchFall
@@ -37,6 +38,9 @@ namespace TouchFall
 
         [Space(5f), Header("GameLevel")]
         [SerializeField] private TimerGameModel _timerGameModel;
+
+        [Space(5f), Header("UI")]
+        [SerializeField] private UIGamePlayDispatcher _uiGame;
         #endregion
 
         #region Fields
@@ -57,11 +61,13 @@ namespace TouchFall
         private void OnEnable()
         {
             _playerControl?.Enable();
+            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
         }
 
         private void OnDisable()
         {
             _playerControl?.Disable();
+            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
         }
 
         private void Awake()
@@ -147,6 +153,12 @@ namespace TouchFall
 
             _fixedUpdaters.Add(_mainHeroMoveController);
             _fixedUpdaters.Add(_mainHeroBehavoiurController);
+        }
+
+        private void OnCreateGameSession()
+        {
+            _poolContainer.ResetObjects();
+            _mainHero.ResetPlayer(_startPointHero.position);
         }
         #endregion
     }

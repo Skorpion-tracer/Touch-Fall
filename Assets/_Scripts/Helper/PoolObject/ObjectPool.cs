@@ -19,15 +19,22 @@ namespace TouchFall.Helper.PoolObject
         public abstract T GetPooledObject();
         #endregion
 
+        #region Public Methods
+        public void ResetAllObjects()
+        {
+            for (int i = 0; i < _count; i++)
+            {
+                _pooledObjects[i].gameObject.SetActive(false);
+            }
+        }
+        #endregion
+
         #region Protected Methods
         protected void SetPool(T objectView)
         {
             for (int i = 0; i < _count; i++)
             {
-                T fallObject = Instantiate(objectView);
-                fallObject.transform.SetParent(transform);
-                fallObject.gameObject.SetActive(false);
-                _pooledObjects.Add(fallObject);
+                InitIobject(objectView);
             }
         }
 
@@ -42,6 +49,14 @@ namespace TouchFall.Helper.PoolObject
             }
 
             return null;
+        }
+
+        protected void InitIobject(T objectView)
+        {
+            T fallObject = Instantiate(objectView);
+            fallObject.transform.SetParent(transform);
+            fallObject.gameObject.SetActive(false);
+            _pooledObjects.Add(fallObject);
         }
         #endregion
     }

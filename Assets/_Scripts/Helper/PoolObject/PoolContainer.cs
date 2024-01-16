@@ -34,5 +34,16 @@ namespace TouchFall.Helper.PoolObject
         public ObjectPool<FallObjectEnemyView> PoolEnemyObjects => _poolEnemyObjects;
         public ObjectPool<FallObjectNeedToSaveView> PoolNeedToSaveObjects => _poolNeedToSaveObjects;
         #endregion
+
+        #region Public Methods
+        public void ResetObjects()
+        {
+            PoolEmptyObjects.ResetAllObjects();
+            PoolModifyObjects.ResetAllObjects();
+            PoolModifyBoundObjects.ResetAllObjects();
+            PoolEnemyObjects.ResetAllObjects();
+            PoolNeedToSaveObjects.ResetAllObjects();
+        }
+        #endregion
     }
 }

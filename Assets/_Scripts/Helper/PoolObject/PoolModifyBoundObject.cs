@@ -31,15 +31,15 @@ namespace TouchFall.Helper.PoolObject
             int step = _count / _countObjectType;
             for (int i = 0; i < step; i++)
             {
-                SetPool(_objectStay);
+                InitIobject(_objectStay);
             }
             for (int i = 0; i < step; i++)
             {
-                SetPool(_objectMove);
+                InitIobject(_objectMove);
             }
             for (int i = 0; i < step; i++)
             {
-                SetPool(_objectDistance);
+                InitIobject(_objectDistance);
             }
         }
 
