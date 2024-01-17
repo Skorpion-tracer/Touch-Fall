@@ -34,8 +34,8 @@ namespace TouchFall.Singletons
 
         public void Resume()
         {
-            GameState = GameState.GamePlay;
             NullTime(false);
+            GameState = GameState.GamePlay;
         }
 
         public void GameOver()
@@ -53,8 +53,8 @@ namespace TouchFall.Singletons
 
         private void NullTime(bool isPause)
         {
-            Time.timeScale = Time.timeScale == 1 ? 0 : 1;
             PauseBegin?.Invoke(isPause);
+            Time.timeScale = Time.timeScale == 1 ? 0 : 1;
         }
     }
 }

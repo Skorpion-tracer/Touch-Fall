@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TouchFall.Controller;
 using TouchFall.Controller.Interfaces;
 using TouchFall.Helper;
@@ -10,6 +11,10 @@ using TouchFall.Singletons;
 using TouchFall.View;
 using TouchFall.View.UI;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using DG.Tweening;
+using System.Collections;
 
 namespace TouchFall
 {
@@ -41,6 +46,7 @@ namespace TouchFall
 
         [Space(5f), Header("UI")]
         [SerializeField] private UIGamePlayDispatcher _uiGame;
+        [SerializeField] private Volume _volume;
         #endregion
 
         #region Fields
@@ -53,8 +59,10 @@ namespace TouchFall
         private List<IUpdater> _updaters = new();
         private List<IFixedUpdater> _fixedUpdaters = new();
         private PoolContainer _poolContainer;
+        private DepthOfField _blur;
 
         private Vector2 _screenBounds;
+        private float _blurValue = 100f;
         #endregion
 
         #region Unity Methods
@@ -62,12 +70,18 @@ namespace TouchFall
         {
             _playerControl?.Enable();
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
+            GameLoop.Instance.PauseBegin += OnPauseBegin;
+            GameLevel.Instance.ExitMenu += OnExitMenu;
+            GameLevel.Instance.GameOver += GameOver;
         }
 
         private void OnDisable()
         {
             _playerControl?.Disable();
             GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
+            GameLoop.Instance.PauseBegin -= OnPauseBegin;
+            GameLevel.Instance.ExitMenu -= OnExitMenu;
+            GameLevel.Instance.GameOver -= GameOver;
         }
 
         private void Awake()
@@ -83,6 +97,8 @@ namespace TouchFall
             InitControllers();
 
             InitUpdaters();
+
+            _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
         }
 
         private void Update()
@@ -133,6 +149,7 @@ namespace TouchFall
             BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
 
             _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
+            _boundsController.ActivateBounds(false);
 
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
@@ -159,6 +176,27 @@ namespace TouchFall
         {
             _poolContainer.ResetObjects();
             _mainHero.ResetPlayer(_startPointHero.position);
+            _boundsController.ActivateBounds(true);
+            _boundsController.ResetBoundsPosition();
+            _blur.focalLength.value = 0f;
+        }
+
+        private void OnExitMenu()
+        {
+            _poolContainer.ResetObjects();
+            _mainHero.HidePlayer();
+            _boundsController.ActivateBounds(false);
+            _blur.focalLength.value = _blurValue;
+        }
+
+        private void OnPauseBegin(bool pause)
+        {
+            _blur.focalLength.value = pause ? _blurValue : 0f;
+        }
+
+        private void GameOver()
+        {
+            _blur.focalLength.value = _blurValue;
         }
         #endregion
     }

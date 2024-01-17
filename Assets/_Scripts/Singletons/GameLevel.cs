@@ -81,6 +81,11 @@ namespace TouchFall.Singletons
         {
             Lifes = 1;
         }
+
+        public void ExitToMainMenu()
+        {
+            ExitMenu?.Invoke();
+        }
         #endregion
     }
 }

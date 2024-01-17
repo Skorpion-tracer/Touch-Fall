@@ -28,6 +28,7 @@ namespace TouchFall.View.UI
         [SerializeField] private float _scaleBtn = 1.2f;
 
         private Tween _tweenMouseEnter;
+        private RectTransform _activePanel;
 
         private float _heighContainer;
         #endregion
@@ -49,19 +50,7 @@ namespace TouchFall.View.UI
         {
             _heighContainer = _mainPanel.rect.yMin;
 
-            _mainMenu.gameObject.SetActive(false);
-            _mainMenu.anchoredPosition = new Vector2(_mainMenu.anchoredPosition.x, _heighContainer + _mainMenu.rect.yMin);
-            _menuPause.anchoredPosition = new Vector2(_menuPause.anchoredPosition.x, _heighContainer + _menuPause.rect.yMin);
-
-            _menuExit.localScale = Vector3.zero;
-            _menuExit.gameObject.SetActive(false);
-
-            _menuGameOver.localScale = Vector2.zero;
-            _menuGameOver.gameObject.SetActive(false);
-
-            await Task.Delay(1000);
-            _mainMenu.gameObject.SetActive(true);
-            _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack);
+            await ResetPanels();
 
             _btnAdvirtisment.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns)
                 .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
@@ -73,7 +62,8 @@ namespace TouchFall.View.UI
         #region Public Methods
         public async void StartGame()
         {
-            await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels)
+                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
             GameLevel.Instance.NewGame();
         }
 
@@ -89,10 +79,20 @@ namespace TouchFall.View.UI
 
         public async void ResumeGame()
         {
+            GameLoop.Instance.Resume();
             await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
             _menuPause.gameObject.SetActive(false);
-            GameLoop.Instance.Resume();
+        }
+
+        public async void ExitToMainMenu()
+        {
+            GameLevel.Instance.ExitToMainMenu();
+            await _activePanel.DOScale(0f, _durationMovePanels)
+                    .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            _activePanel.gameObject.SetActive(false);
+
+            await ResetPanels();
         }
 
         public async void QuiteGame()
@@ -152,14 +152,34 @@ namespace TouchFall.View.UI
                 _menuPause.gameObject.SetActive(true);
                 _menuPause.DOAnchorPosY(1f, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack);
+                _activePanel = _menuPause;
             }
         }
 
         private async void OnGameOver()
         {
+            _activePanel = _menuGameOver;
             _menuGameOver.gameObject.SetActive(true);
             await _menuGameOver.DOScale(1f, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+        }
+
+        private async Task ResetPanels()
+        {
+            _mainMenu.gameObject.SetActive(false);
+            _mainMenu.anchoredPosition = new Vector2(_mainMenu.anchoredPosition.x, _heighContainer + _mainMenu.rect.yMin);
+            _menuPause.localScale = Vector3.one;
+            _menuPause.anchoredPosition = new Vector2(_menuPause.anchoredPosition.x, _heighContainer + _menuPause.rect.yMin);
+
+            _menuExit.localScale = Vector3.zero;
+            _menuExit.gameObject.SetActive(false);
+
+            _menuGameOver.localScale = Vector2.zero;
+            _menuGameOver.gameObject.SetActive(false);
+
+            _mainMenu.gameObject.SetActive(true);
+            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels)
+                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion(); ;
         }
         #endregion
     }

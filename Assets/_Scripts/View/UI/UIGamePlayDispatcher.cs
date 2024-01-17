@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using System.Linq;
+using TouchFall.Helper.Enums;
 using TouchFall.Input;
 using TouchFall.Singletons;
 using UnityEngine;
@@ -10,19 +12,29 @@ namespace TouchFall.View.UI
     public sealed class UIGamePlayDispatcher : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private List<Image> _lifes;
+        [SerializeField] private List<RectTransform> _lifes;
         [SerializeField] private Button _pauseBtn;
         [SerializeField] private Button _resumeBtn;
 
         [SerializeField] private float _durationEnterBtn = 0.3f;
         [SerializeField] private float _scaleBtn = 1.2f;
 
-        [SerializeField] private float _durationHidePanel = 0.4f; 
+        [SerializeField] private float _durationHidePanel = 0.4f;
+
+        [Space(10f)]
+        [SerializeField] private float _durationShakeLife = 1.2f; 
+        [SerializeField] private float _strengthShakeLife = 1f; 
+        [SerializeField] private int _vibratoShakeLife = 5; 
+        [SerializeField] private float _randomnessShakeLife = 90f; 
+        [SerializeField] private bool _fadeShakeLife = true; 
+        [SerializeField] private Vector3 _punchShakeLife = Vector3.zero; 
 
         private RectTransform _gameInformationPanel;
         private Tween _tweenMouseEnter;
+        private List<Tween> _tweensLifes = new(3);
 
         private float _heightPanel;
+        private int _indexLife = 0;
         #endregion
 
         #region Unity Methods
@@ -87,7 +99,10 @@ namespace TouchFall.View.UI
 
         private void OnDamage()
         {
-
+            _tweensLifes[0].Kill();
+            _tweensLifes.RemoveAt(0);
+            _lifes[_indexLife].gameObject.SetActive(false);
+            _indexLife++;
         }
 
         private void OnEarnPoints(int points)
@@ -97,22 +112,14 @@ namespace TouchFall.View.UI
 
         private void OnCreateGameSession()
         {
-            ShowPanel();
+            ShowLifes();
+            ShowPanel();            
         }
 
         private void Pause()
         {
             GameLoop.Instance.Pause();
-            //TODO заблюрить главный экран
-            //TODO отобразить меню паузы
             HidePanel();
-        }
-
-        private void Resume()
-        {
-            //TODO скрыть меню паузы
-            //TODO разблюрить экран
-            ShowPanel();
         }
 
         private void OnPauseBegin(bool pause)
@@ -124,7 +131,31 @@ namespace TouchFall.View.UI
 
         private void OnGameOver()
         {
+            for (int i = 0; i < _tweensLifes.Count; i++)
+            {
+                _tweensLifes[i].Kill();
+            }
+            for (int i = 0; i < _lifes.Count; i++)
+            {
+                _lifes[i].gameObject.SetActive(false);
+            }
             HidePanel();
+        }
+
+        private void ShowLifes()
+        {
+            _tweensLifes.Clear();
+            for (int i = 0; i < _lifes.Count; i++)
+            {
+                Tween tween = _lifes[i].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
+                _tweensLifes.Add(tween);
+            }
+            for (int i = 0; i < _lifes.Count; i++)
+            {
+                _lifes[i].localScale = Vector3.one;
+                _lifes[i].gameObject.SetActive(true);
+            }
+            _indexLife = 0;
         }
         #endregion
     }

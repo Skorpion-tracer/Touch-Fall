@@ -20,11 +20,13 @@ namespace TouchFall.Model
         public SpawnFallObjectModel()
         {
             GameLevel.Instance.ChangeLevel += OnChangeLevel;
+            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
         }
 
         ~SpawnFallObjectModel()
         {
             GameLevel.Instance.ChangeLevel -= OnChangeLevel;
+            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
         }
         #endregion
 
@@ -57,6 +59,11 @@ namespace TouchFall.Model
         {
             TimeSpawn -= _decrementTime;
             Debug.Log("<color=Blue>Повышен уровень!</color>");
+        }
+
+        private void OnCreateGameSession()
+        {
+            TimeSpawn = _maxTimeSpawn;
         }
         #endregion
     }

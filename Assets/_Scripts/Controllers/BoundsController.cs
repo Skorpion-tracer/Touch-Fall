@@ -94,6 +94,21 @@ namespace TouchFall.Controller
             if (_isDeacreaseDistanceBounds)
                 DeacreaseDistanceBound(ref _isDeacreaseDistanceBounds);
         }
+
+        public void ActivateBounds(bool isActivate)
+        {
+            _leftBound.gameObject.SetActive(isActivate);
+            _rightBound.gameObject.SetActive(isActivate);
+        }
+
+        public void ResetBoundsPosition()
+        {
+            _model.ResetDistanceBound();
+            _isStayBounds = true;
+            _isStartPosition = true;
+            _currentMod = ModifyBounds.Stay;
+            StartValuesBounds();
+        }
         #endregion
 
         #region Private Methods
@@ -102,22 +117,7 @@ namespace TouchFall.Controller
             topBound.position = new Vector2(0, _screenBounds.y + _model.TopBoundPositionOffset);
             topBound.localScale = new Vector2(_screenBounds.x * 2, topBound.localScale.y);
 
-            _startY = _screenBounds.y + _model.BoundsVerticalOffset;
-            _endY = _startY - _model.DistnaceBetweenBounds;
-
-            _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _startY);
-            _leftTop.localScale = new Vector2(_leftTop.localScale.x, _screenBounds.y * 2);
-            _leftBottom.localScale = new Vector2(_leftBottom.localScale.x, _screenBounds.y * 2);
-            _leftBottom.localPosition = new Vector2(_leftBottom.localPosition.x, (_leftTop.localPosition.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds);
-            _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _model.DistnaceBetweenBounds);
-            _leftView.transform.localPosition = new Vector2(_leftView.transform.localPosition.x, _leftTop.localPosition.y - (_leftTop.localScale.y * 0.5f) - (_leftView.transform.localScale.y * 0.5f));
-
-            _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _startY);
-            _rightTop.localScale = new Vector2(_rightTop.localScale.x, _screenBounds.y * 2);
-            _rightBottom.localScale = new Vector2(_rightBottom.localScale.x, _screenBounds.y * 2);
-            _rightBottom.position = new Vector2(_rightBottom.position.x, (_rightTop.position.y - _rightTop.localScale.y) - _model.DistnaceBetweenBounds);
-            _rightView.transform.localScale = new Vector2(_rightView.transform.localScale.x, _model.DistnaceBetweenBounds);
-            _rightView.transform.position = new Vector2(_rightView.transform.position.x, _rightTop.position.y - (_rightTop.localScale.y * 0.5f) - (_rightView.transform.localScale.y * 0.5f));
+            StartValuesBounds();
         }
 
         private void Moving()
@@ -232,6 +232,26 @@ namespace TouchFall.Controller
         {
             _newPosYBottomBound = (_leftTop.localPosition.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds;
             _newPosYView = _leftTop.localPosition.y - (_leftTop.localScale.y * 0.5f) - (_model.DistnaceBetweenBounds * 0.5f);
+        }
+
+        private void StartValuesBounds()
+        {
+            _startY = _screenBounds.y + _model.BoundsVerticalOffset;
+            _endY = _startY - _model.DistnaceBetweenBounds;
+
+            _leftBound.transform.position = new Vector2(-_screenBounds.x - (_leftBound.transform.localScale.x * 0.5f), _startY);
+            _leftTop.localScale = new Vector2(_leftTop.localScale.x, _screenBounds.y * 2);
+            _leftBottom.localScale = new Vector2(_leftBottom.localScale.x, _screenBounds.y * 2);
+            _leftBottom.localPosition = new Vector2(_leftBottom.localPosition.x, (_leftTop.localPosition.y - _leftTop.localScale.y) - _model.DistnaceBetweenBounds);
+            _leftView.transform.localScale = new Vector2(_leftView.transform.localScale.x, _model.DistnaceBetweenBounds);
+            _leftView.transform.localPosition = new Vector2(_leftView.transform.localPosition.x, _leftTop.localPosition.y - (_leftTop.localScale.y * 0.5f) - (_leftView.transform.localScale.y * 0.5f));
+
+            _rightBound.transform.position = new Vector2(_screenBounds.x + (_rightBound.transform.localScale.x * 0.5f), _startY);
+            _rightTop.localScale = new Vector2(_rightTop.localScale.x, _screenBounds.y * 2);
+            _rightBottom.localScale = new Vector2(_rightBottom.localScale.x, _screenBounds.y * 2);
+            _rightBottom.position = new Vector2(_rightBottom.position.x, (_rightTop.position.y - _rightTop.localScale.y) - _model.DistnaceBetweenBounds);
+            _rightView.transform.localScale = new Vector2(_rightView.transform.localScale.x, _model.DistnaceBetweenBounds);
+            _rightView.transform.position = new Vector2(_rightView.transform.position.x, _rightTop.position.y - (_rightTop.localScale.y * 0.5f) - (_rightView.transform.localScale.y * 0.5f));
         }
         #endregion
     }

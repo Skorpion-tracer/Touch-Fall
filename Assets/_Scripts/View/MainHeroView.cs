@@ -50,6 +50,11 @@ namespace TouchFall.View
             _currentTransformHero = _currentBodyHero.gameObject.transform;
         }
 
+        public void HidePlayer()
+        {
+            _modifiersHeroes[_currentModify].gameObject.SetActive(false);
+        }
+
         public void ResetPlayer(Vector2 position)
         {
             ModifyPlayerStart(ModifyHero.Drop);
