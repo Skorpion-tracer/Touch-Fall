@@ -94,6 +94,15 @@ namespace TouchFall.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""b4e71b8a-65b3-4c0e-b57c-840fcc966dfa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -116,6 +125,17 @@ namespace TouchFall.Input
                     ""processors"": """",
                     ""groups"": ""MouseScheme"",
                     ""action"": ""PrimaryPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9eeda58a-c670-4e7f-8a24-da98ac343d2f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseScheme"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -143,6 +163,7 @@ namespace TouchFall.Input
             m_Click = asset.FindActionMap("Click", throwIfNotFound: true);
             m_Click_PrimaryContact = m_Click.FindAction("PrimaryContact", throwIfNotFound: true);
             m_Click_PrimaryPosition = m_Click.FindAction("PrimaryPosition", throwIfNotFound: true);
+            m_Click_Pause = m_Click.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -245,12 +266,14 @@ namespace TouchFall.Input
         private IClickActions m_ClickActionsCallbackInterface;
         private readonly InputAction m_Click_PrimaryContact;
         private readonly InputAction m_Click_PrimaryPosition;
+        private readonly InputAction m_Click_Pause;
         public struct ClickActions
         {
             private @PlayerControl m_Wrapper;
             public ClickActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
             public InputAction @PrimaryContact => m_Wrapper.m_Click_PrimaryContact;
             public InputAction @PrimaryPosition => m_Wrapper.m_Click_PrimaryPosition;
+            public InputAction @Pause => m_Wrapper.m_Click_Pause;
             public InputActionMap Get() { return m_Wrapper.m_Click; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -266,6 +289,9 @@ namespace TouchFall.Input
                     @PrimaryPosition.started -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
                     @PrimaryPosition.performed -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
                     @PrimaryPosition.canceled -= m_Wrapper.m_ClickActionsCallbackInterface.OnPrimaryPosition;
+                    @Pause.started -= m_Wrapper.m_ClickActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_ClickActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_ClickActionsCallbackInterface.OnPause;
                 }
                 m_Wrapper.m_ClickActionsCallbackInterface = instance;
                 if (instance != null)
@@ -276,6 +302,9 @@ namespace TouchFall.Input
                     @PrimaryPosition.started += instance.OnPrimaryPosition;
                     @PrimaryPosition.performed += instance.OnPrimaryPosition;
                     @PrimaryPosition.canceled += instance.OnPrimaryPosition;
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
                 }
             }
         }
@@ -307,6 +336,7 @@ namespace TouchFall.Input
         {
             void OnPrimaryContact(InputAction.CallbackContext context);
             void OnPrimaryPosition(InputAction.CallbackContext context);
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }

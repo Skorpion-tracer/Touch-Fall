@@ -44,6 +44,15 @@ namespace TouchFall.Helper.PoolObject
             PoolEnemyObjects.ResetAllObjects();
             PoolNeedToSaveObjects.ResetAllObjects();
         }
+
+        public void PauseAllObjects(bool isPause)
+        {
+            PoolEmptyObjects.Pause(isPause);
+            PoolModifyObjects.Pause(isPause);
+            PoolModifyBoundObjects.Pause(isPause);
+            PoolEnemyObjects.Pause(isPause);
+            PoolNeedToSaveObjects.Pause(isPause);
+        }
         #endregion
     }
 }

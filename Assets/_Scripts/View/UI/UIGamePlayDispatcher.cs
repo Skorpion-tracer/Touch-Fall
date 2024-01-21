@@ -1,8 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
-using System.Linq;
-using TouchFall.Helper.Enums;
-using TouchFall.Input;
+using TMPro;
 using TouchFall.Singletons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,15 +20,15 @@ namespace TouchFall.View.UI
         [SerializeField] private float _durationHidePanel = 0.4f;
 
         [Space(10f)]
-        [SerializeField] private float _durationShakeLife = 1.2f; 
-        [SerializeField] private float _strengthShakeLife = 1f; 
-        [SerializeField] private int _vibratoShakeLife = 5; 
-        [SerializeField] private float _randomnessShakeLife = 90f; 
-        [SerializeField] private bool _fadeShakeLife = true; 
-        [SerializeField] private Vector3 _punchShakeLife = Vector3.zero; 
+        [SerializeField] private float _durationShakeLife = 1.2f;
+        [SerializeField] private Vector3 _punchShakeLife = Vector3.zero;
+
+        [Space(10f)]
+        [SerializeField] private TextMeshProUGUI _pointsText;
 
         private RectTransform _gameInformationPanel;
         private Tween _tweenMouseEnter;
+        private Tween _tweenPause;
         private List<Tween> _tweensLifes = new(3);
 
         private float _heightPanel;
@@ -38,13 +36,11 @@ namespace TouchFall.View.UI
         #endregion
 
         #region Unity Methods
-        private void OnValidate()
+        private void Awake()
         {
-            _gameInformationPanel ??= GetComponent<RectTransform>();
-        }
+            _pointsText.text = "0";
 
-        private void Start()
-        {
+            _gameInformationPanel ??= GetComponent<RectTransform>();
             _heightPanel = _gameInformationPanel.rect.yMin;
 
             _gameInformationPanel.anchoredPosition = new Vector2(_gameInformationPanel.anchoredPosition.x, _heightPanel * -1);
@@ -74,8 +70,7 @@ namespace TouchFall.View.UI
         #region Public Methods
         public void ButtonMouseEnter()
         {
-            _tweenMouseEnter = _pauseBtn.gameObject.transform.DOScale(_scaleBtn, _durationEnterBtn)
-                .SetUpdate(UpdateType.Normal, true).SetLoops(-1, LoopType.Yoyo);
+            _tweenMouseEnter = _pauseBtn.gameObject.transform.DOScale(_scaleBtn, _durationEnterBtn).SetLoops(-1, LoopType.Yoyo);
         }
 
         public void ButtonMouseExit()
@@ -88,45 +83,51 @@ namespace TouchFall.View.UI
         #region Private Methods
         private void HidePanel()
         {
-            _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel)
-                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack);
+            _tweenPause = _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel).SetEase(Ease.InBack);
         }
 
         private void ShowPanel()
         {
+            _tweenPause?.Kill();
             _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
         }
 
-        private void OnDamage()
+        private async void OnDamage()
         {
             _tweensLifes[0].Kill();
             _tweensLifes.RemoveAt(0);
+            await _lifes[_indexLife].DOScale(0f, _durationShakeLife).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _lifes[_indexLife].gameObject.SetActive(false);
             _indexLife++;
         }
 
         private void OnEarnPoints(int points)
         {
-
+            _pointsText.text = points.ToString();
         }
 
         private void OnCreateGameSession()
         {
+            _pointsText.text = "0";
             ShowLifes();
-            ShowPanel();            
+            ShowPanel();
         }
 
         private void Pause()
         {
             GameLoop.Instance.Pause();
-            HidePanel();
         }
 
         private void OnPauseBegin(bool pause)
         {
-            if (pause) return;
-
-            ShowPanel();
+            if (pause)
+            {
+                HidePanel();
+            }
+            else
+            {
+                ShowPanel();
+            }
         }
 
         private void OnGameOver()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -16,6 +17,8 @@ namespace TouchFall.View
         private Dictionary<ModifyHero, HeroModifyType> _modifiersHeroes = new(6);
 
         private ModifyHero _currentModify;
+        private Vector2 _lastVelocity;
+        private float _lastAngularVelocity;
         #endregion
 
         #region Properties
@@ -27,11 +30,13 @@ namespace TouchFall.View
         private void OnEnable()
         {
             ModifyPlayer.Instance.Modify += OnModify;
+            GameLoop.Instance.PauseBegin += Pause;
         }
 
         private void OnDisable()
         {
             ModifyPlayer.Instance.Modify -= OnModify;
+            GameLoop.Instance.PauseBegin -= Pause;
         }
         #endregion
 
@@ -90,6 +95,24 @@ namespace TouchFall.View
                 _currentBodyHero.transform.position = lastPos;
                 _currentBodyHero.gameObject.SetActive(true);
                 _currentTransformHero = _currentBodyHero.gameObject.transform;
+            }
+        }
+
+        private void Pause(bool isPause)
+        {
+            if (isPause)
+            {
+                _lastVelocity = _currentBodyHero.velocity;
+                _lastAngularVelocity = _currentBodyHero.angularVelocity;
+                _currentBodyHero.velocity = Vector2.zero;
+                _currentBodyHero.angularVelocity = 0f;
+                _currentBodyHero.isKinematic = isPause;
+            }
+            else
+            {
+                _currentBodyHero.isKinematic = isPause;
+                _currentBodyHero.velocity = _lastVelocity;
+                _currentBodyHero.angularVelocity = _lastAngularVelocity;
             }
         }
         #endregion

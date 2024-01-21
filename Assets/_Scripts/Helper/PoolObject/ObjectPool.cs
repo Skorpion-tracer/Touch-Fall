@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using TouchFall.View;
-using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.Helper.PoolObject
 {
-    public abstract class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IFallingObject
+    public abstract class ObjectPool<T> : MonoBehaviour where T : BaseFallObjectView
     {
         #region Fields
         [SerializeField] protected int _count = 20;
 
-        protected List<T> _pooledObjects = new();        
+        protected List<T> _pooledObjects = new();
         #endregion
 
         #region Public Methods
@@ -25,6 +24,14 @@ namespace TouchFall.Helper.PoolObject
             for (int i = 0; i < _count; i++)
             {
                 _pooledObjects[i].gameObject.SetActive(false);
+            }
+        }
+
+        public void Pause(bool isSleep)
+        {
+            for (int i = 0; i < _pooledObjects.Count; i++)
+            {
+                _pooledObjects[i].Pause(isSleep);
             }
         }
         #endregion

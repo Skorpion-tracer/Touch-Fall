@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Threading.Tasks;
 using TouchFall.Singletons;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace TouchFall.View.UI
 {
@@ -46,7 +45,7 @@ namespace TouchFall.View.UI
             GameLevel.Instance.GameOver -= OnGameOver;
         }
 
-        private async void Start()
+        private async void Awake()
         {
             _heighContainer = _mainPanel.rect.yMin;
 
@@ -79,15 +78,17 @@ namespace TouchFall.View.UI
 
         public async void ResumeGame()
         {
-            GameLoop.Instance.Resume();
             await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
             _menuPause.gameObject.SetActive(false);
+
+            GameLoop.Instance.Resume();
         }
 
         public async void ExitToMainMenu()
         {
             GameLevel.Instance.ExitToMainMenu();
+
             await _activePanel.DOScale(0f, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _activePanel.gameObject.SetActive(false);
@@ -107,7 +108,7 @@ namespace TouchFall.View.UI
         }
 
         public async void CancelQuit()
-        {            
+        {
             await _menuExit.DOScale(0f, _durationMovePanels)
                     .SetUpdate(UpdateType.Normal, true).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _menuExit.gameObject.SetActive(false);
@@ -179,7 +180,7 @@ namespace TouchFall.View.UI
 
             _mainMenu.gameObject.SetActive(true);
             await _mainMenu.DOAnchorPosY(1f, _durationMovePanels)
-                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion(); ;
+                .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();
         }
         #endregion
     }

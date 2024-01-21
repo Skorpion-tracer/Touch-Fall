@@ -13,8 +13,6 @@ using TouchFall.View.UI;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using DG.Tweening;
-using System.Collections;
 
 namespace TouchFall
 {
@@ -24,7 +22,7 @@ namespace TouchFall
         [Header("Hero")]
         [SerializeField] private Transform _startPointHero;
         [SerializeField] private MainHeroView _mainHero;
-        [SerializeField] private MainHeroModel _mainHeroModel;        
+        [SerializeField] private MainHeroModel _mainHeroModel;
 
         [Space(5f), Header("Bounds")]
         [SerializeField] private Transform _postionTopBound;
@@ -89,6 +87,7 @@ namespace TouchFall
             InitModels();
 
             _playerControl = new();
+            _playerControl.Click.Pause.started += OnStarted;
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
@@ -99,6 +98,11 @@ namespace TouchFall
             InitUpdaters();
 
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
+        }
+
+        private void OnDestroy()
+        {
+            _playerControl.Click.Pause.started -= OnStarted;
         }
 
         private void Update()
@@ -154,7 +158,7 @@ namespace TouchFall
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
             _mainHero.InstantiateHeroes(_startPointHero.position);
-            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
+            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
             _spawnController = new(_spawnModel, _poolContainer, _screenBounds);
@@ -174,11 +178,14 @@ namespace TouchFall
 
         private void OnCreateGameSession()
         {
-            _poolContainer.ResetObjects();
+            _poolContainer.PauseAllObjects(false);
+            _poolContainer.ResetObjects();            
             _mainHero.ResetPlayer(_startPointHero.position);
             _boundsController.ActivateBounds(true);
             _boundsController.ResetBoundsPosition();
+            _timerGameModel.Reset();
             _blur.focalLength.value = 0f;
+            GameLevel.Instance.ResetPoints();
         }
 
         private void OnExitMenu()
@@ -192,11 +199,19 @@ namespace TouchFall
         private void OnPauseBegin(bool pause)
         {
             _blur.focalLength.value = pause ? _blurValue : 0f;
+            _poolContainer.PauseAllObjects(pause);
+        }
+
+        private void OnStarted(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (GameLoop.Instance.GameState == GameState.GamePlay)
+                GameLoop.Instance.Pause();
         }
 
         private void GameOver()
         {
             _blur.focalLength.value = _blurValue;
+            _poolContainer.PauseAllObjects(true);
         }
         #endregion
     }

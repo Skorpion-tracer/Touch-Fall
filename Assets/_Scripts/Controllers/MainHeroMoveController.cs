@@ -23,7 +23,6 @@ namespace TouchFall.Controller
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
-        private Vector2 _screenBounds;
 
         private float _downTime = 0f;
         #endregion
@@ -35,12 +34,11 @@ namespace TouchFall.Controller
         /// <param name="mainHeroView">—сылка на view геро€</param>
         /// <param name="mainHeroModel">—сылка на модель геро€</param>
         /// <param name="startPosition">—сылка на стартовую позицию геро€</param>
-        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition, Vector2 screenBounds)
+        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
         {
             _view = mainHeroView;
             _model = mainHeroModel;
             _startPosition = startPosition;
-            _screenBounds = screenBounds;
 
             //_heroTransform = _view.transform;
 
@@ -119,18 +117,24 @@ namespace TouchFall.Controller
         #region Private Mathods
         private void OnStartTouch(InputAction.CallbackContext ctx)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-            _model.StateMainHero = StateMoveMainHero.Touch;
+            if (GameLoop.Instance.GameState == GameState.GamePlay)
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+                _model.StateMainHero = StateMoveMainHero.Touch;
+            }
         }
 
         private void EndTocuhPrimary(InputAction.CallbackContext ctx)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
+            if (GameLoop.Instance.GameState == GameState.GamePlay)
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
 
-            _model.StateMainHero = StateMoveMainHero.EndTouch;
-            _endPosition = GetPositionTouch();
+                _model.StateMainHero = StateMoveMainHero.EndTouch;
+                _endPosition = GetPositionTouch();
+            }
         }
 
         private Vector3 GetPositionTouch()

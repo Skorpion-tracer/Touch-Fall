@@ -3,17 +3,23 @@ using UnityEngine;
 
 namespace TouchFall.View
 {
-    [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
-    public sealed class FallObjectView : MonoBehaviour, IFallingObject
+    public sealed class FallObjectView : BaseFallObjectView, IScore
     {
+        #region Fields
+        [SerializeField] private int _score;
+        #endregion
+
+        #region Properties
+        public int Score => _score;
+        #endregion
+
         #region Public Methods
-        public void ApplyMod()
+        public override void ApplyMod()
         {
-            Debug.Log("Применить модификатор");
             gameObject.SetActive(false);
         }
 
-        public void DropObject()
+        public override void DropObject()
         {
             gameObject.SetActive(false);
         }

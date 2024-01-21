@@ -12,6 +12,7 @@ namespace TouchFall.Singletons
         private const int _maxLife = 3;
         private const int _minLife = 0;
         private int _countLife = 3;
+        private int _points;
         #endregion
 
         #region Events
@@ -74,7 +75,13 @@ namespace TouchFall.Singletons
 
         public void ChargePoints(int points)
         {
-            EarnPoints?.Invoke(points);
+            _points += points;
+            EarnPoints?.Invoke(_points);
+        }
+
+        public void ResetPoints()
+        {
+            _points = 0;
         }
 
         public void SetExtraLife()

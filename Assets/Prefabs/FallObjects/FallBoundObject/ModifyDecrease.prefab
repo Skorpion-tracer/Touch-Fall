@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1058704974769555172}
   - component: {fileID: 561268411639976363}
   - component: {fileID: 144415727114221918}
+  - component: {fileID: 5941695902919676377}
   m_Layer: 7
   m_Name: ModifyDecrease
   m_TagString: Untagged
@@ -150,3 +151,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modifyBounds: 2
+  _score: 50
+  _body: {fileID: 1058704974769555172}
+--- !u!114 &5941695902919676377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058704974769555169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000451cca0577043ad979d17f31
+  m_ShapePath:
+  - {x: -0.5, y: -0.28866667, z: 0}
+  - {x: 0.000038146973, y: 0.57872653, z: 0}
+  - {x: 0.5, y: -0.28866667, z: 0}
+  m_ShapePathHash: 798828279
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -662118

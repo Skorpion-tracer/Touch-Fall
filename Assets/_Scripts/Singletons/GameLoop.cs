@@ -28,33 +28,25 @@ namespace TouchFall.Singletons
         #region Public Methods
         public void Pause()
         {
+            PauseBegin?.Invoke(true);
             GameState = GameState.Pause;
-            NullTime(true);
         }
 
         public void Resume()
         {
-            NullTime(false);
+            PauseBegin?.Invoke(false);
             GameState = GameState.GamePlay;
         }
 
         public void GameOver()
         {
             GameState = GameState.GameOver;
-            Time.timeScale = 0;
         }
 
         public void NewGame()
         {
             GameState = GameState.GamePlay;
-            Time.timeScale = 1;
         }
         #endregion
-
-        private void NullTime(bool isPause)
-        {
-            PauseBegin?.Invoke(isPause);
-            Time.timeScale = Time.timeScale == 1 ? 0 : 1;
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using TouchFall.View.Interfaces;
+﻿using TouchFall.Singletons;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -12,6 +13,10 @@ namespace TouchFall.View
             if (collision.TryGetComponent(out IFallingObject fallingObject))
             {
                 fallingObject.ApplyMod();
+            }
+            if (collision.TryGetComponent(out IScore score))
+            {
+                GameLevel.Instance.ChargePoints(score.Score);
             }
         }
         #endregion
