@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -650509193
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 3989953a70e0e9040ab1e8732f736ed6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -175,7 +175,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modifyHero: 2
   _body: {fileID: 3006437280981034673}
-  _spriteRenderer: {fileID: 4655096108579932289}
 --- !u!1 &7659082704515413945
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +223,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.471
-  m_Color: {r: 0.82151365, g: 0.9716981, b: 0.6554379, a: 1}
+  m_Color: {r: 1, g: 0.36101076, b: 0.3160377, a: 1}
   m_Intensity: 2.2
   m_LightVolumeIntensity: 0
   m_LightVolumeIntensityEnabled: 0

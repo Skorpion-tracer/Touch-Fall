@@ -31,12 +31,14 @@ namespace TouchFall.View
         {
             ModifyPlayer.Instance.Modify += OnModify;
             GameLoop.Instance.PauseBegin += Pause;
+            GameLevel.Instance.GameOver += OnGameOver;
         }
 
         private void OnDisable()
         {
             ModifyPlayer.Instance.Modify -= OnModify;
             GameLoop.Instance.PauseBegin -= Pause;
+            GameLevel.Instance.GameOver -= OnGameOver;
         }
         #endregion
 
@@ -114,6 +116,11 @@ namespace TouchFall.View
                 _currentBodyHero.velocity = _lastVelocity;
                 _currentBodyHero.angularVelocity = _lastAngularVelocity;
             }
+        }
+
+        private void OnGameOver()
+        {
+            Pause(true);
         }
         #endregion
     }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TouchFall.Controller;
@@ -58,6 +59,7 @@ namespace TouchFall
         private List<IFixedUpdater> _fixedUpdaters = new();
         private PoolContainer _poolContainer;
         private DepthOfField _blur;
+        private Coroutine _blurCouroutine;
 
         private Vector2 _screenBounds;
         private float _blurValue = 100f;
@@ -87,7 +89,7 @@ namespace TouchFall
             InitModels();
 
             _playerControl = new();
-            _playerControl.Click.Pause.started += OnStarted;
+            _playerControl.Click.Pause.started += OnKeyboardEsc;
 
             _screenBounds = Utils.ScreenToWorld(Camera.main, new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
 
@@ -98,15 +100,17 @@ namespace TouchFall
             InitUpdaters();
 
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
+            _blur.focalLength.value = _blurValue;
         }
 
         private void OnDestroy()
         {
-            _playerControl.Click.Pause.started -= OnStarted;
+            _playerControl.Click.Pause.started -= OnKeyboardEsc;
         }
 
         private void Update()
         {
+            if (GameLoop.Instance.GameState == GameState.MainMenu) return;
             if (GameLoop.Instance.GameState == GameState.GamePlay)
             {
                 for (int i = 0; i < _updaters.Count; i++)
@@ -114,6 +118,7 @@ namespace TouchFall
                     _updaters[i].Update();
                 }
             }
+            BlurControl();
         }
 
         private void FixedUpdate()
@@ -184,8 +189,7 @@ namespace TouchFall
             _boundsController.ActivateBounds(true);
             _boundsController.ResetBoundsPosition();
             _timerGameModel.Reset();
-            _blur.focalLength.value = 0f;
-            GameLevel.Instance.ResetPoints();
+            GameLevel.Instance.Reset();
         }
 
         private void OnExitMenu()
@@ -198,11 +202,10 @@ namespace TouchFall
 
         private void OnPauseBegin(bool pause)
         {
-            _blur.focalLength.value = pause ? _blurValue : 0f;
             _poolContainer.PauseAllObjects(pause);
         }
 
-        private void OnStarted(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        private void OnKeyboardEsc(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (GameLoop.Instance.GameState == GameState.GamePlay)
                 GameLoop.Instance.Pause();
@@ -210,8 +213,30 @@ namespace TouchFall
 
         private void GameOver()
         {
-            _blur.focalLength.value = _blurValue;
             _poolContainer.PauseAllObjects(true);
+
+        }
+
+        private void BlurControl()
+        {
+            if (GameLoop.Instance.GameState is GameState.Pause or GameState.GameOver)
+            {
+                if (_blur.focalLength.value <= _blurValue)
+                {
+                    _blur.focalLength.value = Mathf.MoveTowards(_blur.focalLength.value, _blurValue, 0.8f);
+                    return;
+                }
+                _blur.focalLength.value = _blurValue;
+            }
+            else
+            {
+                if (_blur.focalLength.value >= 1f)
+                {
+                    _blur.focalLength.value = Mathf.MoveTowards(_blur.focalLength.value, 1f, 5f);
+                    return;
+                }
+                _blur.focalLength.value = 1f;
+            }
         }
         #endregion
     }

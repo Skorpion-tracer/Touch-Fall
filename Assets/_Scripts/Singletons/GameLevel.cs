@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using UnityEngine;
 
 namespace TouchFall.Singletons
 {
@@ -11,8 +12,11 @@ namespace TouchFall.Singletons
 
         private const int _maxLife = 3;
         private const int _minLife = 0;
+        private const int _countLevelIncrement = 2;
         private int _countLife = 3;
+        private int _countStartLife = 3;
         private int _points;
+        private int _level;
         #endregion
 
         #region Events
@@ -21,6 +25,7 @@ namespace TouchFall.Singletons
         public event Action GameOver;
         public event Action ExitMenu;
         public event Action CreateGameSession;
+        public event Action SetNewLife;
         public event Action<int> EarnPoints;
         #endregion
 
@@ -52,7 +57,7 @@ namespace TouchFall.Singletons
         #region Public Methods
         public void NewGame()
         {
-            Lifes = 3;
+            Lifes = _countStartLife;
             CreateGameSession?.Invoke();
             GameLoop.Instance.NewGame();
         }
@@ -60,6 +65,14 @@ namespace TouchFall.Singletons
         public void IncrementLevel()
         {
             ChangeLevel?.Invoke();
+            _level++;
+            if (_level >= _countLevelIncrement && Lifes < 2)
+            {
+                _level = 0;
+                Lifes++;
+                SetNewLife?.Invoke();
+                Debug.Log("<color=Green>Повышен уровень</color>");
+            }
         }
 
         public void ApplyDamage()
@@ -79,7 +92,7 @@ namespace TouchFall.Singletons
             EarnPoints?.Invoke(_points);
         }
 
-        public void ResetPoints()
+        public void Reset()
         {
             _points = 0;
         }

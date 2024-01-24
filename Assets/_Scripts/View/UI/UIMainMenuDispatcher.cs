@@ -178,6 +178,7 @@ namespace TouchFall.View.UI
             _menuGameOver.localScale = Vector2.zero;
             _menuGameOver.gameObject.SetActive(false);
 
+            await Task.Delay(1000);
             _mainMenu.gameObject.SetActive(true);
             await _mainMenu.DOAnchorPosY(1f, _durationMovePanels)
                 .SetUpdate(UpdateType.Normal, true).SetEase(Ease.OutBack).AsyncWaitForCompletion();

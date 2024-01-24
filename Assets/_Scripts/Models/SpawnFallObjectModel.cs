@@ -58,7 +58,6 @@ namespace TouchFall.Model
         private void OnChangeLevel()
         {
             TimeSpawn -= _decrementTime;
-            Debug.Log("<color=Blue>Повышен уровень!</color>");
         }
 
         private void OnCreateGameSession()

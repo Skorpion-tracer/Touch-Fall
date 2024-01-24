@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using TouchFall.Helper.Enums;
-using UnityEngine;
 
 namespace TouchFall.Singletons
 {

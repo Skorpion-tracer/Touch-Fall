@@ -12,7 +12,6 @@ namespace TouchFall.View.UI
         #region Fields
         [SerializeField] private List<RectTransform> _lifes;
         [SerializeField] private Button _pauseBtn;
-        [SerializeField] private Button _resumeBtn;
 
         [SerializeField] private float _durationEnterBtn = 0.3f;
         [SerializeField] private float _scaleBtn = 1.2f;
@@ -44,6 +43,8 @@ namespace TouchFall.View.UI
             _heightPanel = _gameInformationPanel.rect.yMin;
 
             _gameInformationPanel.anchoredPosition = new Vector2(_gameInformationPanel.anchoredPosition.x, _heightPanel * -1);
+
+            _pointsText.gameObject.transform.DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
         }
 
         private void OnEnable()
@@ -53,6 +54,7 @@ namespace TouchFall.View.UI
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
             GameLevel.Instance.GameOver += OnGameOver;
             GameLoop.Instance.PauseBegin += OnPauseBegin;
+            GameLevel.Instance.SetNewLife += SetNewLife;
             _pauseBtn.onClick.AddListener(Pause);
         }
 
@@ -92,8 +94,20 @@ namespace TouchFall.View.UI
             _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
         }
 
+        private async void SetNewLife()
+        {
+            if (_indexLife == 0) return;
+            int index = _indexLife - 1;
+            _lifes[index].gameObject.SetActive(true);
+            await _lifes[index].DOScale(1f, _durationShakeLife).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+            Tween tween = _lifes[index].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
+            _tweensLifes.Add(tween);
+            _indexLife--;
+        }
+
         private async void OnDamage()
         {
+            if (_tweensLifes.Count == 0) return;
             _tweensLifes[0].Kill();
             _tweensLifes.RemoveAt(0);
             await _lifes[_indexLife].DOScale(0f, _durationShakeLife).SetEase(Ease.InBack).AsyncWaitForCompletion();
