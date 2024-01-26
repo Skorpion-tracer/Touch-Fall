@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using UnityEngine;
 
 namespace TouchFall.Singletons
 {
@@ -17,6 +16,7 @@ namespace TouchFall.Singletons
         private int _countStartLife = 3;
         private int _points;
         private int _level;
+        private int _countExtraLife;
         #endregion
 
         #region Events
@@ -26,6 +26,7 @@ namespace TouchFall.Singletons
         public event Action ExitMenu;
         public event Action CreateGameSession;
         public event Action SetNewLife;
+        public event Action ExtraLife;
         public event Action<int> EarnPoints;
         #endregion
 
@@ -52,12 +53,15 @@ namespace TouchFall.Singletons
                 _countLife = value;
             }
         }
+
+        public bool IsCanUseExtraLife => _countExtraLife <= 2;
         #endregion
 
         #region Public Methods
         public void NewGame()
         {
             Lifes = _countStartLife;
+            _countExtraLife = 0;
             CreateGameSession?.Invoke();
             GameLoop.Instance.NewGame();
         }
@@ -71,7 +75,6 @@ namespace TouchFall.Singletons
                 _level = 0;
                 Lifes++;
                 SetNewLife?.Invoke();
-                Debug.Log("<color=Green>Повышен уровень</color>");
             }
         }
 
@@ -79,7 +82,7 @@ namespace TouchFall.Singletons
         {
             Lifes--;
             Damage?.Invoke();
-            if (Lifes == 0)
+            if (Lifes <= 0)
             {
                 GameOver?.Invoke();
                 GameLoop.Instance.GameOver();
@@ -100,6 +103,8 @@ namespace TouchFall.Singletons
         public void SetExtraLife()
         {
             Lifes = 1;
+            ExtraLife?.Invoke();
+            _countExtraLife++;
         }
 
         public void ExitToMainMenu()

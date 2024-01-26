@@ -189,6 +189,7 @@ namespace TouchFall
             _boundsController.ActivateBounds(true);
             _boundsController.ResetBoundsPosition();
             _timerGameModel.Reset();
+            _timerGameController.Reset();
             GameLevel.Instance.Reset();
         }
 

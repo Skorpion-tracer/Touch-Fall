@@ -7,11 +7,11 @@ namespace TouchFall.Model
     public sealed class TimerGameModel
     {
         #region Fields
-        [SerializeField, Range(60, 120)] private float _timeLimit = 60f;
+        [SerializeField, Range(50, 120)] private float _timeLimit = 50f;
 
         private float _timeIncrement = 30f;
-        private float _timeStart = 60f;
-        private float _timeMin = 60f;
+        private float _timeStart = 50f;
+        private float _timeMin = 50f;
         private float _timeMax = 120f;
         #endregion
 

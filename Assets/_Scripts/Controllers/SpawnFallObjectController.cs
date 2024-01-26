@@ -1,6 +1,7 @@
 ﻿using TouchFall.Controller.Interfaces;
 using TouchFall.Helper.PoolObject;
 using TouchFall.Model;
+using TouchFall.Singletons;
 using TouchFall.View;
 using UnityEngine;
 
@@ -16,11 +17,6 @@ namespace TouchFall.Controller
         private float _minPositionX;
         private float _maxPositionX;
         private float _posY;
-        private float _probabilityEmpty = 1f;
-        private float _probabilityHero = 2f;
-        private float _probabilityBound = 0.1f;
-        private float _probabilityEnemy = 1f;
-        private float _probabilitySave = 1f;
         #endregion
 
         #region Constructor
@@ -32,6 +28,12 @@ namespace TouchFall.Controller
             _minPositionX = -screenBounds.x;
             _maxPositionX = screenBounds.x;
             _posY = screenBounds.y + _model.OffsetVerticalPositionSpawn;
+            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
+        }
+
+        ~SpawnFallObjectController()
+        {
+            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
         }
         #endregion
 
@@ -52,10 +54,15 @@ namespace TouchFall.Controller
         #endregion
 
         #region Private Methods
+        private void OnCreateGameSession()
+        {
+            _time = 0;
+        }
+
         private void InstantiateObject()
         {
-            float result = Random.Range(0, 5);
-            if (result >= _probabilityEmpty)
+            int result = Random.Range(1, _model.MaxRangeDropEmpty);
+            if (result >= _model.ProbabilityEmpty)
             {
                 FallObjectView fallObjectView = _pool.PoolEmptyObjects.GetPooledObject();
 
@@ -68,8 +75,8 @@ namespace TouchFall.Controller
 
         private void InstantiateModifyHeroObject()
         {
-            float result = Random.Range(0, 5);
-            if (result >= _probabilityHero)
+            int result = Random.Range(1, _model.MaxRangeDropHero);
+            if (result >= _model.ProbabilityHero)
             {
                 FallObjectModifyHeroView fallObjectModifyView = _pool.PoolModifyObjects.GetPooledObject();
 
@@ -82,8 +89,8 @@ namespace TouchFall.Controller
 
         private void InstantiateModifyBoundObject()
         {
-            float result = Random.Range(0, 10);
-            if (result >= _probabilityBound)
+            int result = Random.Range(1, _model.MaxRangeDropBound);
+            if (result >= _model.ProbabilityBound)
             {
                 FallObjectModifyBoundView fallObjectModifyBoundView = _pool.PoolModifyBoundObjects.GetPooledObject();
 
@@ -96,8 +103,8 @@ namespace TouchFall.Controller
 
         private void InstantiateEnemyObject()
         {
-            float result = Random.Range(0, 5);
-            if (result >= _probabilityEnemy)
+            int result = Random.Range(1, _model.MaxRangeDropEnemy);
+            if (result >= _model.ProbabilityEnemy)
             {
                 FallObjectEnemyView fallObjectEnemyView = _pool.PoolEnemyObjects.GetPooledObject();
 
@@ -110,8 +117,8 @@ namespace TouchFall.Controller
 
         private void InstantiateNeedToSaveObject()
         {
-            float result = Random.Range(0, 5);
-            if (result >= _probabilitySave)
+            int result = Random.Range(1, _model.MaxRangeDropSave);
+            if (result >= _model.ProbabilitySave)
             {
                 FallObjectNeedToSaveView fallObjectNeedToSaveView = _pool.PoolNeedToSaveObjects.GetPooledObject();
 

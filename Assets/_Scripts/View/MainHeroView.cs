@@ -94,6 +94,7 @@ namespace TouchFall.View
             _currentBodyHero = _modifiersHeroes[modifyHero].Body;
             if (_currentBodyHero != null)
             {
+                _currentBodyHero.angularVelocity = 0f;
                 _currentBodyHero.transform.position = lastPos;
                 _currentBodyHero.gameObject.SetActive(true);
                 _currentTransformHero = _currentBodyHero.gameObject.transform;

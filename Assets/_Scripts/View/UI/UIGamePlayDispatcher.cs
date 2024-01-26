@@ -54,7 +54,8 @@ namespace TouchFall.View.UI
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
             GameLevel.Instance.GameOver += OnGameOver;
             GameLoop.Instance.PauseBegin += OnPauseBegin;
-            GameLevel.Instance.SetNewLife += SetNewLife;
+            GameLevel.Instance.SetNewLife += OnNewLife;
+            GameLevel.Instance.ExtraLife += OnExtraLife;
             _pauseBtn.onClick.AddListener(Pause);
         }
 
@@ -65,6 +66,8 @@ namespace TouchFall.View.UI
             GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
             GameLevel.Instance.GameOver -= OnGameOver;
             GameLoop.Instance.PauseBegin -= OnPauseBegin;
+            GameLevel.Instance.SetNewLife -= OnNewLife;
+            GameLevel.Instance.ExtraLife -= OnExtraLife;
             _pauseBtn.onClick.RemoveListener(Pause);
         }
         #endregion
@@ -94,7 +97,7 @@ namespace TouchFall.View.UI
             _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
         }
 
-        private async void SetNewLife()
+        private async void OnNewLife()
         {
             if (_indexLife == 0) return;
             int index = _indexLife - 1;
@@ -103,6 +106,14 @@ namespace TouchFall.View.UI
             Tween tween = _lifes[index].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
             _tweensLifes.Add(tween);
             _indexLife--;
+        }
+
+        private async void OnExtraLife()
+        {
+            _lifes[0].gameObject.SetActive(true);
+            await _lifes[0].DOScale(1f, _durationShakeLife).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+            Tween tween = _lifes[0].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
+            _tweensLifes.Add(tween);
         }
 
         private async void OnDamage()
