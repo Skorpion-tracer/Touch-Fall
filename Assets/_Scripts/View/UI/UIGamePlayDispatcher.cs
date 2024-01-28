@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using TouchFall.Singletons;
 using UnityEngine;
@@ -99,21 +100,12 @@ namespace TouchFall.View.UI
 
         private async void OnNewLife()
         {
-            if (_indexLife == 0) return;
-            int index = _indexLife - 1;
-            _lifes[index].gameObject.SetActive(true);
-            await _lifes[index].DOScale(1f, _durationShakeLife).SetEase(Ease.OutBack).AsyncWaitForCompletion();
-            Tween tween = _lifes[index].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
-            _tweensLifes.Add(tween);
-            _indexLife--;
+            await AddLife(1);
         }
 
         private async void OnExtraLife()
         {
-            _lifes[0].gameObject.SetActive(true);
-            await _lifes[0].DOScale(1f, _durationShakeLife).SetEase(Ease.OutBack).AsyncWaitForCompletion();
-            Tween tween = _lifes[0].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
-            _tweensLifes.Add(tween);
+            await AddLife(2);
         }
 
         private async void OnDamage()
@@ -124,6 +116,7 @@ namespace TouchFall.View.UI
             await _lifes[_indexLife].DOScale(0f, _durationShakeLife).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _lifes[_indexLife].gameObject.SetActive(false);
             _indexLife++;
+            if (_indexLife > _lifes.Count) _indexLife = _lifes.Count;
         }
 
         private void OnEarnPoints(int points)
@@ -182,6 +175,15 @@ namespace TouchFall.View.UI
                 _lifes[i].gameObject.SetActive(true);
             }
             _indexLife = 0;
+        }
+
+        private async Task AddLife(int index)
+        {
+            _lifes[index].gameObject.SetActive(true);
+            await _lifes[index].DOScale(1f, _durationShakeLife).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+            Tween tween = _lifes[index].DOScale(_punchShakeLife, _durationShakeLife).SetEase(Ease.InOutFlash).SetLoops(-1, LoopType.Yoyo);
+            _tweensLifes.Add(tween);
+            _indexLife = index;
         }
         #endregion
     }

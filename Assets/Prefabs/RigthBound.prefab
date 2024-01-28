@@ -5107,7 +5107,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.9812, y: 1.8887}
+  m_SizeDelta: {x: 0.9363, y: 0.6619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6823628149936067430
 MeshRenderer:
@@ -5180,7 +5180,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 55551
+    rgba: 4278245631
   m_fontColor: {r: 1, g: 0.8489028, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5205,8 +5205,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5234,7 +5234,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -0.45164347, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.015020609, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -5473,7 +5473,11 @@ MonoBehaviour:
   _durationFadeScore: 2
   _durationShowScore: 0.2
   _durationMoveScore: 2
-  _positionMoveScore: {x: 1, y: 3, z: 0}
+  _minXScore: 1.2
+  _maxXScore: 1
+  _minYScore: -0.8
+  _maxYScore: 3
+  _easing: 27
 --- !u!1 &9196690771457633560
 GameObject:
   m_ObjectHideFlags: 0
@@ -5540,30 +5544,24 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 1
   m_ShadowVolumeIntensity: 1
   m_Vertices:
-  - position: {x: 0.285, y: 1.41, z: 0}
+  - position: {x: 0.33336738, y: 1.432245, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.7355372, y: 0.9462025}
-  - position: {x: 0.305, y: -1.41, z: 0}
+    uv: {x: 0.7755102, y: 0.953125}
+  - position: {x: 0.16051021, y: -1.432245, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.75206614, y: 0.05379747}
-  - position: {x: 0.305, y: 1.4, z: 0}
+    uv: {x: 0.63265306, y: 0.046875}
+  - position: {x: 0.33336738, y: -1.432245, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.75206614, y: 0.943038}
-  - position: {x: 0.235, y: 1.41, z: 0}
+    uv: {x: 0.7755102, y: 0.046875}
+  - position: {x: 0.13581634, y: 1.432245, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.6942149, y: 0.9462025}
-  - position: {x: 0.205, y: -1.41, z: 0}
+    uv: {x: 0.6122449, y: 0.953125}
+  - position: {x: -0.605, y: 1.0371429, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.6694215, y: 0.05379747}
-  - position: {x: -0.555, y: 0.85, z: 0}
+    uv: {x: 0.00000003892548, y: 0.828125}
+  - position: {x: -0.605, y: -1.1606123, z: 0}
     color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0.041322313, y: 0.76898736}
-  - position: {x: -0.605, y: 0.79, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0, y: 0.75}
-  - position: {x: -0.605, y: -0.84, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 1}
-    uv: {x: 0, y: 0.23417722}
+    uv: {x: 0.00000003892548, y: 0.1328125}
   - position: {x: 0, y: 0, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
@@ -5582,22 +5580,10 @@ MonoBehaviour:
   - position: {x: 0, y: 0, z: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     uv: {x: 0, y: 0}
-  - position: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    uv: {x: 0, y: 0}
-  - position: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    uv: {x: 0, y: 0}
-  - position: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    uv: {x: 0, y: 0}
-  - position: {x: 0, y: 0, z: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
-    uv: {x: 0, y: 0}
-  m_Triangles: 070006000400050004000600030004000500010004000300000001000300020001000000
+  m_Triangles: 050004000100030001000400000001000300020001000000
   m_LocalBounds:
-    m_Center: {x: -0.15, y: 0, z: 0}
-    m_Extent: {x: 0.455, y: 1.41, z: 0}
+    m_Center: {x: -0.13581632, y: 0, z: 0}
+    m_Extent: {x: 0.46918368, y: 1.432245, z: 0}
   m_PointLightInnerAngle: 180
   m_PointLightOuterAngle: 180
   m_PointLightInnerRadius: 0

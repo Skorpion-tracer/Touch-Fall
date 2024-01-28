@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TouchFall.Controller;
@@ -59,7 +58,6 @@ namespace TouchFall
         private List<IFixedUpdater> _fixedUpdaters = new();
         private PoolContainer _poolContainer;
         private DepthOfField _blur;
-        private Coroutine _blurCouroutine;
 
         private Vector2 _screenBounds;
         private float _blurValue = 100f;
@@ -71,6 +69,7 @@ namespace TouchFall
             _playerControl?.Enable();
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
             GameLoop.Instance.PauseBegin += OnPauseBegin;
+            GameLoop.Instance.ResumeCommercial += OnResumeCommercial;
             GameLevel.Instance.ExitMenu += OnExitMenu;
             GameLevel.Instance.GameOver += GameOver;
         }
@@ -80,6 +79,7 @@ namespace TouchFall
             _playerControl?.Disable();
             GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
             GameLoop.Instance.PauseBegin -= OnPauseBegin;
+            GameLoop.Instance.ResumeCommercial -= OnResumeCommercial;
             GameLevel.Instance.ExitMenu -= OnExitMenu;
             GameLevel.Instance.GameOver -= GameOver;
         }
@@ -87,6 +87,10 @@ namespace TouchFall
         private void Awake()
         {
             InitModels();
+
+            GameData.Instance.Load();
+
+            Debug.Log(GameData.Instance.SaveData.scores);
 
             _playerControl = new();
             _playerControl.Click.Pause.started += OnKeyboardEsc;
@@ -184,7 +188,7 @@ namespace TouchFall
         private void OnCreateGameSession()
         {
             _poolContainer.PauseAllObjects(false);
-            _poolContainer.ResetObjects();            
+            _poolContainer.ResetObjects();
             _mainHero.ResetPlayer(_startPointHero.position);
             _boundsController.ActivateBounds(true);
             _boundsController.ResetBoundsPosition();
@@ -199,11 +203,18 @@ namespace TouchFall
             _mainHero.HidePlayer();
             _boundsController.ActivateBounds(false);
             _blur.focalLength.value = _blurValue;
+            if (GameLevel.Instance.Points > GameData.Instance.SaveData.scores)
+                GameData.Instance.Save(GameLevel.Instance.Points);
         }
 
         private void OnPauseBegin(bool pause)
         {
             _poolContainer.PauseAllObjects(pause);
+        }
+
+        private void OnResumeCommercial()
+        {
+            _poolContainer.ResetSaveAndEnemy();
         }
 
         private void OnKeyboardEsc(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -215,7 +226,6 @@ namespace TouchFall
         private void GameOver()
         {
             _poolContainer.PauseAllObjects(true);
-
         }
 
         private void BlurControl()

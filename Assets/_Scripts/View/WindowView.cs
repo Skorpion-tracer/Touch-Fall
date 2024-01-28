@@ -22,7 +22,11 @@ namespace TouchFall.View
         [SerializeField] private float _durationFadeScore = 1f;
         [SerializeField] private float _durationShowScore = 1f;
         [SerializeField] private float _durationMoveScore = 1f;
-        [SerializeField] private Vector3 _positionMoveScore = Vector3.one;
+        [SerializeField] private float _minXScore = 0.8f;
+        [SerializeField] private float _maxXScore = 1f;
+        [SerializeField] private float _minYScore = -0.8f;
+        [SerializeField] private float _maxYScore = 3f;
+        [SerializeField] private Ease _easing = Ease.OutSine;
 
         private Stack<TextMeshPro> _texts = new(15);
 
@@ -98,11 +102,13 @@ namespace TouchFall.View
             if (_texts.Count <= 0) return;
             TextMeshPro text = _texts.Pop();
 
-            text.gameObject.transform.localScale = Vector3.one;
+            //text.gameObject.transform.localScale = Vector3.one;
             text.gameObject.transform.position = new Vector2(transform.position.x, transform.position.y);
             text.text = score.ToString();
             text.gameObject.SetActive(true);
-            text.gameObject.transform.DOMove(_positionMoveScore, _durationMoveScore);
+            text.gameObject.transform.DOMove(
+                new Vector2(Random.Range(_minXScore, _maxXScore), 
+                Random.Range(_minYScore, _maxYScore)), _durationMoveScore).SetEase(_easing);
             text.DOFade(0, _durationFadeScore).OnComplete(() =>
             {
                 text.gameObject.SetActive(false);

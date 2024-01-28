@@ -89,7 +89,7 @@ namespace TouchFall.View.UI
             _menuGameOver.gameObject.SetActive(false);
 
             GameLevel.Instance.SetExtraLife();
-            GameLoop.Instance.Resume();
+            GameLoop.Instance.ResumeAdvertisment();
         }
 
         public async void ExitToMainMenu()

@@ -45,6 +45,12 @@ namespace TouchFall.Helper.PoolObject
             PoolNeedToSaveObjects.ResetAllObjects();
         }
 
+        public void ResetSaveAndEnemy()
+        {
+            PoolEnemyObjects.ResetAllObjects();
+            PoolNeedToSaveObjects.ResetAllObjects();
+        }
+
         public void PauseAllObjects(bool isPause)
         {
             PoolEmptyObjects.Pause(isPause);

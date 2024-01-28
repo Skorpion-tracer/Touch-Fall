@@ -13,6 +13,7 @@ namespace TouchFall.Singletons
 
         #region Events
         public event Action<bool> PauseBegin;
+        public event Action ResumeCommercial;
         #endregion
 
         #region Constructor
@@ -35,6 +36,12 @@ namespace TouchFall.Singletons
         {
             PauseBegin?.Invoke(false);
             GameState = GameState.GamePlay;
+        }
+
+        public void ResumeAdvertisment()
+        {
+            ResumeCommercial?.Invoke();
+            Resume();
         }
 
         public void GameOver()

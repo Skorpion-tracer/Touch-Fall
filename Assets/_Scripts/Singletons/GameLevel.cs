@@ -55,6 +55,7 @@ namespace TouchFall.Singletons
         }
 
         public bool IsCanUseExtraLife => _countExtraLife <= 2;
+        public int Points => _points;
         #endregion
 
         #region Public Methods
