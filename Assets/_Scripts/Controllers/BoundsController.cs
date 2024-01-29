@@ -199,6 +199,7 @@ namespace TouchFall.Controller
                     CalculateNewPosBottomBound();
                     return;
                 case ModifyBounds.Stay:
+                    if (_currentMod == ModifyBounds.Stay) return;
                     _isStayBounds = true;
                     _isStartPosition = true;
                     _currentMod = ModifyBounds.Stay;

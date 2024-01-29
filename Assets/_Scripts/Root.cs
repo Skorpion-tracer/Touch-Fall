@@ -44,6 +44,7 @@ namespace TouchFall
 
         [Space(5f), Header("UI")]
         [SerializeField] private UIGamePlayDispatcher _uiGame;
+        [SerializeField] private UIMainMenuDispatcher _uiMenu;
         [SerializeField] private Volume _volume;
         #endregion
 
@@ -90,7 +91,8 @@ namespace TouchFall
 
             GameData.Instance.Load();
 
-            Debug.Log(GameData.Instance.SaveData.scores);
+            _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
+            _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
 
             _playerControl = new();
             _playerControl.Click.Pause.started += OnKeyboardEsc;
@@ -204,7 +206,11 @@ namespace TouchFall
             _boundsController.ActivateBounds(false);
             _blur.focalLength.value = _blurValue;
             if (GameLevel.Instance.Points > GameData.Instance.SaveData.scores)
+            {
                 GameData.Instance.Save(GameLevel.Instance.Points);
+                _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
+                _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
+            } 
         }
 
         private void OnPauseBegin(bool pause)

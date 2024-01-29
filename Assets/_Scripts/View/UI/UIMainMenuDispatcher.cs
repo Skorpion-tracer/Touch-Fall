@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System.Threading.Tasks;
+using TMPro;
 using TouchFall.Singletons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,10 +17,20 @@ namespace TouchFall.View.UI
         [SerializeField] private RectTransform _menuPause;
         [SerializeField] private RectTransform _menuGameOver;
         [SerializeField] private RectTransform _menuExit;
+        
+        [Space(10f)]
+        [SerializeField] private Image _imageMusicStartmenu;
+        [SerializeField] private Image _imageMusicPause;
+        [SerializeField] private Sprite _musicOn;
+        [SerializeField] private Sprite _musicOff;
 
         [Space(10f)]
         [SerializeField] private Button _btnAdvirtisment;
         [SerializeField] private RectTransform _panelPublicity;
+
+        [Space(10f)]
+        [SerializeField] private RectTransform _panelBestPoints;
+        [SerializeField] private TextMeshProUGUI _textCountPoints;
 
         [Space(10f)]
         [SerializeField] private float _durationMovePanels = 0.4f;
@@ -48,6 +59,8 @@ namespace TouchFall.View.UI
         private async void Awake()
         {
             _heighContainer = _mainPanel.rect.yMin;
+
+            SetMusicImage();
 
             await ResetPanels();
 
@@ -128,6 +141,22 @@ namespace TouchFall.View.UI
             GameLevel.Instance.NewGame();
         }
 
+        public void MusicOnOff()
+        {
+            GameData.Instance.Save(!GameData.Instance.SaveData.isOnMusic);
+            SetMusicImage();
+        }
+
+        public void ShowBestPoints(bool isShow)
+        {
+            _panelBestPoints.gameObject.SetActive(isShow);
+        }
+
+        public void UpdateBestBoint(int score)
+        {
+            _textCountPoints.text = score.ToString();
+        }
+
         public void Exit()
         {
             Application.Quit();
@@ -171,6 +200,7 @@ namespace TouchFall.View.UI
         {
             _mainMenu.gameObject.SetActive(false);
             _mainMenu.anchoredPosition = new Vector2(_mainMenu.anchoredPosition.x, _heighContainer + _mainMenu.rect.yMin);
+
             _menuPause.localScale = Vector3.one;
             _menuPause.anchoredPosition = new Vector2(_menuPause.anchoredPosition.x, _heighContainer + _menuPause.rect.yMin);
 
@@ -183,8 +213,23 @@ namespace TouchFall.View.UI
             _panelPublicity.gameObject.SetActive(true);
 
             await Task.Delay(1000);
+
             _mainMenu.gameObject.SetActive(true);
             await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+        }
+
+        private void SetMusicImage()
+        {
+            if (GameData.Instance.SaveData.isOnMusic)
+            {
+                _imageMusicStartmenu.sprite = _musicOn;
+                _imageMusicPause.sprite = _musicOn;
+            }
+            else
+            {
+                _imageMusicStartmenu.sprite = _musicOff;
+                _imageMusicPause.sprite = _musicOff;
+            }
         }
         #endregion
     }

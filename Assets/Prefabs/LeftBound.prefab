@@ -335,7 +335,7 @@ MonoBehaviour:
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
-  m_isRichText: 1
+  m_isRichText: 0
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -1382,7 +1382,7 @@ ParticleSystem:
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 0.50753856
-          value: 0.5706198
+          value: 0.6956198
           inSlope: 0.012458243
           outSlope: 0.012458243
           tangentMode: 0
@@ -1392,11 +1392,11 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -0.1369243
-          outSlope: -0.1369243
+          inSlope: -0.07352938
+          outSlope: -0.07352938
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.35167322
+          inWeight: 0.36337352
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2

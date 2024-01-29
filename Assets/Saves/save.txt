@@ -1,1 +1,1 @@
-{"scores":870,"isOnMusic":true}
+{"scores":570,"isOnMusic":true}

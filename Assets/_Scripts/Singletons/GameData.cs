@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using TouchFall.Helper;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace TouchFall.Singletons
 {
