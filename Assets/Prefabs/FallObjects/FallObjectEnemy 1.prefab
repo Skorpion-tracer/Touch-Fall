@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _body: {fileID: 1058704974769555172}
   _score: 30
+  _sound: {fileID: 8300000, guid: f8be9b0a4f95bc648bf299493ebf5a5e, type: 3}
 --- !u!114 &61708758464360130
 MonoBehaviour:
   m_ObjectHideFlags: 0

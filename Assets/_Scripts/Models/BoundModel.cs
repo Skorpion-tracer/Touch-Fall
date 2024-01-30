@@ -27,7 +27,7 @@ namespace TouchFall.Model
         public float DistnaceBetweenBounds
         {
             get => _distanceBetweenBounds;
-            set
+            private set
             {
                 if (value <= _minDistanceBetweenBounds)
                 {
@@ -56,6 +56,11 @@ namespace TouchFall.Model
         public void SetStartDistanceBound()
         {
             _startDistanceBound = DistnaceBetweenBounds;
+        }
+
+        public bool IsCanDecreasedistance()
+        {
+            return DistnaceBetweenBounds > _minDistanceBetweenBounds;
         }
         #endregion
     }

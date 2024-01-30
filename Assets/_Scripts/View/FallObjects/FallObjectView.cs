@@ -1,4 +1,5 @@
-﻿using TouchFall.View.Interfaces;
+﻿using TouchFall.Singletons;
+using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -7,6 +8,7 @@ namespace TouchFall.View
     {
         #region Fields
         [SerializeField] private int _score;
+        [SerializeField] private AudioClip _sound;
         #endregion
 
         #region Properties
@@ -17,6 +19,7 @@ namespace TouchFall.View
         public override void ApplyMod()
         {
             gameObject.SetActive(false);
+            GameAudio.instance.PlaySound(_sound);
         }
 
         public override void DropObject()

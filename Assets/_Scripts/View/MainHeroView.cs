@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
-using TouchFall.View.Interfaces;
 using UnityEngine;
 
 namespace TouchFall.View
@@ -13,6 +12,7 @@ namespace TouchFall.View
 
         private Rigidbody2D _currentBodyHero;
         private Transform _currentTransformHero;
+        private AudioModify _audioHero;
 
         private Dictionary<ModifyHero, HeroModifyType> _modifiersHeroes = new(6);
 
@@ -43,7 +43,7 @@ namespace TouchFall.View
         #endregion
 
         #region Public Methods
-        public void InstantiateHeroes(Vector2 position)
+        public void InstantiateHeroes(Vector2 position, AudioModify audioHero)
         {
             for (int i = 0; i < _bodies.Length; i++)
             {
@@ -55,6 +55,7 @@ namespace TouchFall.View
             _currentModify = ModifyHero.Drop;
             _currentBodyHero = _modifiersHeroes[_currentModify].Body;
             _currentTransformHero = _currentBodyHero.gameObject.transform;
+            _audioHero = audioHero;
         }
 
         public void HidePlayer()
@@ -81,6 +82,10 @@ namespace TouchFall.View
         private void OnModify(ModifyHero modifyHero)
         {
             if (_currentModify == modifyHero) return;
+
+            AudioClip clip = _audioHero.GetAudio(modifyHero);
+
+            // TODO проиграть звук
 
             ModifyPlayerStart(modifyHero);
         }

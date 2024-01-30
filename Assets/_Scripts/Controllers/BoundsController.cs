@@ -30,6 +30,8 @@ namespace TouchFall.Controller
         private BoundModel _model;
         private Vector2 _screenBounds;
 
+        private AudioModify _audioModify;
+
         private ModifyBounds _currentMod = ModifyBounds.Stay;
         private MoveBound _moveBoundLeft = MoveBound.Down;
         private MoveBound _moveBoundRight = MoveBound.Down;
@@ -49,10 +51,11 @@ namespace TouchFall.Controller
         private bool _isDeacreaseDistanceBounds;
         private bool _isStayBounds;
         private bool _isStartPosition;
+        private bool _isPlayStayBounds;
         #endregion
 
         #region Constructor
-        public BoundsController(Vector2 screenBounds, BoundView leftBound, BoundView rightBound, BoundModel boundModel, Transform topBound)
+        public BoundsController(Vector2 screenBounds, BoundView leftBound, BoundView rightBound, BoundModel boundModel, Transform topBound, AudioModify audioModify)
         {
             _screenBounds = screenBounds;
 
@@ -68,6 +71,8 @@ namespace TouchFall.Controller
             _rightTop = _rightBound.Bounds.topBound;
             _rightView = _rightBound.Bounds.window;
             _rightBottom = _rightBound.Bounds.bottomBound;
+
+            _audioModify = audioModify;
 
             InitBounds(topBound);
 
@@ -192,16 +197,23 @@ namespace TouchFall.Controller
                     _moveRight = 0f;
                     _timeRightBoundMove = 0f;
                     _startMoveRightBound = false;
+                    _isPlayStayBounds = true;
+                    GameAudio.instance.PlaySound(_audioModify.GetAudio(_currentMod));
                     return;
                 case ModifyBounds.IncreaseDistance:
                     _isDeacreaseDistanceBounds = true;
+                    _isPlayStayBounds = true;
+                    if (_model.IsCanDecreasedistance())
+                        GameAudio.instance.PlaySound(_audioModify.GetAudio(ModifyBounds.IncreaseDistance));
                     _model.DecreaseDistanceBound();
                     CalculateNewPosBottomBound();
                     return;
                 case ModifyBounds.Stay:
-                    if (_currentMod == ModifyBounds.Stay) return;
                     _isStayBounds = true;
+                    if (_isPlayStayBounds)
+                        GameAudio.instance.PlaySound(_audioModify.GetAudio(ModifyBounds.Stay));
                     _isStartPosition = true;
+                    _isPlayStayBounds = false;
                     _currentMod = ModifyBounds.Stay;
                     _model.ResetDistanceBound();
                     CalculateNewPosBottomBound();

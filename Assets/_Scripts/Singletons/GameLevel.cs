@@ -16,6 +16,7 @@ namespace TouchFall.Singletons
         private int _countStartLife = 3;
         private int _points;
         private int _level;
+        private int _levelForLife;
         private int _countExtraLife;
         #endregion
 
@@ -63,26 +64,33 @@ namespace TouchFall.Singletons
         {
             Lifes = _countStartLife;
             _countExtraLife = 0;
+            _levelForLife = 0;
+            _level = 1;
             CreateGameSession?.Invoke();
             GameLoop.Instance.NewGame();
+            GameAudio.instance.PlayMusicGamePlay(_level);
         }
 
         public void IncrementLevel()
         {
             ChangeLevel?.Invoke();
+            _levelForLife++;
             _level++;
-            if (_level >= _countLevelIncrement && Lifes < 2)
+            if (_levelForLife >= _countLevelIncrement && Lifes < 2)
             {
-                _level = 0;
+                _levelForLife = 0;
                 Lifes++;
                 SetNewLife?.Invoke();
+                GameAudio.instance.PlayExtraLife();
             }
+            GameAudio.instance.PlayMusicGamePlay(_level);
         }
 
         public void ApplyDamage()
         {
             Lifes--;
             Damage?.Invoke();
+            GameAudio.instance.PlayDamge();
             if (Lifes <= 0)
             {
                 GameOver?.Invoke();

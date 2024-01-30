@@ -23,6 +23,7 @@ namespace TouchFall.View.UI
         [SerializeField] private Image _imageMusicPause;
         [SerializeField] private Sprite _musicOn;
         [SerializeField] private Sprite _musicOff;
+        [SerializeField] private AudioClip _soundTap;
 
         [Space(10f)]
         [SerializeField] private Button _btnAdvirtisment;
@@ -72,6 +73,7 @@ namespace TouchFall.View.UI
         #region Public Methods
         public async void StartGame()
         {
+            GameAudio.instance.PlaySound(_soundTap);
             await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             GameLevel.Instance.NewGame();
         }
@@ -88,7 +90,8 @@ namespace TouchFall.View.UI
 
         public async void ResumeGame()
         {
-            await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+            GameAudio.instance.PlaySound(_soundTap);
+            await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _menuPause.gameObject.SetActive(false);
 
             GameLoop.Instance.Resume();
@@ -97,6 +100,8 @@ namespace TouchFall.View.UI
         public async void ShowAdvirtisemnet()
         {
             // TODO Вызывать показ рекламы
+
+            GameAudio.instance.PlaySound(_soundTap);
 
             await _menuGameOver.DOScale(0f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
             _menuGameOver.gameObject.SetActive(false);
@@ -107,6 +112,7 @@ namespace TouchFall.View.UI
 
         public async void ExitToMainMenu()
         {
+            GameAudio.instance.PlaySound(_soundTap);
             GameLevel.Instance.ExitToMainMenu();
 
             await _activePanel.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
@@ -117,6 +123,8 @@ namespace TouchFall.View.UI
 
         public async void QuiteGame()
         {
+            GameAudio.instance.PlaySound(_soundTap);
+
             await _mainMenu.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _mainMenu.gameObject.SetActive(false);
 
@@ -126,6 +134,8 @@ namespace TouchFall.View.UI
 
         public async void CancelQuit()
         {
+            GameAudio.instance.PlaySound(_soundTap);
+
             await _menuExit.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _menuExit.gameObject.SetActive(false);
 
@@ -135,6 +145,8 @@ namespace TouchFall.View.UI
 
         public async void RestartGame()
         {
+            GameAudio.instance.PlaySound(_soundTap);
+
             await _menuGameOver.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _menuGameOver.gameObject.SetActive(false);
 
@@ -159,6 +171,7 @@ namespace TouchFall.View.UI
 
         public void Exit()
         {
+            GameAudio.instance.PlaySound(_soundTap);
             Application.Quit();
         }
         #endregion

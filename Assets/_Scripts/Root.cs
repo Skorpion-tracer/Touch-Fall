@@ -46,6 +46,9 @@ namespace TouchFall
         [SerializeField] private UIGamePlayDispatcher _uiGame;
         [SerializeField] private UIMainMenuDispatcher _uiMenu;
         [SerializeField] private Volume _volume;
+
+        [Space(5f), Header("Music")]
+        [SerializeField] private AudioModify _audioModify;
         #endregion
 
         #region Fields
@@ -107,6 +110,8 @@ namespace TouchFall
 
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
             _blur.focalLength.value = _blurValue;
+
+            GameAudio.instance.PlayMusicMenu();
         }
 
         private void OnDestroy()
@@ -163,12 +168,12 @@ namespace TouchFall
             BoundView leftBound = Instantiate(_leftBoundView, Vector2.zero, Quaternion.identity);
             BoundView rightBound = Instantiate(_rightBoundView, Vector2.zero, Quaternion.identity);
 
-            _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound);
+            _boundsController = new(_screenBounds, leftBound, rightBound, _boundModel, _postionTopBound, _audioModify);
             _boundsController.ActivateBounds(false);
 
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
-            _mainHero.InstantiateHeroes(_startPointHero.position);
+            _mainHero.InstantiateHeroes(_startPointHero.position, _audioModify);
             _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
@@ -210,17 +215,20 @@ namespace TouchFall
                 GameData.Instance.Save(GameLevel.Instance.Points);
                 _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
                 _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
-            } 
+            }
+            GameAudio.instance.PlayMusicMenu();
         }
 
         private void OnPauseBegin(bool pause)
         {
             _poolContainer.PauseAllObjects(pause);
+            GameAudio.instance.Pause(pause);
         }
 
         private void OnResumeCommercial()
         {
             _poolContainer.ResetSaveAndEnemy();
+            GameAudio.instance.Pause(false);
         }
 
         private void OnKeyboardEsc(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -232,6 +240,8 @@ namespace TouchFall
         private void GameOver()
         {
             _poolContainer.PauseAllObjects(true);
+            GameAudio.instance.Pause(true);
+            GameAudio.instance.PlayGameOver();
         }
 
         private void BlurControl()
