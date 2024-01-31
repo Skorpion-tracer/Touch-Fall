@@ -85,7 +85,7 @@ namespace TouchFall.View
 
             AudioClip clip = _audioHero.GetAudio(modifyHero);
 
-            // TODO проиграть звук
+            GameAudio.instance.PlaySound(clip);
 
             ModifyPlayerStart(modifyHero);
         }

@@ -111,7 +111,7 @@ namespace TouchFall
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
             _blur.focalLength.value = _blurValue;
 
-            GameAudio.instance.PlayMusicMenu();
+            //GameAudio.instance.PlayMusicMenu();
         }
 
         private void OnDestroy()

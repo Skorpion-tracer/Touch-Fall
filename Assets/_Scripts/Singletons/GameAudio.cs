@@ -11,7 +11,6 @@ namespace TouchFall.Singletons
         #region SerializeFields
         [SerializeField] private AudioSource _music;
         [SerializeField] private AudioSource _sounds;
-        //[SerializeField] private AudioMix
 
         [Space(5f), Header("Musics")]
         [SerializeField] private AudioClip[] _musicsMenu;
@@ -29,18 +28,23 @@ namespace TouchFall.Singletons
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+                EnableSounds();
             }
             else
             {
                 Destroy(gameObject);
+                EnableSounds();
             }
+            PlayMusicMenu();
         }
         #endregion
 
         #region Public Methods
-        public void EnableSounds(bool isEnable)
+        public void EnableSounds()
         {
-
+            bool onOff = !GameData.Instance.SaveData.isOnMusic;
+            _music.mute = onOff;
+            _sounds.mute = onOff;
         }
 
         public void PlaySound(AudioClip clip)

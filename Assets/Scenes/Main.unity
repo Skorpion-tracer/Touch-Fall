@@ -1581,7 +1581,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 0
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -1652,7 +1652,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!199 &526887493
 ParticleSystemRenderer:
@@ -9098,10 +9098,10 @@ RectTransform:
   m_Father: {fileID: 895041117}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.054285724, y: 0.22117369}
-  m_AnchorMax: {x: 0.94428575, y: 0.65571433}
-  m_AnchoredPosition: {x: 0.5, y: 82.37476}
-  m_SizeDelta: {x: -23.01, y: 123.6256}
+  m_AnchorMin: {x: 0.05857143, y: 0.22117369}
+  m_AnchorMax: {x: 0.94428575, y: 0.76500005}
+  m_AnchoredPosition: {x: -1, y: 5.874756}
+  m_SizeDelta: {x: -20.010002, y: -29.374397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1285752899
 CanvasRenderer:
@@ -9503,11 +9503,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ad3473ca0d0d4469ec21d9fd232056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heroSound: {fileID: 0}
-  _softHeroSound: {fileID: 0}
-  _magneticHeroSound: {fileID: 0}
+  _heroSound: {fileID: 8300000, guid: 144aaec9ee7d20543bbe4ac1c0e99fa8, type: 3}
+  _softHeroSound: {fileID: 8300000, guid: e9716b9073de5344d971558ad520b872, type: 3}
+  _magneticHeroSound: {fileID: 8300000, guid: f82d746e8b0cda94a87548c0b61ce161, type: 3}
   _repulseHeroSound: {fileID: 8300000, guid: 255079f7411f12c4d98601e1313276ef, type: 3}
-  _spinHeroSound: {fileID: 0}
+  _spinHeroSound: {fileID: 8300000, guid: 49f8adc589b808b4fbc29f148ac799df, type: 3}
   _squareHeroSound: {fileID: 8300000, guid: ba35dcbbe350fa84396f91de46bb8a9c, type: 3}
   _boundReset: {fileID: 8300000, guid: f9fc19d5f8afd4042947698a6692f3a0, type: 3}
   _boundMove: {fileID: 8300000, guid: ce746d72ee3eca443b0de3ad4d76b340, type: 3}

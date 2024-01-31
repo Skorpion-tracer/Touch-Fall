@@ -13,7 +13,7 @@ namespace TouchFall.Singletons
             new(() => new GameData(), LazyThreadSafetyMode.ExecutionAndPublication);
 
         private SaveData _saveData;
-        private readonly string _saveFolder = Path.Combine(Application.dataPath, "Saves");
+        private readonly string _saveFolder = Path.Combine(Application.persistentDataPath, "Saves");
         private readonly string _name;
         #endregion
 
@@ -25,7 +25,7 @@ namespace TouchFall.Singletons
             {
                 Directory.CreateDirectory(_saveFolder);
             }
-            _name = Path.Combine(_saveFolder, "save.txt");
+            _name = Path.Combine(_saveFolder, "save.json");
         }
         #endregion
 
@@ -59,6 +59,7 @@ namespace TouchFall.Singletons
 
         public void Load()
         {
+            
             if (File.Exists(_name))
             {
                 string jsonString = File.ReadAllText(_name);

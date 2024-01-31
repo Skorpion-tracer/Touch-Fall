@@ -156,6 +156,7 @@ namespace TouchFall.View.UI
         public void MusicOnOff()
         {
             GameData.Instance.Save(!GameData.Instance.SaveData.isOnMusic);
+            GameAudio.instance.EnableSounds();
             SetMusicImage();
         }
 
