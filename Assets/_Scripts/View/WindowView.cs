@@ -38,22 +38,26 @@ namespace TouchFall.View
         #region UnityMethods
         private void OnEnable()
         {
-            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
             GameLevel.Instance.ChangeLevel += OnChangeLevel;
             GameLevel.Instance.GameOver += OnGameOver;
         }
 
         private void OnDisable()
         {
-            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
             GameLevel.Instance.ChangeLevel -= OnChangeLevel;
             GameLevel.Instance.GameOver -= OnGameOver;
         }
 
         private void Awake()
         {
+            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
             InitTextMesseges();
             OnCreateGameSession();
+        }
+
+        private void OnDestroy()
+        {
+            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

@@ -8,10 +8,10 @@ namespace TouchFall.Model
     public sealed class SpawnFallObjectModel
     {
         #region Fields
-        [SerializeField, Range(0.5f, 3)] private float _timeSpawn;
+        [SerializeField, Range(0.8f, 3)] private float _timeSpawn;
         [SerializeField, Range(1, 10)] private float _offsetVerticalPositionSpawn;
 
-        private float _minTimeSpawn = 0.5f;
+        private float _minTimeSpawn = 0.8f;
         private float _maxTimeSpawn = 3f;
         private float _decrementTime = 0.65f;
 

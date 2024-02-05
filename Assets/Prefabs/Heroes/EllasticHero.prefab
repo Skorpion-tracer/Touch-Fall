@@ -121,9 +121,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6785920250089573145}
   - component: {fileID: 6785920250089573144}
-  - component: {fileID: 6785920250089573159}
-  - component: {fileID: 6785920250089573158}
+  - component: {fileID: 6058710417680587885}
+  - component: {fileID: 425979740228953045}
   - component: {fileID: 5926728361734429646}
+  - component: {fileID: 3782633789259941235}
   m_Layer: 6
   m_Name: EllasticHero
   m_TagString: Untagged
@@ -188,19 +189,19 @@ SpriteRenderer:
   m_SortingLayerID: -650509193
   m_SortingLayer: 2
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 9724ce0015b7e3a44b8b8d772e30c20a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a1ab3aa3b501a34e95d52ed7c79b142, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.04, y: 4.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &6785920250089573159
-CircleCollider2D:
+--- !u!60 &6058710417680587885
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -213,9 +214,31 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.81
---- !u!50 &6785920250089573158
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.016, y: 1.92}
+    newSize: {x: 5.04, y: 4.8}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.99539804, y: 0.6012395}
+      - {x: 0.8051467, y: 0.80777174}
+      - {x: 0.50887793, y: 0.90293276}
+      - {x: 0.03294059, y: 0.9354145}
+      - {x: -0.5342842, y: 0.9037646}
+      - {x: -0.98367214, y: 0.6862889}
+      - {x: -1.0185595, y: -0.72273517}
+      - {x: -0.75559765, y: -0.8286853}
+      - {x: -0.1950185, y: -0.9386332}
+      - {x: 0.14171475, y: -0.9491074}
+      - {x: 0.51783353, y: -0.9027383}
+      - {x: 0.98555857, y: -0.72531337}
+  m_UseDelaunayMesh: 0
+--- !u!50 &425979740228953045
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -229,7 +252,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 10
   m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: a7f145133f55cb24a9fe90b918451ac6, type: 2}
   m_Interpolate: 1
@@ -249,4 +272,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modifyHero: 1
-  _body: {fileID: 6785920250089573158}
+  _body: {fileID: 425979740228953045}
+--- !u!114 &3782633789259941235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785920250089573147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c008f954fe54a8bb972de1018a2cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RootBone: {fileID: 0}
+  m_BoneTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_Bounds:
+    m_Center: {x: -0.0079244375, y: -0.013296485, z: 0}
+    m_Extent: {x: 1.210398, y: 1.1576425, z: 0}
+  m_UseBatching: 1
+  m_AlwaysUpdate: 1
+  m_AutoRebind: 0

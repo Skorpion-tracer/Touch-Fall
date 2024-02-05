@@ -16,7 +16,9 @@ namespace TouchFall.Controller
         private float _time;
         private float _minPositionX;
         private float _maxPositionX;
+        private float _posX;
         private float _posY;
+        private float _incrementOffset = 1.5f;
         #endregion
 
         #region Constructor
@@ -25,8 +27,9 @@ namespace TouchFall.Controller
             _model = spawnFallObjectModel;
             _pool = poolContainer;
 
-            _minPositionX = -screenBounds.x;
-            _maxPositionX = screenBounds.x;
+            _minPositionX = -(screenBounds.x - 0.9f);
+            _maxPositionX = screenBounds.x - 0.9f;
+            _posX = _minPositionX;
             _posY = screenBounds.y + _model.OffsetVerticalPositionSpawn;
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
         }
@@ -43,11 +46,12 @@ namespace TouchFall.Controller
             _time += Time.deltaTime;
             if (_time >= _model.TimeSpawn)
             {
+                _posX = Random.Range(_minPositionX, _maxPositionX);
                 InstantiateObject();
                 InstantiateModifyHeroObject();
-                InstantiateModifyBoundObject();
                 InstantiateEnemyObject();
                 InstantiateNeedToSaveObject();
+                InstantiateModifyBoundObject();                
                 _time = 0;
             }
         }
@@ -131,7 +135,22 @@ namespace TouchFall.Controller
 
         private void InitFallObject(GameObject fallObject)
         {
-            fallObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), _posY);
+            _posX += _incrementOffset;
+            float posX = _posX;
+            if (posX > _maxPositionX)
+            {
+                posX = _minPositionX;
+                _posX = _minPositionX;
+            } 
+            //if (posX == Mathf.Clamp(_posX, _posX, _posX + _incrementOffset))
+            //{
+            //    posX += _incrementOffset;
+
+            //    Debug.Log("Смещение");
+            //}
+
+            //_posX = Random.Range(_minPositionX, _maxPositionX);
+            fallObject.transform.position = new Vector2(posX, _posY);
             fallObject.SetActive(true);
         }
         #endregion

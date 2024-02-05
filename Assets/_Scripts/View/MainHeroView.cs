@@ -8,9 +8,10 @@ namespace TouchFall.View
     public sealed class MainHeroView : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private Rigidbody2D[] _bodies;
+        [SerializeField] private HeroModifyType[] _bodies;
 
         private Rigidbody2D _currentBodyHero;
+        private HeroModifyType _currentHero;
         private Transform _currentTransformHero;
         private AudioModify _audioHero;
 
@@ -47,14 +48,15 @@ namespace TouchFall.View
         {
             for (int i = 0; i < _bodies.Length; i++)
             {
-                HeroModifyType typeHero = _bodies[i].GetComponent<HeroModifyType>();
+                HeroModifyType typeHero = _bodies[i];
                 typeHero = Instantiate(typeHero, position, Quaternion.identity);
                 _modifiersHeroes.Add(typeHero.ModifyHero, typeHero);
                 typeHero.gameObject.SetActive(false);
             }
             _currentModify = ModifyHero.Drop;
-            _currentBodyHero = _modifiersHeroes[_currentModify].Body;
-            _currentTransformHero = _currentBodyHero.gameObject.transform;
+            _currentHero = _modifiersHeroes[_currentModify];
+            _currentBodyHero = _currentHero.Body;           
+            _currentTransformHero = _currentHero.transform;
             _audioHero = audioHero;
         }
 
@@ -96,13 +98,14 @@ namespace TouchFall.View
             Vector2 lastPos = _currentTransformHero.position;
             DeactivateAllHero();
 
-            _currentBodyHero = _modifiersHeroes[modifyHero].Body;
-            if (_currentBodyHero != null)
+            _currentHero = _modifiersHeroes[modifyHero];
+            _currentBodyHero = _currentHero.Body;
+            if (_currentHero != null)
             {
                 _currentBodyHero.angularVelocity = 0f;
-                _currentBodyHero.transform.position = lastPos;
-                _currentBodyHero.gameObject.SetActive(true);
-                _currentTransformHero = _currentBodyHero.gameObject.transform;
+                _currentHero.transform.position = lastPos;
+                _currentHero.gameObject.SetActive(true);
+                _currentTransformHero = _currentHero.transform;
             }
         }
 

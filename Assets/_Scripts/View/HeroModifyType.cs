@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TouchFall.View
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public sealed class HeroModifyType : MonoBehaviour
     {
         #region Fields
