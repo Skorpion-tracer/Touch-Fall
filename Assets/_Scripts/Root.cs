@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TouchFall.Controller;
@@ -46,6 +47,7 @@ namespace TouchFall
         [SerializeField] private UIGamePlayDispatcher _uiGame;
         [SerializeField] private UIMainMenuDispatcher _uiMenu;
         [SerializeField] private Volume _volume;
+        [SerializeField] private Animator _cameraAnim;
 
         [Space(5f), Header("Music")]
         [SerializeField] private AudioModify _audioModify;
@@ -75,7 +77,8 @@ namespace TouchFall
             GameLoop.Instance.PauseBegin += OnPauseBegin;
             GameLoop.Instance.ResumeCommercial += OnResumeCommercial;
             GameLevel.Instance.ExitMenu += OnExitMenu;
-            GameLevel.Instance.GameOver += GameOver;
+            GameLevel.Instance.GameOver += OnGameOver;
+            GameLevel.Instance.Damage += OnDamage;
         }
 
         private void OnDisable()
@@ -85,7 +88,8 @@ namespace TouchFall
             GameLoop.Instance.PauseBegin -= OnPauseBegin;
             GameLoop.Instance.ResumeCommercial -= OnResumeCommercial;
             GameLevel.Instance.ExitMenu -= OnExitMenu;
-            GameLevel.Instance.GameOver -= GameOver;
+            GameLevel.Instance.GameOver -= OnGameOver;
+            GameLevel.Instance.Damage -= OnDamage;
         }
 
         private void Awake()
@@ -192,6 +196,12 @@ namespace TouchFall
             _fixedUpdaters.Add(_mainHeroBehavoiurController);
         }
 
+        private void OnDamage()
+        {
+            if (GameLevel.Instance.Lifes > 0)
+                _cameraAnim.SetTrigger("IsShake");
+        }
+
         private void OnCreateGameSession()
         {
             _poolContainer.PauseAllObjects(false);
@@ -237,7 +247,7 @@ namespace TouchFall
                 GameLoop.Instance.Pause();
         }
 
-        private void GameOver()
+        private void OnGameOver()
         {
             _poolContainer.PauseAllObjects(true);
             GameAudio.instance.Pause(true);

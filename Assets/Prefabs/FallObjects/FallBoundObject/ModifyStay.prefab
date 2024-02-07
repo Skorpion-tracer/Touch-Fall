@@ -77,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: -650509193
   m_SortingLayer: 2
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 4bece799cabcc4741a0ddc028d0a0dcb, type: 3}
-  m_Color: {r: 0.4470588, g: 0.7958226, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 661a8b52485ace147b673c5db1683cc3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -125,8 +125,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.874652, y: 0.929091}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -134,9 +134,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.5773587}
-      - {x: -0.5, y: -0.28866667}
-      - {x: 0.5, y: -0.28866667}
+    - - {x: 0.0924937, y: 0.10097641}
+      - {x: 0, y: 0.47049123}
+      - {x: -0.088375375, y: 0.101821765}
+      - {x: -0.43148416, y: -0.00054057315}
+      - {x: -0.091850206, y: -0.09876239}
+      - {x: 0.0001398325, y: -0.46820402}
+      - {x: 0.09091893, y: -0.092331275}
+      - {x: 0.43374214, y: -0.0001244247}
   m_UseDelaunayMesh: 0
 --- !u!114 &144415727114221918
 MonoBehaviour:
@@ -173,9 +178,14 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 451cca05
   m_ShapePath:
-  - {x: -0.5, y: -0.28866667, z: 0}
-  - {x: 0.0028008223, y: 0.57872653, z: 0}
-  - {x: 0.5, y: -0.28866667, z: 0}
-  m_ShapePathHash: -1704576777
+  - {x: -0.43541127, y: 0.0029613972, z: 0}
+  - {x: -0.08790173, y: 0.102510154, z: 0}
+  - {x: -0.0011136495, y: 0.47107857, z: 0}
+  - {x: 0.09216392, y: 0.09663844, z: 0}
+  - {x: 0.4340962, y: -0.0030834675, z: 0}
+  - {x: 0.09144348, y: -0.0951706, z: 0}
+  - {x: -0.0004582405, y: -0.4685226, z: 0}
+  - {x: -0.08985896, y: -0.0951706, z: 0}
+  m_ShapePathHash: -1230291219
   m_Mesh: {fileID: 0}
-  m_InstanceId: 44106
+  m_InstanceId: 30354
