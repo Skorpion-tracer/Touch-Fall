@@ -3,6 +3,7 @@ using TouchFall.Helper.Enums;
 using TouchFall.Model;
 using TouchFall.Singletons;
 using TouchFall.View;
+using UnityEngine;
 
 namespace TouchFall.Controller
 {
@@ -11,11 +12,8 @@ namespace TouchFall.Controller
         #region Fields
         private readonly MainHeroView _heroView;
         private readonly MainHeroModel _heroModel;
-        private readonly float _maxAngle = 365f;
 
-        private StateBehaviourHero _stateBehaviourHero = StateBehaviourHero.None;
-
-        private float _angle;        
+        private StateBehaviourHero _stateBehaviourHero = StateBehaviourHero.None;      
         #endregion
 
         #region Constructor
@@ -41,9 +39,7 @@ namespace TouchFall.Controller
                 case StateBehaviourHero.None:
                     return;
                 case StateBehaviourHero.Rotate:
-                    _angle += _heroModel.SpeedRotation;
-                    if (_angle >= _maxAngle) _angle = 0;
-                    _heroView.Body.MoveRotation(_angle);
+                    _heroView.Body.MoveRotation(_heroView.Body.rotation + _heroModel.SpeedRotation * Time.fixedDeltaTime);
                     break;
             }
         }
