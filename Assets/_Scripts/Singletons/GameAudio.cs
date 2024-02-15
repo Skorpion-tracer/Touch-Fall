@@ -10,7 +10,9 @@ namespace TouchFall.Singletons
 
         #region SerializeFields
         [SerializeField] private AudioSource _music;
-        [SerializeField] private AudioSource _sounds;
+        [SerializeField] private AudioSource _soundBounds;
+        [SerializeField] private AudioSource _soundHero;
+        [SerializeField] private AudioSource _soundOther;
 
         [Space(5f), Header("Musics")]
         [SerializeField] private AudioClip[] _musicsMenu;
@@ -19,6 +21,7 @@ namespace TouchFall.Singletons
         [SerializeField] private AudioClip _gameOver;
         [SerializeField] private AudioClip _damage;
         [SerializeField] private AudioClip _extraLife;
+        [SerializeField] private AudioClip _emptyBonus;
         #endregion
 
         #region Unity Methods
@@ -44,13 +47,27 @@ namespace TouchFall.Singletons
         {
             bool onOff = !GameData.Instance.SaveData.isOnMusic;
             _music.mute = onOff;
-            _sounds.mute = onOff;
+            _soundBounds.mute = onOff;
+            _soundHero.mute = onOff;
+            _soundOther.mute = onOff;
         }
 
         public void PlaySound(AudioClip clip)
         {
-            _sounds.clip = clip;
-            _sounds.Play();
+            _soundOther.clip = clip;
+            _soundOther.Play();
+        }
+
+        public void PlaySoundBounds(AudioClip clip)
+        {
+            _soundBounds.clip = clip;
+            _soundBounds.Play();
+        }
+
+        public void PlaySoundHero(AudioClip clip)
+        {
+            _soundHero.clip = clip;
+            _soundHero.Play();
         }
 
         public void Pause(bool isPause)
@@ -85,6 +102,11 @@ namespace TouchFall.Singletons
         public void PlayExtraLife()
         {
             PlaySound(_extraLife);
+        }
+
+        public void PlayEmptyBonus()
+        {
+            PlaySound(_emptyBonus);
         }
         #endregion
     }

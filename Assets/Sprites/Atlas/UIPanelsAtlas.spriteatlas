@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UIPanelsAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 0cecce68926a1dd45817c731b27e33b8, type: 3}
+    - {fileID: 2800000, guid: 7baa060f690dca844b6c62aa43ac3997, type: 3}
+    - {fileID: 2800000, guid: 3c4194c7bd89b9245bc1e59db0aa4c38, type: 3}
+    - {fileID: 2800000, guid: 1a12feda33cf3494bac99413b1b1fdb2, type: 3}
+    - {fileID: 2800000, guid: f50c38649fc0c2649bd02224824347ce, type: 3}
+    - {fileID: 2800000, guid: d54b6f67648f03a43aa679ac91d2d2dc, type: 3}
+    - {fileID: 2800000, guid: c51324bdf185bca43b4120bd3eaeda5e, type: 3}
+    - {fileID: 2800000, guid: aa0fc3e2f4cd2e1478f0488916bf2e49, type: 3}
+    - {fileID: 2800000, guid: 16cf3675e6dc81d40ac7f70400e7e95f, type: 3}
+    - {fileID: 2800000, guid: 0806d060a240ca6468fb359d739c7758, type: 3}
+    - {fileID: 2800000, guid: 35a73c90dedaaf343b09aee538d97c99, type: 3}
+    - {fileID: 2800000, guid: 65d9e61de2f14a1488937b93e6269e74, type: 3}
+    - {fileID: 2800000, guid: bdf6395257dc70f4586c2385a2c135c0, type: 3}
+    - {fileID: 2800000, guid: 1def7dd5af3a2b04a8c572d468b3037c, type: 3}
+    - {fileID: 2800000, guid: 86cda7b2b249d3f448460ea73032c98d, type: 3}
+    - {fileID: 2800000, guid: eefb76bba50ff0e4fa5181fcdfcb29e2, type: 3}
+    - {fileID: 2800000, guid: 72d6d8b69d9453a44a0bd182bf66d86c, type: 3}
+    - {fileID: 2800000, guid: 1b1bdebc266a17f448900a664c733ff4, type: 3}
+    - {fileID: 2800000, guid: 36352a8748a6ce0488e2555007d9641a, type: 3}
+    - {fileID: 2800000, guid: 7ddf8a6f94ea8c14e95f77729d047f23, type: 3}
+    - {fileID: 2800000, guid: 98838006f996166458d7cd876b2eb467, type: 3}
+    - {fileID: 2800000, guid: 110f3556d3e55014b8e1e8e4e08e6618, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0806d060a240ca6468fb359d739c7758, type: 3}
+  - {fileID: 21300000, guid: 35a73c90dedaaf343b09aee538d97c99, type: 3}
+  - {fileID: 21300000, guid: bdf6395257dc70f4586c2385a2c135c0, type: 3}
+  - {fileID: 21300000, guid: 86cda7b2b249d3f448460ea73032c98d, type: 3}
+  - {fileID: 21300000, guid: aa0fc3e2f4cd2e1478f0488916bf2e49, type: 3}
+  - {fileID: 21300000, guid: f50c38649fc0c2649bd02224824347ce, type: 3}
+  - {fileID: 21300000, guid: 1def7dd5af3a2b04a8c572d468b3037c, type: 3}
+  - {fileID: 21300000, guid: 98838006f996166458d7cd876b2eb467, type: 3}
+  - {fileID: 21300000, guid: 110f3556d3e55014b8e1e8e4e08e6618, type: 3}
+  - {fileID: 21300000, guid: 72d6d8b69d9453a44a0bd182bf66d86c, type: 3}
+  - {fileID: 21300000, guid: d54b6f67648f03a43aa679ac91d2d2dc, type: 3}
+  - {fileID: 21300000, guid: 36352a8748a6ce0488e2555007d9641a, type: 3}
+  - {fileID: 21300000, guid: 3c4194c7bd89b9245bc1e59db0aa4c38, type: 3}
+  - {fileID: 21300000, guid: 0cecce68926a1dd45817c731b27e33b8, type: 3}
+  - {fileID: 21300000, guid: 1a12feda33cf3494bac99413b1b1fdb2, type: 3}
+  - {fileID: 21300000, guid: eefb76bba50ff0e4fa5181fcdfcb29e2, type: 3}
+  - {fileID: 21300000, guid: 1b1bdebc266a17f448900a664c733ff4, type: 3}
+  - {fileID: 21300000, guid: 65d9e61de2f14a1488937b93e6269e74, type: 3}
+  - {fileID: 21300000, guid: c51324bdf185bca43b4120bd3eaeda5e, type: 3}
+  - {fileID: 21300000, guid: 7baa060f690dca844b6c62aa43ac3997, type: 3}
+  - {fileID: 21300000, guid: 7ddf8a6f94ea8c14e95f77729d047f23, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - flat_icon_check
+  - Heart
+  - Icon_Exit
+  - Icon_Music_On
+  - Add_Video
+  - Button_Square_Orange_250px
+  - Icon_Music_Off
+  - flare
+  - Light
+  - Icon_Play
+  - Button_Square_Pink_250px
+  - Star
+  - Button_Circle_Pink_250px
+  - Button_Square_Yellow_250px
+  - Button_Circle_Red_250px
+  - Icon_Pause
+  - Icon_Restart
+  - Icon_Close
+  - Button_Square_Red_250px
+  - Add_Video_Plate
+  - Shop_Icon_Extra_Hearts
+  m_RenderDataMap: {}
+  m_Tag: UIPanelsAtlas
+  m_IsVariant: 0

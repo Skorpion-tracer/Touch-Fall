@@ -198,20 +198,20 @@ namespace TouchFall.Controller
                     _timeRightBoundMove = 0f;
                     _startMoveRightBound = false;
                     _isPlayStayBounds = true;
-                    GameAudio.instance.PlaySound(_audioModify.GetAudio(_currentMod));
+                    GameAudio.instance.PlaySoundBounds(_audioModify.GetAudio(_currentMod));
                     return;
                 case ModifyBounds.IncreaseDistance:
                     _isDeacreaseDistanceBounds = true;
                     _isPlayStayBounds = true;
                     if (_model.IsCanDecreasedistance())
-                        GameAudio.instance.PlaySound(_audioModify.GetAudio(ModifyBounds.IncreaseDistance));
+                        GameAudio.instance.PlaySoundBounds(_audioModify.GetAudio(ModifyBounds.IncreaseDistance));
                     _model.DecreaseDistanceBound();
                     CalculateNewPosBottomBound();
                     return;
                 case ModifyBounds.Stay:
                     _isStayBounds = true;
                     if (_isPlayStayBounds)
-                        GameAudio.instance.PlaySound(_audioModify.GetAudio(ModifyBounds.Stay));
+                        GameAudio.instance.PlaySoundBounds(_audioModify.GetAudio(ModifyBounds.Stay));
                     _isStartPosition = true;
                     _isPlayStayBounds = false;
                     _currentMod = ModifyBounds.Stay;

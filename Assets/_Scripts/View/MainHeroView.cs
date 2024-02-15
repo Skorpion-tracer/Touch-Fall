@@ -83,11 +83,15 @@ namespace TouchFall.View
         #region Private Methods
         private void OnModify(ModifyHero modifyHero)
         {
-            if (_currentModify == modifyHero) return;
+            if (_currentModify == modifyHero)
+            {
+                GameAudio.instance.PlayEmptyBonus();
+                return;
+            } 
 
             AudioClip clip = _audioHero.GetAudio(modifyHero);
 
-            GameAudio.instance.PlaySound(clip);
+            GameAudio.instance.PlaySoundHero(clip);
 
             ModifyPlayerStart(modifyHero);
         }

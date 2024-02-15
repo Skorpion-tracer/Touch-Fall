@@ -17,6 +17,7 @@ namespace TouchFall.View.UI
         [SerializeField] private RectTransform _menuPause;
         [SerializeField] private RectTransform _menuGameOver;
         [SerializeField] private RectTransform _menuExit;
+        [SerializeField] private RectTransform _menuTutorial;
         
         [Space(10f)]
         [SerializeField] private Image _imageMusicStartmenu;
@@ -119,6 +120,14 @@ namespace TouchFall.View.UI
             _activePanel.gameObject.SetActive(false);
 
             await ResetPanels();
+        }
+
+        public void SetShowTotorial(bool isShow)
+        {
+            _menuTutorial.gameObject.SetActive(isShow);
+            _tweenMouseEnter?.Restart();
+            _tweenMouseEnter?.Complete();
+            _tweenMouseEnter?.Kill();
         }
 
         public async void QuiteGame()

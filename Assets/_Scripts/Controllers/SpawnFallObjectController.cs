@@ -18,6 +18,8 @@ namespace TouchFall.Controller
         private float _maxPositionX;
         private float _posX;
         private float _posY;
+        private float _maxPosY;
+        private float _minPosY;
         private float _incrementOffset = 1.5f;
         #endregion
 
@@ -30,7 +32,8 @@ namespace TouchFall.Controller
             _minPositionX = -(screenBounds.x - 0.9f);
             _maxPositionX = screenBounds.x - 0.9f;
             _posX = _minPositionX;
-            _posY = screenBounds.y + _model.OffsetVerticalPositionSpawn;
+            _maxPosY = screenBounds.y + _model.OffsetVerticalPositionSpawn;
+            _minPosY = screenBounds.y + 0.4f;
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
         }
 
@@ -47,6 +50,7 @@ namespace TouchFall.Controller
             if (_time >= _model.TimeSpawn)
             {
                 _posX = Random.Range(_minPositionX, _maxPositionX);
+                _posY = Random.Range(_minPosY, _maxPosY);
                 InstantiateObject();
                 InstantiateModifyHeroObject();
                 InstantiateEnemyObject();
@@ -141,16 +145,17 @@ namespace TouchFall.Controller
             {
                 posX = _minPositionX;
                 _posX = _minPositionX;
-            } 
-            //if (posX == Mathf.Clamp(_posX, _posX, _posX + _incrementOffset))
-            //{
-            //    posX += _incrementOffset;
+            }
 
-            //    Debug.Log("Смещение");
-            //}
+            _posY -= _incrementOffset;
+            float posY = _posY;
+            if (posY < _minPosY)
+            {
+                posY = _maxPosY;
+                _posY = _maxPosY;
+            }
 
-            //_posX = Random.Range(_minPositionX, _maxPositionX);
-            fallObject.transform.position = new Vector2(posX, _posY);
+            fallObject.transform.position = new Vector2(posX, posY);
             fallObject.SetActive(true);
         }
         #endregion

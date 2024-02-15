@@ -128,7 +128,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.874652, y: 0.929091}
+    oldSize: {x: 1.3744531, y: 1.46}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -136,14 +136,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.0924937, y: 0.10097641}
-      - {x: 0, y: 0.47049123}
-      - {x: -0.088375375, y: 0.101821765}
-      - {x: -0.43148416, y: -0.00054057315}
-      - {x: -0.091850206, y: -0.09876239}
-      - {x: 0.0001398325, y: -0.46820402}
-      - {x: 0.09091893, y: -0.092331275}
-      - {x: 0.43374214, y: -0.0001244247}
+    - - {x: 0.25432616, y: 0.26746118}
+      - {x: -0.00047639036, y: 0.6411966}
+      - {x: -0.25726175, y: 0.28024814}
+      - {x: -0.6291865, y: -0.003411266}
+      - {x: -0.3077608, y: -0.28590816}
+      - {x: -0.009859505, y: -0.6449862}
+      - {x: 0.26929662, y: -0.30097818}
+      - {x: 0.609, y: -0.0024526482}
   m_UseDelaunayMesh: 0
 --- !u!114 &144415727114221918
 MonoBehaviour:
@@ -180,17 +180,17 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 451cca05
   m_ShapePath:
-  - {x: -0.43541127, y: 0.0029613972, z: 0}
-  - {x: -0.08790173, y: 0.102510154, z: 0}
-  - {x: -0.0011136495, y: 0.47107857, z: 0}
-  - {x: 0.09216392, y: 0.09663844, z: 0}
-  - {x: 0.4340962, y: -0.0030834675, z: 0}
-  - {x: 0.09144348, y: -0.0951706, z: 0}
-  - {x: -0.0004582405, y: -0.4685226, z: 0}
-  - {x: -0.08985896, y: -0.0951706, z: 0}
-  m_ShapePathHash: -1230291219
+  - {x: -0.6285141, y: -0.0019125337, z: 0}
+  - {x: -0.11052638, y: 0.12595814, z: 0}
+  - {x: 0.003592087, y: 0.6652884, z: 0}
+  - {x: 0.12383755, y: 0.12169899, z: 0}
+  - {x: 0.59815544, y: -0.0006316664, z: 0}
+  - {x: 0.123809546, y: -0.128962, z: 0}
+  - {x: 0.0013476859, y: -0.6634324, z: 0}
+  - {x: -0.109162256, y: -0.11551582, z: 0}
+  m_ShapePathHash: -353125788
   m_Mesh: {fileID: 0}
-  m_InstanceId: 45616
+  m_InstanceId: 81710
 --- !u!1 &1574363876420531038
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574363876420531038}
   m_LocalRotation: {x: -0, y: -0, z: 0.3574103, w: 0.9339475}
-  m_LocalPosition: {x: -0.051, y: 0.054, z: 0}
+  m_LocalPosition: {x: -0.091, y: 0.084, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,14 +299,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889662803307898521}
-  m_LocalRotation: {x: -0, y: -0, z: 0.34115648, w: 0.94000655}
-  m_LocalPosition: {x: 0.033, y: -0.09, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.503007, w: 0.86428237}
+  m_LocalPosition: {x: 0.044, y: -0.075, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1058704974769555174}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.895}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60.398}
 --- !u!212 &1675758916491762372
 SpriteRenderer:
   m_ObjectHideFlags: 0
