@@ -14,6 +14,7 @@ using TouchFall.View.UI;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Localization.Settings;
 
 namespace TouchFall
 {
@@ -98,6 +99,9 @@ namespace TouchFall
 
             GameData.Instance.Load();
 
+            LocalizationSettings.InitializationOperation.Completed += e =>
+                LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
+
             _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
             _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
 
@@ -114,8 +118,6 @@ namespace TouchFall
 
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
             _blur.focalLength.value = _blurValue;
-
-            //GameAudio.instance.PlayMusicMenu();
         }
 
         private void OnDestroy()

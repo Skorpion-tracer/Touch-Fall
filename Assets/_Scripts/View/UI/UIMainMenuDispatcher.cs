@@ -1,8 +1,10 @@
 ﻿using DG.Tweening;
 using System.Threading.Tasks;
 using TMPro;
+using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 namespace TouchFall.View.UI
@@ -177,6 +179,15 @@ namespace TouchFall.View.UI
         public void UpdateBestBoint(int score)
         {
             _textCountPoints.text = score.ToString();
+        }
+
+        public void ChangeLang()
+        {
+            Language currentLang = GameData.Instance.SaveData.language;
+            GameData.Instance.SaveData.language = currentLang == Language.English ? Language.Russian : Language.English;
+            GameData.Instance.Save(GameData.Instance.SaveData.language);
+
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
         }
 
         public void Exit()

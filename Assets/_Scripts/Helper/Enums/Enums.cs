@@ -39,4 +39,10 @@ namespace TouchFall.Helper.Enums
         Pause,
         GameOver
     }
+
+    public enum Language : byte
+    {
+        English,
+        Russian
+    }
 }

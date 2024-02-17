@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Localization_title_en-GB
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en-GB
+  m_SharedData: {fileID: 11400000, guid: 7e338fdfd9558d342b5eb036a48199bb, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 149480550400
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383673708544
+    m_Localized: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29735153053696
+    m_Localized: It is necessary to save the right objects by directing them to the
+      borders highlighted at the edges, with the help of the main character. Some
+      objects give various bonuses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29925129859072
+    m_Localized: This is the enemy. In no case should it fall into the lateral boundaries
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30055753068544
+    m_Localized: We need to save them. If it falls, a life is taken away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30147490885632
+    m_Localized: Just accrues points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30334951108608
+    m_Localized: Reduces the size of the borders
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30459945562112
+    m_Localized: Makes the boundaries move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30593110519808
+    m_Localized: Returns the boundaries to their original state
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30694117748736
+    m_Localized: Bonuses that change the behavior of the main character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30938528231424
+    m_Localized: Magnetic - attracts all objects to itself
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31004055842816
+    m_Localized: Repulsive - repels all objects from itself
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31174365556736
+    m_Localized: Spinning - constantly rotating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31237439500288
+    m_Localized: Elastic - has elastic properties. Be careful!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31301939507200
+    m_Localized: Square - the main character assumes a unique square shape
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31407182983168
+    m_Localized: Returns the main character to the original behavior
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

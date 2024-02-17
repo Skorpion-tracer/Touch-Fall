@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Localization_title Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Localization_title
+  m_TableCollectionNameGuidString: 7e338fdfd9558d342b5eb036a48199bb
+  m_Entries:
+  - m_Id: 149480550400
+    m_Key: play_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 383673708544
+    m_Key: tutorial_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29735153053696
+    m_Key: rules_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29925129859072
+    m_Key: enemy_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30055753068544
+    m_Key: star_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30147490885632
+    m_Key: empty_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30334951108608
+    m_Key: boundResize_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30459945562112
+    m_Key: boundMove_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30593110519808
+    m_Key: boundReset_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30694117748736
+    m_Key: header_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30938528231424
+    m_Key: magnetic_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31004055842816
+    m_Key: repulse_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31174365556736
+    m_Key: spin_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31237439500288
+    m_Key: ellastic_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31301939507200
+    m_Key: square_id
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31407182983168
+    m_Key: reset_id
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5807252482965110811
+  references:
+    version: 2
+    RefIds:
+    - rid: 5807252482965110811
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1708191574537

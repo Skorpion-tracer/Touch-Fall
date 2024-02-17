@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using TouchFall.Helper;
+using TouchFall.Helper.Enums;
 using UnityEngine;
 
 namespace TouchFall.Singletons
@@ -35,6 +36,15 @@ namespace TouchFall.Singletons
         #endregion
 
         #region Public Methods
+        public void Save(int score, bool isOnOffMusic, Language language)
+        {
+            _saveData.scores = score;
+            _saveData.isOnMusic = isOnOffMusic;
+            _saveData.language = language;
+
+            Save();
+        }
+
         public void Save(int score, bool isOnOffMusic)
         {
             _saveData.scores = score;
@@ -57,9 +67,15 @@ namespace TouchFall.Singletons
             Save();
         }
 
-        public void Load()
+        public void Save(Language language)
         {
-            
+            _saveData.language = language;
+
+            Save();
+        }
+
+        public void Load()
+        {            
             if (File.Exists(_name))
             {
                 string jsonString = File.ReadAllText(_name);
