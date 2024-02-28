@@ -11,7 +11,14 @@ namespace TouchFall.View
 
         private Vector2 _lastVelocity;
         private float _lastAngularVelocity;
+        private float _rangeVector = 30f;
         #endregion
+
+        private void OnEnable()
+        {
+            _body.AddForce(new Vector2(Random.Range(-_rangeVector, _rangeVector), Random.Range(-_rangeVector, _rangeVector)), ForceMode2D.Impulse);
+            Debug.Log("Активация");
+        }
 
         #region Public Methods
         public abstract void ApplyMod();

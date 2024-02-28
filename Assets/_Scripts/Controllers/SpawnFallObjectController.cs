@@ -10,10 +10,23 @@ namespace TouchFall.Controller
     public sealed class SpawnFallObjectController : IUpdater
     {
         #region Fields
+
+        private enum SpawnType : byte
+        {
+            None,
+            Empty,
+            ModifyHero,
+            Enemy,
+            NeedToSave,
+            ModifyBound
+        }
+
         private SpawnFallObjectModel _model;
         private PoolContainer _pool;
 
-        private float _time;
+        private SpawnType _spawnType;
+        private float _timeToSpawn;
+        private float _timeSpawnObject;
         private float _minPositionX;
         private float _maxPositionX;
         private float _posX;
@@ -21,6 +34,7 @@ namespace TouchFall.Controller
         private float _maxPosY;
         private float _minPosY;
         private float _incrementOffset = 1.5f;
+        private float _timeSpawn = 0.5f;
         #endregion
 
         #region Constructor
@@ -46,17 +60,76 @@ namespace TouchFall.Controller
         #region Public Methods
         public void Update()
         {
-            _time += Time.deltaTime;
-            if (_time >= _model.TimeSpawn)
+            //switch (_spawnType)
+            //{
+            //    case SpawnType.None:
+            //        _timeToSpawn += Time.deltaTime;
+            //        if (_timeToSpawn >= _model.TimeSpawn)
+            //        {
+            //            _posX = Random.Range(_minPositionX, _maxPositionX);
+            //            _posY = Random.Range(_minPosY, _maxPosY);
+            //            _spawnType = SpawnType.Empty;
+            //            return;
+            //        }                        
+            //        break;
+            //    case SpawnType.Empty:
+            //        InstantiateObject();
+            //        _spawnType = SpawnType.ModifyHero;
+            //        return;
+            //    case SpawnType.ModifyHero:
+            //        _timeSpawnObject += Time.deltaTime;
+            //        if (_timeSpawnObject >= _timeSpawn)
+            //        {
+            //            InstantiateModifyHeroObject();
+            //            _spawnType = SpawnType.Enemy;
+            //            _timeSpawnObject = 0;
+            //            return;
+            //        }
+            //        break;
+            //    case SpawnType.Enemy:
+            //        _timeSpawnObject += Time.deltaTime;
+            //        if (_timeSpawnObject >= _timeSpawn)
+            //        {
+            //            InstantiateEnemyObject();
+            //            _spawnType = SpawnType.NeedToSave;
+            //            _timeSpawnObject = 0;
+            //            return;
+            //        }
+            //        break;
+            //    case SpawnType.NeedToSave:
+            //        _timeSpawnObject += Time.deltaTime;
+            //        if (_timeSpawnObject >= _timeSpawn)
+            //        {
+            //            InstantiateNeedToSaveObject();
+            //            _spawnType = SpawnType.ModifyBound;
+            //            _timeSpawnObject = 0;
+            //            return;
+            //        }
+            //        break;
+            //    case SpawnType.ModifyBound:
+            //        _timeSpawnObject += Time.deltaTime;
+            //        if (_timeSpawnObject >= _timeSpawn)
+            //        {
+            //            InstantiateModifyBoundObject();
+            //            _spawnType = SpawnType.None;
+            //            _timeSpawnObject = 0;
+            //            return;
+            //        }
+            //        break;
+            //}
+            _timeToSpawn += Time.deltaTime;
+            if (_timeToSpawn >= _model.TimeSpawn)
             {
                 _posX = Random.Range(_minPositionX, _maxPositionX);
                 _posY = Random.Range(_minPosY, _maxPosY);
+
                 InstantiateObject();
                 InstantiateModifyHeroObject();
                 InstantiateEnemyObject();
                 InstantiateNeedToSaveObject();
-                InstantiateModifyBoundObject();                
-                _time = 0;
+                InstantiateModifyBoundObject();
+
+                _timeToSpawn = 0;
             }
         }
         #endregion
@@ -64,7 +137,9 @@ namespace TouchFall.Controller
         #region Private Methods
         private void OnCreateGameSession()
         {
-            _time = 0;
+            _timeToSpawn = 0;
+            _timeSpawnObject = 0;
+            _spawnType = SpawnType.None;
         }
 
         private void InstantiateObject()
@@ -156,6 +231,7 @@ namespace TouchFall.Controller
             }
 
             fallObject.transform.position = new Vector2(posX, posY);
+            //fallObject.transform.position = new Vector2(Random.Range(_minPositionX, _maxPositionX), Random.Range(_minPosY, _maxPosY));
             fallObject.SetActive(true);
         }
         #endregion

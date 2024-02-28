@@ -22,6 +22,11 @@ namespace TouchFall.Singletons
         private GameData()
         {
             _saveData = new();
+
+#if UNITY_WEBGL
+            return;
+#endif
+
             if (!Directory.Exists(_saveFolder))
             {
                 Directory.CreateDirectory(_saveFolder);
@@ -75,7 +80,10 @@ namespace TouchFall.Singletons
         }
 
         public void Load()
-        {            
+        {
+#if UNITY_WEBGL
+            return;
+#endif
             if (File.Exists(_name))
             {
                 string jsonString = File.ReadAllText(_name);
@@ -88,6 +96,10 @@ namespace TouchFall.Singletons
         #region Private Methods
         private void Save()
         {
+#if UNITY_WEBGL
+            return;
+#endif
+
             string jsonString = JsonUtility.ToJson(_saveData);
 
             File.WriteAllText(_name, jsonString);

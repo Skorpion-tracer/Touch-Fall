@@ -17,12 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 18e694f2591afa7418f06e7e126e0be0
   m_SerializeEntries:
-  - m_GUID: a372857bbedf3b541971678de19082e1
-    m_Address: Language_title_ru-RU
+  - m_GUID: e7165d7e51f0e714897923f436c2556b
+    m_Address: Lamguage_title_ru-RU
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru-RU
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 822f989b64c181b4084af274c347e35a, type: 2}

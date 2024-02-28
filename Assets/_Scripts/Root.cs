@@ -100,7 +100,9 @@ namespace TouchFall
             GameData.Instance.Load();
 
             LocalizationSettings.InitializationOperation.Completed += e =>
+            {
                 LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
+            };
 
             _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
             _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
@@ -119,6 +121,18 @@ namespace TouchFall
             _blur = (DepthOfField)_volume.profile.components.FirstOrDefault(e => e is DepthOfField);
             _blur.focalLength.value = _blurValue;
         }
+
+        //private void Start()
+        //{
+        //    LocalizationSettings.InitializationOperation.Completed += e =>
+        //    {
+        //        while (LocalizationSettings.AvailableLocales.Locales.Count == 0)
+        //        {
+
+        //        }
+        //        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
+        //    };
+        //}
 
         private void OnDestroy()
         {

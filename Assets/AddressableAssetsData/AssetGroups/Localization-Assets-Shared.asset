@@ -23,8 +23,8 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ece3ab39182b4fd4ba468b72321778fc
-    m_Address: Assets/Localization/Localization Tables/Language_title Shared Data.asset
+  - m_GUID: ec25c41700dee3c47a532bd0f4e3a0ee
+    m_Address: Assets/Localization/Localization Tables/Lamguage_title Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

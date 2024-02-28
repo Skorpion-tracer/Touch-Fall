@@ -246,10 +246,10 @@ namespace TouchFall.View.UI
 
             _panelPublicity.gameObject.SetActive(true);
 
-            await Task.Delay(1000);
+            //await Task.Delay(1000);
 
             _mainMenu.gameObject.SetActive(true);
-            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
+            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).SetDelay(1.5f).AsyncWaitForCompletion();
         }
 
         private void SetMusicImage()

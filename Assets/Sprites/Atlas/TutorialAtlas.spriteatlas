@@ -35,61 +35,60 @@ SpriteAtlas:
     - {fileID: 2800000, guid: a146d84ae1fc5c04e8152f8da017ac63, type: 3}
     - {fileID: 2800000, guid: b18301a05be345a4094dfff9c369e56c, type: 3}
     - {fileID: 2800000, guid: 973a18284a55aea4bb9bf8f6bd95a94a, type: 3}
-    - {fileID: 2800000, guid: ef267ca7d0592f548897f08384528be4, type: 3}
+    - {fileID: 2800000, guid: 786e94b7bb49fec488a1322c46cb54bf, type: 3}
     - {fileID: 2800000, guid: c4688c1fce1883f4cb4eaab89a27e2cd, type: 3}
     - {fileID: 2800000, guid: 8e0f40e6ce048d545892f026aa35ef5a, type: 3}
-    - {fileID: 2800000, guid: 63daaa908c260084b83a3917d172e94c, type: 3}
+    - {fileID: 2800000, guid: 204f2df20ef26f94f8780b0103ccec2d, type: 3}
     - {fileID: 2800000, guid: 209abac0a57875e488bdb163ca8bfa73, type: 3}
-    - {fileID: 2800000, guid: 5f59078111a2d0d4fbe92759f8ff8e41, type: 3}
+    - {fileID: 2800000, guid: bad157e232f17474da619210dc2dfc38, type: 3}
     - {fileID: 2800000, guid: 013075ddb8c1b434c828e543923962e0, type: 3}
     - {fileID: 2800000, guid: d2a026219136c254cb10e251f76ed152, type: 3}
     - {fileID: 2800000, guid: 34e3b8ab7ca16ff4caa880fe4b4782b9, type: 3}
-    - {fileID: 2800000, guid: b3e6b237a722a4049a8699394d9189bf, type: 3}
-    - {fileID: 2800000, guid: 786e94b7bb49fec488a1322c46cb54bf, type: 3}
-    - {fileID: 2800000, guid: 204f2df20ef26f94f8780b0103ccec2d, type: 3}
-    - {fileID: 2800000, guid: 2aa78f6647e108a47a366299cc3ad0e9, type: 3}
     - {fileID: 2800000, guid: adc1f1f90c13240439e0bbecce4de8e6, type: 3}
-    - {fileID: 2800000, guid: c0e7d8fc0d1e2dd4e842a76dee3a87b2, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - b18301a05be345a4094dfff9c369e56c: 21300000
+    - 209abac0a57875e488bdb163ca8bfa73: 21300000
+    - d2a026219136c254cb10e251f76ed152: 21300000
+    - bad157e232f17474da619210dc2dfc38: 21300000
+    - 204f2df20ef26f94f8780b0103ccec2d: 21300000
+    - 8e0f40e6ce048d545892f026aa35ef5a: 21300000
+    - 786e94b7bb49fec488a1322c46cb54bf: 21300000
+    - 973a18284a55aea4bb9bf8f6bd95a94a: 21300000
+    - adc1f1f90c13240439e0bbecce4de8e6: 21300000
+    - a146d84ae1fc5c04e8152f8da017ac63: 21300000
+    - 34e3b8ab7ca16ff4caa880fe4b4782b9: 21300000
+    - 013075ddb8c1b434c828e543923962e0: 21300000
+    - c4688c1fce1883f4cb4eaab89a27e2cd: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 63daaa908c260084b83a3917d172e94c, type: 3}
   - {fileID: 21300000, guid: b18301a05be345a4094dfff9c369e56c, type: 3}
   - {fileID: 21300000, guid: 209abac0a57875e488bdb163ca8bfa73, type: 3}
   - {fileID: 21300000, guid: d2a026219136c254cb10e251f76ed152, type: 3}
-  - {fileID: 21300000, guid: 5f59078111a2d0d4fbe92759f8ff8e41, type: 3}
+  - {fileID: 21300000, guid: bad157e232f17474da619210dc2dfc38, type: 3}
   - {fileID: 21300000, guid: 204f2df20ef26f94f8780b0103ccec2d, type: 3}
-  - {fileID: 21300000, guid: 2aa78f6647e108a47a366299cc3ad0e9, type: 3}
   - {fileID: 21300000, guid: 8e0f40e6ce048d545892f026aa35ef5a, type: 3}
-  - {fileID: 21300000, guid: b3e6b237a722a4049a8699394d9189bf, type: 3}
-  - {fileID: 21300000, guid: ef267ca7d0592f548897f08384528be4, type: 3}
   - {fileID: 21300000, guid: 786e94b7bb49fec488a1322c46cb54bf, type: 3}
   - {fileID: 21300000, guid: 973a18284a55aea4bb9bf8f6bd95a94a, type: 3}
   - {fileID: 21300000, guid: adc1f1f90c13240439e0bbecce4de8e6, type: 3}
   - {fileID: 21300000, guid: a146d84ae1fc5c04e8152f8da017ac63, type: 3}
   - {fileID: 21300000, guid: 34e3b8ab7ca16ff4caa880fe4b4782b9, type: 3}
-  - {fileID: 21300000, guid: c0e7d8fc0d1e2dd4e842a76dee3a87b2, type: 3}
   - {fileID: 21300000, guid: 013075ddb8c1b434c828e543923962e0, type: 3}
   - {fileID: 21300000, guid: c4688c1fce1883f4cb4eaab89a27e2cd, type: 3}
   m_PackedSpriteNamesToIndex:
-  - HeroMain
   - BoundsResizeBonus
   - MagneticBonus
   - MoveBoundsBonus
-  - MagneticHero_1
+  - MainScreen
   - SpinBonus
-  - SpinHero
   - Enemy
-  - RepulsiveHero_1
-  - EllasticHero
   - ResetBoundsBonus
   - EllasticBonus
   - SquareBonus
   - BonusDrop
   - RepulsiveBonus
-  - SquareHero_1
   - Star
   - EmptyBonus_1
   m_RenderDataMap: {}

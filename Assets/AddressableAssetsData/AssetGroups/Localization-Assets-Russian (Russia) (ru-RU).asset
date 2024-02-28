@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Russian (Russia) (ru-RU)
   m_Data:
     m_SerializedData: []
-  m_GUID: 36686a306f87f9946a995fb9ad98feeb
+  m_GUID: c3a7249545a1cc04485a04796f88f568
   m_SerializeEntries:
   - m_GUID: beee1476ebd9438468c5e89b2f870e49
     m_Address: ru
@@ -27,5 +27,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 822f989b64c181b4084af274c347e35a, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d37d61dd9b23b0040b26f8432e3c708a, type: 2}
-    - {fileID: 11400000, guid: bb91e6c1a65a1e74d821f4a1329115a3, type: 2}
+    - {fileID: 11400000, guid: ec0e9e889552c3548a627827c63c6cdc, type: 2}
+    - {fileID: 11400000, guid: 984d2b95974f7de45975e962140deb55, type: 2}
