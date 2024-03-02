@@ -31,12 +31,12 @@ namespace TouchFall.Singletons
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                EnableSounds();
+                //EnableSounds();
             }
             else
             {
                 Destroy(gameObject);
-                EnableSounds();
+                //EnableSounds();
             }
             PlayMusicMenu();
         }

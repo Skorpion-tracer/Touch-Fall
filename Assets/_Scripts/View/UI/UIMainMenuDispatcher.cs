@@ -1,6 +1,8 @@
 ﻿using DG.Tweening;
+using System;
 using System.Threading.Tasks;
 using TMPro;
+using TouchFall.Helper;
 using TouchFall.Helper.Enums;
 using TouchFall.Singletons;
 using UnityEngine;
@@ -12,6 +14,9 @@ namespace TouchFall.View.UI
     public sealed class UIMainMenuDispatcher : MonoBehaviour
     {
         #region Fields
+        [SerializeField] private Yandex _yandex;
+
+        [Space(10f)]
         [SerializeField] private RectTransform _mainPanel;
 
         [Space(10f)]
@@ -31,6 +36,7 @@ namespace TouchFall.View.UI
         [Space(10f)]
         [SerializeField] private Button _btnAdvirtisment;
         [SerializeField] private RectTransform _panelPublicity;
+        [SerializeField] private Button _btnRateGame;
 
         [Space(10f)]
         [SerializeField] private RectTransform _panelBestPoints;
@@ -64,12 +70,14 @@ namespace TouchFall.View.UI
         {
             _heighContainer = _mainPanel.rect.yMin;
 
-            SetMusicImage();
+            //SetMusicImage();
 
             await ResetPanels();
 
             _btnAdvirtisment.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
             _panelPublicity.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
+            _btnRateGame.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
+            //_yandex.CanRate();
         }
         #endregion
 
@@ -171,6 +179,17 @@ namespace TouchFall.View.UI
             SetMusicImage();
         }
 
+        public void CanRateGame(int canRate)
+        {
+            bool result = Convert.ToBoolean(canRate);
+            _btnRateGame.gameObject.SetActive(result);
+        }
+
+        public void RateGame()
+        {
+            _yandex.RateGameAction();
+        }
+
         public void ShowBestPoints(bool isShow)
         {
             _panelBestPoints.gameObject.SetActive(isShow);
@@ -190,10 +209,18 @@ namespace TouchFall.View.UI
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
         }
 
-        public void Exit()
+        public void SetMusicImage()
         {
-            GameAudio.instance.PlaySound(_soundTap);
-            Application.Quit();
+            if (GameData.Instance.SaveData.isOnMusic)
+            {
+                _imageMusicStartmenu.sprite = _musicOn;
+                _imageMusicPause.sprite = _musicOn;
+            }
+            else
+            {
+                _imageMusicStartmenu.sprite = _musicOff;
+                _imageMusicPause.sprite = _musicOff;
+            }
         }
         #endregion
 
@@ -221,10 +248,7 @@ namespace TouchFall.View.UI
 
         private async void OnGameOver()
         {
-            if (!GameLevel.Instance.IsCanUseExtraLife)
-            {
-                _panelPublicity.gameObject.SetActive(false);
-            }
+            _panelPublicity.gameObject.SetActive(GameLevel.Instance.IsCanUseExtraLife);
             _activePanel = _menuGameOver;
             _menuGameOver.gameObject.SetActive(true);
             await _menuGameOver.DOScale(1f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
@@ -246,24 +270,8 @@ namespace TouchFall.View.UI
 
             _panelPublicity.gameObject.SetActive(true);
 
-            //await Task.Delay(1000);
-
             _mainMenu.gameObject.SetActive(true);
-            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).SetDelay(1.5f).AsyncWaitForCompletion();
-        }
-
-        private void SetMusicImage()
-        {
-            if (GameData.Instance.SaveData.isOnMusic)
-            {
-                _imageMusicStartmenu.sprite = _musicOn;
-                _imageMusicPause.sprite = _musicOn;
-            }
-            else
-            {
-                _imageMusicStartmenu.sprite = _musicOff;
-                _imageMusicPause.sprite = _musicOff;
-            }
+            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).SetDelay(1.3f).AsyncWaitForCompletion();
         }
         #endregion
     }

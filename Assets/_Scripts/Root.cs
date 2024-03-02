@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TouchFall.Controller;
@@ -12,9 +11,9 @@ using TouchFall.Singletons;
 using TouchFall.View;
 using TouchFall.View.UI;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Localization.Settings;
 
 namespace TouchFall
 {
@@ -52,6 +51,9 @@ namespace TouchFall
 
         [Space(5f), Header("Music")]
         [SerializeField] private AudioModify _audioModify;
+
+        [Space(5f), Header("Yandex")]
+        [SerializeField] private Yandex _yandex;
         #endregion
 
         #region Fields
@@ -97,15 +99,7 @@ namespace TouchFall
         {
             InitModels();
 
-            GameData.Instance.Load();
-
-            LocalizationSettings.InitializationOperation.Completed += e =>
-            {
-                LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
-            };
-
-            _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
-            _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
+            GameData.Instance.InitYandex(_yandex);
 
             _playerControl = new();
             _playerControl.Click.Pause.started += OnKeyboardEsc;
@@ -122,17 +116,13 @@ namespace TouchFall
             _blur.focalLength.value = _blurValue;
         }
 
-        //private void Start()
-        //{
-        //    LocalizationSettings.InitializationOperation.Completed += e =>
-        //    {
-        //        while (LocalizationSettings.AvailableLocales.Locales.Count == 0)
-        //        {
+        private void Start()
+        {
+            GameData.Instance.Load();
 
-        //        }
-        //        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
-        //    };
-        //}
+            _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
+            _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
+        }
 
         private void OnDestroy()
         {
@@ -236,12 +226,10 @@ namespace TouchFall
             _mainHero.HidePlayer();
             _boundsController.ActivateBounds(false);
             _blur.focalLength.value = _blurValue;
-            if (GameLevel.Instance.Points > GameData.Instance.SaveData.scores)
-            {
-                GameData.Instance.Save(GameLevel.Instance.Points);
-                _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
-                _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
-            }
+
+            _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
+            _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
+
             GameAudio.instance.PlayMusicMenu();
         }
 
@@ -268,6 +256,13 @@ namespace TouchFall
             _poolContainer.PauseAllObjects(true);
             GameAudio.instance.Pause(true);
             GameAudio.instance.PlayGameOver();
+
+            int points = GameLevel.Instance.Points;
+            if (points > GameData.Instance.SaveData.scores)
+            {
+                GameData.Instance.Save(points);
+                _yandex.SaveLeaderboard(points);
+            }
         }
 
         private void BlurControl()

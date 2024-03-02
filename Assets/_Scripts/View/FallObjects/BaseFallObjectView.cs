@@ -17,7 +17,6 @@ namespace TouchFall.View
         private void OnEnable()
         {
             _body.AddForce(new Vector2(Random.Range(-_rangeVector, _rangeVector), Random.Range(-_rangeVector, _rangeVector)), ForceMode2D.Impulse);
-            Debug.Log("Активация");
         }
 
         #region Public Methods

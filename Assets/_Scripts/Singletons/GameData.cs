@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using TouchFall.Helper;
 using TouchFall.Helper.Enums;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace TouchFall.Singletons
 {
@@ -14,24 +16,17 @@ namespace TouchFall.Singletons
             new(() => new GameData(), LazyThreadSafetyMode.ExecutionAndPublication);
 
         private SaveData _saveData;
-        private readonly string _saveFolder = Path.Combine(Application.persistentDataPath, "Saves");
-        private readonly string _name;
+        private Yandex _yandex;
+        private Dictionary<string, Language> _langDict = new()
+        {
+            { "ru", Language.Russian }, { "en", Language.Russian }
+        };
         #endregion
 
         #region Constructor
         private GameData()
         {
             _saveData = new();
-
-#if UNITY_WEBGL
-            return;
-#endif
-
-            if (!Directory.Exists(_saveFolder))
-            {
-                Directory.CreateDirectory(_saveFolder);
-            }
-            _name = Path.Combine(_saveFolder, "save.json");
         }
         #endregion
 
@@ -41,6 +36,11 @@ namespace TouchFall.Singletons
         #endregion
 
         #region Public Methods
+        public void InitYandex(Yandex yandex)
+        {
+            _yandex = yandex;
+        }
+
         public void Save(int score, bool isOnOffMusic, Language language)
         {
             _saveData.scores = score;
@@ -74,6 +74,7 @@ namespace TouchFall.Singletons
 
         public void Save(Language language)
         {
+            _saveData.isChangeLang = true;
             _saveData.language = language;
 
             Save();
@@ -81,14 +82,24 @@ namespace TouchFall.Singletons
 
         public void Load()
         {
-#if UNITY_WEBGL
-            return;
-#endif
-            if (File.Exists(_name))
-            {
-                string jsonString = File.ReadAllText(_name);
+            _yandex.Load();
+        }
 
-                _saveData = JsonUtility.FromJson<SaveData>(jsonString);
+        public void Load(string data)
+        {
+            _saveData = JsonUtility.FromJson<SaveData>(data);
+        }
+
+        public void Localize(string lang)
+        {
+            if (_langDict.ContainsKey(lang))
+            {
+                _saveData.language = _langDict[lang];
+
+                LocalizationSettings.InitializationOperation.Completed += e =>
+                {
+                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
+                };
             }
         }
         #endregion
@@ -96,13 +107,8 @@ namespace TouchFall.Singletons
         #region Private Methods
         private void Save()
         {
-#if UNITY_WEBGL
-            return;
-#endif
-
             string jsonString = JsonUtility.ToJson(_saveData);
-
-            File.WriteAllText(_name, jsonString);
+            _yandex.Save(jsonString);
         }
         #endregion
     }

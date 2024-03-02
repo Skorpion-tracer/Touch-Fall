@@ -456,8 +456,8 @@ PlayerSettings:
     CUSTOMIZE_LOADING_SCREEN_BACKGROUND: 
     CUSTOMIZE_LOGO: display = "none"
     CUSTOM_EVENT_IN_CSS: 
-    CUSTOM_EVENT_IN_HTML: 
-    CUSTOM_EVENT_IN_JS: 
+    CUSTOM_EVENT_IN_HTML: <script src="https://yandex.ru/games/sdk/v2"></script>
+    CUSTOM_EVENT_IN_JS: YaGames.init().then(ysdk=>{console.log("Yandex SDK initialized");window.ysdk=ysdk});
     DISABLE_CONSOLE_MESSAGES: 
     GP_GAMEREADY_AUTOCALL_DELAY: 
     GP_PROJECT_ID: 
