@@ -191,7 +191,11 @@ namespace TouchFall.Controller
             switch (modify)
             {
                 case ModifyBounds.Moving:
-                    if (_currentMod == ModifyBounds.Moving) return;
+                    if (_currentMod == ModifyBounds.Moving)
+                    {
+                        GameAudio.instance.PlayEmptyBonus();
+                        return;
+                    } 
                     _currentMod = ModifyBounds.Moving;
                     _moveLeft = 0f;
                     _moveRight = 0f;
@@ -212,6 +216,8 @@ namespace TouchFall.Controller
                     _isStayBounds = true;
                     if (_isPlayStayBounds)
                         GameAudio.instance.PlaySoundBounds(_audioModify.GetAudio(ModifyBounds.Stay));
+                    else
+                        GameAudio.instance.PlayEmptyBonus();
                     _isStartPosition = true;
                     _isPlayStayBounds = false;
                     _currentMod = ModifyBounds.Stay;

@@ -1,3 +1,5 @@
+var isRewarded = false;
+
 mergeInto(LibraryManager.library, {
 
   /*Hello: function () {
@@ -31,12 +33,14 @@ mergeInto(LibraryManager.library, {
     if (value) {
       ysdk.feedback.requestReview()
       .then(({ feedbackSent }) => {
-        console.log(feedbackSent);
+        console.log("Результат оценки" + feedbackSent);
         if (feedbackSent) {
-          myGameInstance.SendMessage('Yandex', 'CanRateGameCallback', 1);
+          // Если оценка поставлена отправляем в Unity false и скрываем кнопку
+          myGameInstance.SendMessage('Yandex', 'CanRateGameCallback', 0);
         }
         else {
-          myGameInstance.SendMessage('Yandex', 'CanRateGameCallback', 0);
+          // Иначе отправляем в Unity true и оставляем кнопку видимой
+          myGameInstance.SendMessage('Yandex', 'CanRateGameCallback', 1);
         }
       });
     } else {
@@ -73,6 +77,45 @@ mergeInto(LibraryManager.library, {
     var buffer = _malloc(bufferSize);
     stringToUTF8(lang, buffer, bufferSize);
     return buffer;
+  },
+
+  ShowAdv: function() {
+      ysdk.adv.showFullscreenAdv({
+      callbacks: {
+          onClose: function(wasShown) {
+            myGameInstance.SendMessage('Yandex', 'StartGame');
+          },
+          onError: function(error) {
+            myGameInstance.SendMessage('Yandex', 'StartGame');
+          }
+      }
+    });
+  },
+
+  ShowAdvRewarded: function() {
+    ysdk.adv.showRewardedVideo({
+        callbacks: {
+          onOpen: () => {
+            console.log('Video ad open.');
+          },
+          onRewarded: () => {
+            console.log('Rewarded!');
+            isRewarded = true;
+          },
+          onClose: () => {
+            if (isRewarded) {
+              myGameInstance.SendMessage('Yandex', 'AfterRewarded');
+            }
+            else {
+              console.log('Close before watching the ad');
+              myGameInstance.SendMessage('Yandex', 'UnLockBtns');
+            }
+          }, 
+          onError: (e) => {
+            console.log('Error while open video ad:', e);
+          }
+      }
+    });
   },
 
 });

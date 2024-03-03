@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
@@ -11,6 +12,9 @@ namespace TouchFall.View.UI
     public sealed class UIGamePlayDispatcher : MonoBehaviour
     {
         #region Fields
+        [SerializeField] private RectTransform _gameInformationPanel;
+
+        [Space(10f)]
         [SerializeField] private List<RectTransform> _lifes;
         [SerializeField] private Button _pauseBtn;
 
@@ -25,8 +29,7 @@ namespace TouchFall.View.UI
 
         [Space(10f)]
         [SerializeField] private TextMeshProUGUI _pointsText;
-
-        private RectTransform _gameInformationPanel;
+        
         private Tween _tweenMouseEnter;
         private Tween _tweenPause;
         private List<Tween> _tweensLifes = new(3);
@@ -40,7 +43,6 @@ namespace TouchFall.View.UI
         {
             _pointsText.text = "0";
 
-            _gameInformationPanel ??= GetComponent<RectTransform>();
             _heightPanel = _gameInformationPanel.rect.yMin;
 
             _gameInformationPanel.anchoredPosition = new Vector2(_gameInformationPanel.anchoredPosition.x, _heightPanel * -1);
@@ -89,12 +91,18 @@ namespace TouchFall.View.UI
         #region Private Methods
         private void HidePanel()
         {
-            _tweenPause = _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel).SetEase(Ease.InBack);
+            _pauseBtn.interactable = false;
+            _tweenPause = _gameInformationPanel.DOAnchorPosY(_heightPanel * -1, _durationHidePanel).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                _gameInformationPanel.gameObject.SetActive(false);
+                _pauseBtn.interactable = true;
+            });
         }
 
         private void ShowPanel()
         {
             _tweenPause?.Kill();
+            _gameInformationPanel.gameObject.SetActive(true);
             _gameInformationPanel.DOAnchorPosY(0, _durationHidePanel).SetEase(Ease.OutBack);
         }
 

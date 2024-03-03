@@ -37,6 +37,8 @@ namespace TouchFall.View.UI
         [SerializeField] private Button _btnAdvirtisment;
         [SerializeField] private RectTransform _panelPublicity;
         [SerializeField] private Button _btnRateGame;
+        [SerializeField] private Button _btnRestartGameOver;
+        [SerializeField] private Button _btnExitMenuGameOver;
 
         [Space(10f)]
         [SerializeField] private RectTransform _panelBestPoints;
@@ -49,8 +51,14 @@ namespace TouchFall.View.UI
 
         private Tween _tweenMouseEnter;
         private RectTransform _activePanel;
+        private Button _buttonStartGame;
 
         private float _heighContainer;
+
+        private int _countShowAdv = 0;
+        private int _maxShowAdv = 2;
+
+        private bool _isStart;
         #endregion
 
         #region UnityMethods
@@ -70,23 +78,45 @@ namespace TouchFall.View.UI
         {
             _heighContainer = _mainPanel.rect.yMin;
 
-            //SetMusicImage();
-
             await ResetPanels();
 
             _btnAdvirtisment.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
             _panelPublicity.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
             _btnRateGame.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
-            //_yandex.CanRate();
         }
         #endregion
 
         #region Public Methods
-        public async void StartGame()
+
+        public async void StartGame(Button button)
         {
+            _buttonStartGame = button;
+            _buttonStartGame.interactable = false;
+
             GameAudio.instance.PlaySound(_soundTap);
-            await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
-            GameLevel.Instance.NewGame();
+
+            _isStart = true;
+
+            if (IsShowAdvertisment()) return;
+
+            await StartGameAfterAdvirtisment();
+        }
+
+        public async Task StartGameAfterAdvirtisment()
+        {
+            if (_isStart)
+            {
+                await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
+            }
+            else
+            {
+                await _menuGameOver.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
+                _menuGameOver.gameObject.SetActive(false);
+            }
+
+            _buttonStartGame.interactable = true;
+
+            GameLevel.Instance.NewGame();            
         }
 
         public void BtnMouseEnter(Button btn)
@@ -99,30 +129,58 @@ namespace TouchFall.View.UI
             BtnMousExit(btn);
         }
 
-        public async void ResumeGame()
+        public async void ResumeGame(Button button)
         {
+            button.interactable = false;
+
             GameAudio.instance.PlaySound(_soundTap);
             await _menuPause.DOAnchorPosY(_heighContainer + _menuPause.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
             _menuPause.gameObject.SetActive(false);
 
             GameLoop.Instance.Resume();
+
+            button.interactable = true;
         }
 
         public async void ShowAdvirtisemnet()
         {
-            // TODO Вызывать показ рекламы
+            _btnAdvirtisment.interactable = false;
+            _btnRestartGameOver.interactable = false;
+            _btnExitMenuGameOver.interactable = false;
 
             GameAudio.instance.PlaySound(_soundTap);
 
+            if (GameLevel.Instance.IsCanUseExtraLife)
+            {
+                _yandex.ShowRewarded();
+                return;
+            }
+
+            await ResumeGameAfterRewarded();
+        }
+
+        public async Task ResumeGameAfterRewarded()
+        {
             await _menuGameOver.DOScale(0f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
             _menuGameOver.gameObject.SetActive(false);
 
             GameLevel.Instance.SetExtraLife();
             GameLoop.Instance.ResumeAdvertisment();
+
+            UnLockBtns();
         }
 
-        public async void ExitToMainMenu()
+        public void UnLockBtns()
         {
+            _btnAdvirtisment.interactable = true;
+            _btnRestartGameOver.interactable = true;
+            _btnExitMenuGameOver.interactable = true;
+        }
+
+        public async void ExitToMainMenu(Button button)
+        {
+            button.interactable = false;
+
             GameAudio.instance.PlaySound(_soundTap);
             GameLevel.Instance.ExitToMainMenu();
 
@@ -130,6 +188,8 @@ namespace TouchFall.View.UI
             _activePanel.gameObject.SetActive(false);
 
             await ResetPanels();
+
+            button.interactable = true;
         }
 
         public void SetShowTotorial(bool isShow)
@@ -162,14 +222,18 @@ namespace TouchFall.View.UI
             await _mainMenu.DOScale(1f, _durationMovePanels).SetEase(Ease.OutBack).AsyncWaitForCompletion();
         }
 
-        public async void RestartGame()
+        public async void RestartGame(Button button)
         {
+            _buttonStartGame = button;
+            _buttonStartGame.interactable = false;
+
             GameAudio.instance.PlaySound(_soundTap);
 
-            await _menuGameOver.DOScale(0f, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
-            _menuGameOver.gameObject.SetActive(false);
+            _isStart = false;
 
-            GameLevel.Instance.NewGame();
+            if (IsShowAdvertisment()) return;
+
+            await StartGameAfterAdvirtisment();
         }
 
         public void MusicOnOff()
@@ -187,7 +251,9 @@ namespace TouchFall.View.UI
 
         public void RateGame()
         {
+            _btnRateGame.interactable = false;
             _yandex.RateGameAction();
+            _btnRateGame.interactable = true;
         }
 
         public void ShowBestPoints(bool isShow)
@@ -225,6 +291,21 @@ namespace TouchFall.View.UI
         #endregion
 
         #region Private Methods
+        private bool IsShowAdvertisment()
+        {
+            _countShowAdv++;
+
+            if (_countShowAdv >= _maxShowAdv && GameLevel.Instance.TimerGame >= 60f)
+            {
+                _yandex.ShowAdvirtisment();
+                _countShowAdv = 0;
+                GameLevel.Instance.TimerGame = 0f;
+                return true;
+            }
+
+            return false;
+        }
+
         private void BtnMousEnter(Button btn)
         {
             _tweenMouseEnter = btn.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);

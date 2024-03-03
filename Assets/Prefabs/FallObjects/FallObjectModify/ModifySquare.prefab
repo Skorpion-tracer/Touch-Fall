@@ -166,7 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _body: {fileID: 1058704974769555172}
   _modifyHero: 5
-  _score: 20
+  _score: 40
 --- !u!114 &-3133583523283329966
 MonoBehaviour:
   m_ObjectHideFlags: 0

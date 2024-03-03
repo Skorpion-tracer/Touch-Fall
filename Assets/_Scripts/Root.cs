@@ -131,7 +131,7 @@ namespace TouchFall
 
         private void Update()
         {
-            if (GameLoop.Instance.GameState == GameState.MainMenu) return;
+            if (GameLoop.Instance.GameState is GameState.MainMenu) return;
             if (GameLoop.Instance.GameState == GameState.GamePlay)
             {
                 for (int i = 0; i < _updaters.Count; i++)
@@ -140,6 +140,8 @@ namespace TouchFall
                 }
             }
             BlurControl();
+
+            GameLevel.Instance.TimerGame += Time.deltaTime;
         }
 
         private void FixedUpdate()

@@ -38,6 +38,11 @@ namespace TouchFall.Singletons
             GameState = GameState.GamePlay;
         }
 
+        public void SetAdirtisment()
+        {
+            GameState = GameState.Advirtisment;
+        }
+
         public void ResumeAdvertisment()
         {
             ResumeCommercial?.Invoke();

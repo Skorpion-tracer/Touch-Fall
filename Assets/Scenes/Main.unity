@@ -1334,10 +1334,10 @@ MonoBehaviour:
       - m_Target: {fileID: 895041118}
         m_TargetAssemblyTypeName: TouchFall.View.UI.UIMainMenuDispatcher, Assembly-CSharp
         m_MethodName: ExitToMainMenu
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 312272964}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1916,7 +1916,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!212 &416914115
 SpriteRenderer:
@@ -1999,7 +1999,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &419809231
 Transform:
@@ -2539,7 +2539,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &514984697
 MonoBehaviour:
@@ -7618,7 +7618,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &546078755
 Transform:
@@ -7900,10 +7900,10 @@ MonoBehaviour:
       - m_Target: {fileID: 895041118}
         m_TargetAssemblyTypeName: TouchFall.View.UI.UIMainMenuDispatcher, Assembly-CSharp
         m_MethodName: ResumeGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 558467921}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8196,7 +8196,7 @@ MonoBehaviour:
     _offsetVerticalPositionSpawn: 2.3
   _timerGameModel:
     _timeLimit: 5
-  _uiGame: {fileID: 977358044}
+  _uiGame: {fileID: 0}
   _uiMenu: {fileID: 895041118}
   _volume: {fileID: 1088029441}
   _cameraAnim: {fileID: 519420034}
@@ -9245,10 +9245,10 @@ MonoBehaviour:
       - m_Target: {fileID: 895041118}
         m_TargetAssemblyTypeName: TouchFall.View.UI.UIMainMenuDispatcher, Assembly-CSharp
         m_MethodName: StartGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 765316959}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10121,6 +10121,8 @@ MonoBehaviour:
   _btnAdvirtisment: {fileID: 1614020290}
   _panelPublicity: {fileID: 1696630590}
   _btnRateGame: {fileID: 782790042}
+  _btnRestartGameOver: {fileID: 1777700003}
+  _btnExitMenuGameOver: {fileID: 1577253837}
   _panelBestPoints: {fileID: 368801588}
   _textCountPoints: {fileID: 1641060746}
   _durationMovePanels: 0.6
@@ -10141,7 +10143,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!82 &924374404
 AudioSource:
@@ -10269,7 +10271,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &939550510
 MonoBehaviour:
@@ -10687,7 +10689,6 @@ GameObject:
   m_Component:
   - component: {fileID: 977358042}
   - component: {fileID: 977358043}
-  - component: {fileID: 977358044}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -10712,10 +10713,10 @@ RectTransform:
   - {fileID: 714893727}
   m_Father: {fileID: 1290736902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.9281875}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0.37995437}
+  m_SizeDelta: {x: 0, y: 76.37996}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &977358043
 CanvasRenderer:
@@ -10725,29 +10726,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977358041}
   m_CullTransparentMesh: 1
---- !u!114 &977358044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977358041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41d65981088884745a8cab252a11eb88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lifes:
-  - {fileID: 467646384}
-  - {fileID: 2121787706}
-  - {fileID: 701080928}
-  _pauseBtn: {fileID: 2076069048}
-  _durationEnterBtn: 0.3
-  _scaleBtn: 1.1
-  _durationHidePanel: 0.5
-  _durationShakeLife: 0.7
-  _punchShakeLife: {x: 1.1, y: 1.3, z: 0}
-  _pointsText: {fileID: 714893728}
 --- !u!1 &984587152
 GameObject:
   m_ObjectHideFlags: 0
@@ -11618,7 +11596,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1195538640
 MonoBehaviour:
@@ -11682,7 +11660,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1197524829
 Transform:
@@ -12358,6 +12336,7 @@ GameObject:
   - component: {fileID: 1290736901}
   - component: {fileID: 1290736900}
   - component: {fileID: 1290736899}
+  - component: {fileID: 1290736903}
   m_Layer: 5
   m_Name: UIGamePlay
   m_TagString: Untagged
@@ -12448,6 +12427,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1290736903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290736898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d65981088884745a8cab252a11eb88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameInformationPanel: {fileID: 977358042}
+  _lifes:
+  - {fileID: 467646384}
+  - {fileID: 2121787706}
+  - {fileID: 701080928}
+  _pauseBtn: {fileID: 2076069048}
+  _durationEnterBtn: 0.3
+  _scaleBtn: 1.1
+  _durationHidePanel: 0.5
+  _durationShakeLife: 0.7
+  _punchShakeLife: {x: 1.1, y: 1.3, z: 0}
+  _pointsText: {fileID: 714893728}
 --- !u!1 &1324973415
 GameObject:
   m_ObjectHideFlags: 0
@@ -13415,7 +13418,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1490947508
 MonoBehaviour:
@@ -13574,7 +13577,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1524311822
 Transform:
@@ -13835,10 +13838,10 @@ MonoBehaviour:
       - m_Target: {fileID: 895041118}
         m_TargetAssemblyTypeName: TouchFall.View.UI.UIMainMenuDispatcher, Assembly-CSharp
         m_MethodName: ExitToMainMenu
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1577253837}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14843,7 +14846,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!82 &1665063894
 AudioSource:
@@ -15268,7 +15271,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1701793404
 Transform:
@@ -15891,10 +15894,10 @@ MonoBehaviour:
       - m_Target: {fileID: 895041118}
         m_TargetAssemblyTypeName: TouchFall.View.UI.UIMainMenuDispatcher, Assembly-CSharp
         m_MethodName: RestartGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1777700003}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -17050,7 +17053,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 977358044}
+        - m_Target: {fileID: 1290736903}
           m_TargetAssemblyTypeName: TouchFall.View.UI.UIGamePlayDispatcher, Assembly-CSharp
           m_MethodName: ButtonMouseEnter
           m_Mode: 1
@@ -17066,7 +17069,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 977358044}
+        - m_Target: {fileID: 1290736903}
           m_TargetAssemblyTypeName: TouchFall.View.UI.UIGamePlayDispatcher, Assembly-CSharp
           m_MethodName: ButtonMouseExit
           m_Mode: 1

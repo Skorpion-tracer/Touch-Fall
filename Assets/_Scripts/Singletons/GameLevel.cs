@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using TouchFall.Helper;
+using UnityEngine;
 
 namespace TouchFall.Singletons
 {
@@ -57,6 +59,7 @@ namespace TouchFall.Singletons
 
         public bool IsCanUseExtraLife => _countExtraLife <= 2;
         public int Points => _points;
+        public float TimerGame { get; set; }
         #endregion
 
         #region Public Methods

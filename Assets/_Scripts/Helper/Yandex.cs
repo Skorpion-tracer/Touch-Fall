@@ -30,6 +30,12 @@ namespace TouchFall.Helper
 
         [DllImport("__Internal")]
         private static extern string GetLang();
+
+        [DllImport("__Internal")]
+        private static extern void ShowAdv();
+
+        [DllImport("__Internal")]
+        private static extern void ShowAdvRewarded();
         #endregion
 
         #region Public Methods
@@ -83,6 +89,26 @@ namespace TouchFall.Helper
 #endif
         }
 
+        public void ShowAdvirtisment()
+        {
+#if UNITY_EDITOR
+            return;
+#endif
+#if UNITY_WEBGL
+            ShowAdv();
+#endif
+        }
+
+        public void ShowRewarded()
+        {
+#if UNITY_EDITOR
+            return;
+#endif
+#if UNITY_WEBGL
+            ShowAdvRewarded();
+#endif
+        }
+        
         /// <summary>
         /// Вызывается из jslib
         /// </summary>
@@ -118,6 +144,30 @@ namespace TouchFall.Helper
         public void CanRateGameCallback(int canRate)
         {
             _mainMenu.CanRateGame(canRate);
+        }
+
+        /// <summary>
+        /// Вызывается из jslib
+        /// </summary>
+        public async void StartGame()
+        {
+            await _mainMenu.StartGameAfterAdvirtisment();
+        }
+
+        /// <summary>
+        /// Вызывается из jslib
+        /// </summary>
+        public async void AfterRewarded()
+        {
+            await _mainMenu.ResumeGameAfterRewarded();
+        }
+
+        /// <summary>
+        /// Вызывается из jslib
+        /// </summary>
+        public void UnLockBtns()
+        {
+            _mainMenu.UnLockBtns();
         }
         #endregion
     }

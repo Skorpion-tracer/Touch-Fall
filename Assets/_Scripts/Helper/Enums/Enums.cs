@@ -37,7 +37,8 @@ namespace TouchFall.Helper.Enums
         MainMenu,
         GamePlay,
         Pause,
-        GameOver
+        GameOver,
+        Advirtisment
     }
 
     public enum Language : byte
