@@ -1,3 +1,4 @@
+using System;
 using TouchFall.Controller.Interfaces;
 using TouchFall.Helper;
 using TouchFall.Helper.Enums;
@@ -20,11 +21,14 @@ namespace TouchFall.Controller
         private PlayerControl _playerControl;
         //private Transform _heroTransform;
         private Camera _camera;
+        private Func<Vector3> _getTouch;
 
         private Vector2 _startPosition;
         private Vector2 _endPosition;
+        private Vector2 _screenBounds;
 
         private float _downTime = 0f;
+        private float _coeffSizeHero = 0.5f;
         #endregion
 
         #region Constructors
@@ -34,7 +38,7 @@ namespace TouchFall.Controller
         /// <param name="mainHeroView">—сылка на view геро€</param>
         /// <param name="mainHeroModel">—сылка на модель геро€</param>
         /// <param name="startPosition">—сылка на стартовую позицию геро€</param>
-        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition)
+        public MainHeroMoveController(MainHeroView mainHeroView, MainHeroModel mainHeroModel, PlayerControl playerControl, Vector2 startPosition, Vector2 screenBounds)
         {
             _view = mainHeroView;
             _model = mainHeroModel;
@@ -43,6 +47,7 @@ namespace TouchFall.Controller
             //_heroTransform = _view.transform;
 
             _camera = Camera.main;
+            _screenBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
 
             _playerControl = playerControl;
 
@@ -50,11 +55,15 @@ namespace TouchFall.Controller
             {
                 _playerControl.Touch.PrimaryContact.started += ctx => OnStartTouch(ctx);
                 _playerControl.Touch.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
+
+                _getTouch = TouchVector3;
             }
             else
             {
                 _playerControl.Click.PrimaryContact.started += ctx => OnStartTouch(ctx);
                 _playerControl.Click.PrimaryContact.canceled += ctx => EndTocuhPrimary(ctx);
+
+                _getTouch = ClickVector3;
             }
         }
 
@@ -139,10 +148,22 @@ namespace TouchFall.Controller
 
         private Vector3 GetPositionTouch()
         {
-            if (Application.isMobilePlatform)
-                return Utils.ScreenToWorld(_camera, _playerControl.Touch.PrimaryPosition.ReadValue<Vector2>());
-            else
-                return Utils.ScreenToWorld(_camera, _playerControl.Click.PrimaryPosition.ReadValue<Vector2>());
+            Vector3 pos = _getTouch();
+
+            pos.x = Mathf.Clamp(pos.x, _screenBounds.x * -1 + _coeffSizeHero, _screenBounds.x - _coeffSizeHero);
+            pos.y = Mathf.Clamp(pos.y, _screenBounds.y * -1 + _coeffSizeHero, _screenBounds.y - _coeffSizeHero);
+
+            return pos;
+        }
+
+        private Vector3 TouchVector3()
+        {
+            return Utils.ScreenToWorld(_camera, _playerControl.Touch.PrimaryPosition.ReadValue<Vector2>());
+        }
+
+        private Vector3 ClickVector3()
+        {
+            return Utils.ScreenToWorld(_camera, _playerControl.Click.PrimaryPosition.ReadValue<Vector2>());
         }
         #endregion
     }

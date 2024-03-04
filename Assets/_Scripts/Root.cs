@@ -146,6 +146,7 @@ namespace TouchFall
 
         private void FixedUpdate()
         {
+            if (GameLoop.Instance.GameState is GameState.MainMenu) return;
             if (GameLoop.Instance.GameState == GameState.GamePlay)
             {
                 for (int i = 0; i < _fixedUpdaters.Count; i++)
@@ -186,7 +187,7 @@ namespace TouchFall
             _bottomTriggerView.Initialized(_boundModel, _screenBounds);
 
             _mainHero.InstantiateHeroes(_startPointHero.position, _audioModify);
-            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position);
+            _mainHeroMoveController = new(_mainHero, _mainHeroModel, _playerControl, _startPointHero.position, _screenBounds);
             _mainHeroBehavoiurController = new(_mainHero, _mainHeroModel);
 
             _spawnController = new(_spawnModel, _poolContainer, _screenBounds);

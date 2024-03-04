@@ -19,7 +19,7 @@ namespace TouchFall.Singletons
         private Yandex _yandex;
         private Dictionary<string, Language> _langDict = new()
         {
-            { "ru", Language.Russian }, { "en", Language.Russian }
+            { "ru", Language.Russian }, { "en", Language.English }
         };
         #endregion
 
@@ -98,7 +98,14 @@ namespace TouchFall.Singletons
 
                 LocalizationSettings.InitializationOperation.Completed += e =>
                 {
-                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)GameData.Instance.SaveData.language];
+                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)_saveData.language];
+                };
+            }
+            else
+            {
+                LocalizationSettings.InitializationOperation.Completed += e =>
+                {
+                    LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)Language.Russian];
                 };
             }
         }
