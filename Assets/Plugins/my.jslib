@@ -57,11 +57,15 @@ mergeInto(LibraryManager.library, {
 
   LoadExtern: function() {
     console.log("Loading data player");
-      player.getData().then(_data => {
+    if (player) {
+        player.getData().then(_data => {
         const myJSON = JSON.stringify(_data);
         myGameInstance.SendMessage('Yandex', 'LoadData', myJSON);
         console.log(myJSON);
       });
+    } else {
+      console.log("player don`t init");
+    }
   },
 
   SetToLeaderBoard: function(value) {

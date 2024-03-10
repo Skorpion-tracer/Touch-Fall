@@ -54,6 +54,7 @@ namespace TouchFall.View.UI
         private Button _buttonStartGame;
 
         private float _heighContainer;
+        private float _delayShowMenu = 2.3f;
 
         private int _countShowAdv = 0;
         private int _maxShowAdv = 2;
@@ -80,6 +81,8 @@ namespace TouchFall.View.UI
 
             await ResetPanels();
 
+            _delayShowMenu = 0.3f;
+
             _btnAdvirtisment.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
             _panelPublicity.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
             _btnRateGame.gameObject.transform.DOScale(_scaleBtn, _durationScaleBtns).SetLoops(-1, LoopType.Yoyo);
@@ -104,6 +107,8 @@ namespace TouchFall.View.UI
 
         public async Task StartGameAfterAdvirtisment()
         {
+            GameAudio.instance.EnableSounds();
+
             if (_isStart)
             {
                 await _mainMenu.DOAnchorPosY(_heighContainer + _mainMenu.rect.yMin, _durationMovePanels).SetEase(Ease.InBack).AsyncWaitForCompletion();
@@ -115,8 +120,8 @@ namespace TouchFall.View.UI
             }
 
             _buttonStartGame.interactable = true;
-
-            GameLevel.Instance.NewGame();            
+            
+            GameLevel.Instance.NewGame();
         }
 
         public void BtnMouseEnter(Button btn)
@@ -152,6 +157,7 @@ namespace TouchFall.View.UI
 
             if (GameLevel.Instance.IsCanUseExtraLife)
             {
+                GameAudio.instance.DisableSounds();
                 _yandex.ShowRewarded();
                 return;
             }
@@ -175,6 +181,7 @@ namespace TouchFall.View.UI
             _btnAdvirtisment.interactable = true;
             _btnRestartGameOver.interactable = true;
             _btnExitMenuGameOver.interactable = true;
+            GameAudio.instance.EnableSounds();
         }
 
         public async void ExitToMainMenu(Button button)
@@ -194,6 +201,7 @@ namespace TouchFall.View.UI
 
         public void SetShowTotorial(bool isShow)
         {
+            GameAudio.instance.PlaySound(_soundTap);
             _menuTutorial.gameObject.SetActive(isShow);
             _tweenMouseEnter?.Restart();
             _tweenMouseEnter?.Complete();
@@ -238,6 +246,7 @@ namespace TouchFall.View.UI
 
         public void MusicOnOff()
         {
+            GameAudio.instance.PlaySound(_soundTap);
             GameData.Instance.Save(!GameData.Instance.SaveData.isOnMusic);
             GameAudio.instance.EnableSounds();
             SetMusicImage();
@@ -268,6 +277,7 @@ namespace TouchFall.View.UI
 
         public void ChangeLang()
         {
+            GameAudio.instance.PlaySound(_soundTap);
             Language currentLang = GameData.Instance.SaveData.language;
             GameData.Instance.SaveData.language = currentLang == Language.English ? Language.Russian : Language.English;
             GameData.Instance.Save(GameData.Instance.SaveData.language);
@@ -297,6 +307,7 @@ namespace TouchFall.View.UI
 
             if (_countShowAdv >= _maxShowAdv && GameLevel.Instance.TimerGame >= 60f)
             {
+                GameAudio.instance.DisableSounds();
                 _yandex.ShowAdvirtisment();
                 _countShowAdv = 0;
                 GameLevel.Instance.TimerGame = 0f;
@@ -352,7 +363,7 @@ namespace TouchFall.View.UI
             _panelPublicity.gameObject.SetActive(true);
 
             _mainMenu.gameObject.SetActive(true);
-            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).SetDelay(1.3f).AsyncWaitForCompletion();
+            await _mainMenu.DOAnchorPosY(1f, _durationMovePanels).SetEase(Ease.OutBack).SetDelay(_delayShowMenu).AsyncWaitForCompletion();
         }
         #endregion
     }

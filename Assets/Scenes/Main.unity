@@ -9041,7 +9041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0420\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u043E"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d97a84e9849b76d4c9160f25629d80ce, type: 2}
   m_sharedMaterial: {fileID: 4166143176527572277, guid: d97a84e9849b76d4c9160f25629d80ce, type: 2}
@@ -11618,10 +11618,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ab3c03bc2c72444aae8932ccc6ca97d, type: 3}
   - {fileID: 8300000, guid: cc5fa4ce88f7e5542af3fd7d46de50a2, type: 3}
   _musicsGamePlay:
+  - {fileID: 8300000, guid: 5059413ec429c4507bb7bca2286fad19, type: 3}
   - {fileID: 8300000, guid: b6891bf38a3df44b29d9271a7acfea03, type: 3}
   - {fileID: 8300000, guid: 5bad19318d4b8527699548fa25ef04b9, type: 3}
   - {fileID: 8300000, guid: 0bc55b8656c4adb578aba68c68683c1b, type: 3}
-  - {fileID: 8300000, guid: b1dcba19f5e11af029e0b88d1b4e2a2e, type: 3}
   _gameOver: {fileID: 8300000, guid: 36f7bdb9703097b4fb141049b3271dd7, type: 3}
   _damage: {fileID: 8300000, guid: 0a564b81f929f3840af7cdfc6abdfc75, type: 3}
   _extraLife: {fileID: 8300000, guid: 660cf884459704f46aceb1264feee78f, type: 3}
@@ -15092,7 +15092,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0418\u0433\u0440\u0430\u0442\u044C"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d97a84e9849b76d4c9160f25629d80ce, type: 2}
   m_sharedMaterial: {fileID: 4166143176527572277, guid: d97a84e9849b76d4c9160f25629d80ce, type: 2}
@@ -16273,7 +16273,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: beee1476ebd9438468c5e89b2f870e49, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

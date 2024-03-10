@@ -31,12 +31,10 @@ namespace TouchFall.Singletons
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
-                //EnableSounds();
             }
             else
             {
                 Destroy(gameObject);
-                //EnableSounds();
             }
             PlayMusicMenu();
         }
@@ -50,6 +48,14 @@ namespace TouchFall.Singletons
             _soundBounds.mute = onOff;
             _soundHero.mute = onOff;
             _soundOther.mute = onOff;
+        }
+
+        public void DisableSounds()
+        {
+            _music.mute = true;
+            _soundBounds.mute = true;
+            _soundHero.mute = true;
+            _soundOther.mute = true;
         }
 
         public void PlaySound(AudioClip clip)
