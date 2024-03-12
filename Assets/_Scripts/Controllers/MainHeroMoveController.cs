@@ -19,7 +19,6 @@ namespace TouchFall.Controller
         private MainHeroModel _model;
 
         private PlayerControl _playerControl;
-        //private Transform _heroTransform;
         private Camera _camera;
         private Func<Vector3> _getTouch;
 
@@ -44,12 +43,13 @@ namespace TouchFall.Controller
             _model = mainHeroModel;
             _startPosition = startPosition;
 
-            //_heroTransform = _view.transform;
-
             _camera = Camera.main;
             _screenBounds = _camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, _camera.transform.position.z));
 
             _playerControl = playerControl;
+
+            GameLevel.Instance.CreateGameSession += OnCreateGameSession;
+            GameLoop.Instance.ResumeCommercial += OnCreateGameSession;
 
             if (Application.isMobilePlatform)
             {
@@ -79,6 +79,9 @@ namespace TouchFall.Controller
                 _playerControl.Click.PrimaryContact.started -= ctx => OnStartTouch(ctx);
                 _playerControl.Click.PrimaryContact.canceled -= ctx => EndTocuhPrimary(ctx);
             }
+
+            GameLevel.Instance.CreateGameSession -= OnCreateGameSession;
+            GameLoop.Instance.ResumeCommercial -= OnCreateGameSession;
         }
         #endregion
 
@@ -124,6 +127,11 @@ namespace TouchFall.Controller
         #endregion
 
         #region Private Mathods
+        private void OnCreateGameSession()
+        {
+            _model.StateMainHero = StateMoveMainHero.None;
+        }
+
         private void OnStartTouch(InputAction.CallbackContext ctx)
         {
             if (GameLoop.Instance.GameState == GameState.GamePlay)

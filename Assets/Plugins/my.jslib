@@ -96,6 +96,21 @@ mergeInto(LibraryManager.library, {
     });
   },
 
+  ShowAdvStartGame: function() {
+      ysdk.adv.showFullscreenAdv({
+      callbacks: {
+          onClose: function(wasShown) {
+            myGameInstance.SendMessage('Root', 'CallbackAfterShowAdv');
+            console.log('Adv close');
+          },
+          onError: function(error) {
+            myGameInstance.SendMessage('Root', 'CallbackAfterShowAdv');
+            console.log('Adv error');
+          }
+      }
+    });
+  },
+
   ShowAdvRewarded: function() {
     ysdk.adv.showRewardedVideo({
         callbacks: {
@@ -116,7 +131,8 @@ mergeInto(LibraryManager.library, {
             }
           }, 
           onError: (e) => {
-            console.log('Error while open video ad:', e);
+            console.log('Error while open video ad:');
+            myGameInstance.SendMessage('Yandex', 'UnLockBtns');
           }
       }
     });

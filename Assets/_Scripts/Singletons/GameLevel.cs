@@ -57,7 +57,7 @@ namespace TouchFall.Singletons
             }
         }
 
-        public bool IsCanUseExtraLife => _countExtraLife <= 2;
+        public bool IsCanUseExtraLife => _countExtraLife <= 15;
         public int Points => _points;
         public float TimerGame { get; set; }
         #endregion

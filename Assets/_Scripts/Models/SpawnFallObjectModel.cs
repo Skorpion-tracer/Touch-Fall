@@ -29,6 +29,9 @@ namespace TouchFall.Model
         private int _maxRangeDropBound;
         private int _maxRangeDropEnemy;
         private int _maxRangeDropSave;
+
+        private int _minProbability = 1;
+        private int _maxProbability = 6;
         #endregion
 
         #region Constructor
@@ -103,7 +106,7 @@ namespace TouchFall.Model
             _probabilityEmpty = 1;
             _probabilityHero = 4;
             _probabilityBound = 2;
-            _probabilityEnemy = 5;
+            _probabilityEnemy = 4;
             _probabilitySave = 4;
 
             _maxRangeDropEmpty = 6;
@@ -115,17 +118,17 @@ namespace TouchFall.Model
 
         private void ChangeProbability()
         {
-            _probabilityEmpty++;
-            _probabilityHero = _countIncrementLevel <= 2 ? (_probabilityHero - 1) : _probabilityHero;
-            _probabilityBound = _countIncrementLevel == 3 ? (_probabilityBound - 1) : _probabilityBound;
-            _probabilityEnemy = _countIncrementLevel >= 3 ? (_probabilityEnemy - 1) : _probabilityEnemy;
-            _probabilitySave = _countIncrementLevel >= 3 ? (_probabilitySave - 1) : _probabilitySave;
+            _probabilityEmpty = _probabilityEmpty < _maxProbability ? _probabilityEmpty + 1 : _probabilityEmpty;
+            _probabilityHero = (_countIncrementLevel <= 2 && _probabilityHero > _minProbability) ? (_probabilityHero - 1) : _probabilityHero;
+            _probabilityBound = (_countIncrementLevel == 3 && _probabilityBound > _minProbability) ? (_probabilityBound - 1) : _probabilityBound;
+            _probabilityEnemy = (_countIncrementLevel >= 2 && _probabilityEnemy > _minProbability) ? (_probabilityEnemy - 1) : _probabilityEnemy;
+            _probabilitySave = (_countIncrementLevel >= 3 && _probabilitySave > _minProbability) ? (_probabilitySave - 1) : _probabilitySave;
 
-            if (_countIncrementLevel >= 3)
-            {
-                //_maxRangeDropEnemy++;
-                _probabilitySave++;
-            }
+            //if (_countIncrementLevel >= 3)
+            //{
+            //    //_maxRangeDropEnemy++;
+            //    _probabilitySave++;
+            //}
         }
         #endregion
     }

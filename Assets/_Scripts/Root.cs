@@ -72,6 +72,17 @@ namespace TouchFall
         private float _blurValue = 100f;
         #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// Вызывается из jslib
+        /// </summary>
+        public void CallbackAfterShowAdv()
+        {
+            GameAudio.instance.EnableSounds();
+            GameAudio.instance.PlayMusicMenu();
+        }
+        #endregion
+
         #region Unity Methods
         private void OnEnable()
         {
@@ -122,6 +133,8 @@ namespace TouchFall
 
             _uiMenu.ShowBestPoints(GameData.Instance.SaveData.scores > 0);
             _uiMenu.UpdateBestBoint(GameData.Instance.SaveData.scores);
+
+            _yandex.ShowAdvirtismentStartGame();
         }
 
         private void OnDestroy()

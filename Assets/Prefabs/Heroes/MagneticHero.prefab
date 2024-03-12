@@ -235,7 +235,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.021203995, y: 0.04316163}
   serializedVersion: 2
-  m_Radius: 2.94
+  m_Radius: 2.56
 --- !u!250 &7502733929144723102
 PointEffector2D:
   m_ObjectHideFlags: 0
@@ -356,7 +356,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 6785920250089573147}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e9c59e9c381ffdd44bbef1b20d8b162f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -414,7 +414,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: 726411a734c17ec4abd10c87bc560f5a, type: 2}
+  m_Material: {fileID: 6200000, guid: e9c59e9c381ffdd44bbef1b20d8b162f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

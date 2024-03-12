@@ -33,6 +33,8 @@ namespace TouchFall.Helper
 
         [DllImport("__Internal")]
         private static extern void ShowAdv();
+        [DllImport("__Internal")]
+        private static extern void ShowAdvStartGame();
 
         [DllImport("__Internal")]
         private static extern void ShowAdvRewarded();
@@ -99,9 +101,22 @@ namespace TouchFall.Helper
 #endif
         }
 
+        public void ShowAdvirtismentStartGame()
+        {
+#if UNITY_EDITOR
+            //GameAudio.instance.EnableSounds();
+            return;
+#endif
+#if UNITY_WEBGL
+            //GameAudio.instance.DisableSounds();
+            ShowAdvStartGame();
+#endif
+        }
+
         public void ShowRewarded()
         {
 #if UNITY_EDITOR
+            //AfterRewarded();
             return;
 #endif
 #if UNITY_WEBGL

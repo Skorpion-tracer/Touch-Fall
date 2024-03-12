@@ -36,7 +36,8 @@ namespace TouchFall.Singletons
             {
                 Destroy(gameObject);
             }
-            PlayMusicMenu();
+            //PlayMusicMenu();
+            DisableSounds();
         }
         #endregion
 

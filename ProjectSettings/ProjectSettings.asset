@@ -141,7 +141,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.0.0.1
+  bundleVersion: 0.0.0.2
   preloadedAssets:
   - {fileID: 11400000, guid: b92f43729410b61428d967cb6bda9358, type: 2}
   metroInputSource: 0
@@ -453,8 +453,8 @@ PlayerSettings:
     CONFIGURE_SHADOWS_AROUND_CANVAS: 
     CONNECT_PLUGIN: 
     CUSTOMIZE_BARS_BACKGROUND: backgroundColor = "#2b2f32"
-    CUSTOMIZE_LOADING_SCREEN_BACKGROUND: 
-    CUSTOMIZE_LOGO: display = "none"
+    CUSTOMIZE_LOADING_SCREEN_BACKGROUND: backgroundColor = "#2b2f32"
+    CUSTOMIZE_LOGO: backgroundImage = "url('LogoStudy.png')"
     CUSTOM_EVENT_IN_CSS: 
     CUSTOM_EVENT_IN_HTML: <script src="https://yandex.ru/games/sdk/v2"></script>
     CUSTOM_EVENT_IN_JS: YaGames.init().then(ysdk=>{console.log("Yandex SDK initialized");window.ysdk=ysdk});

@@ -29,11 +29,11 @@ namespace TouchFall.Controller
             _model = spawnFallObjectModel;
             _pool = poolContainer;
 
-            _minPositionX = -(screenBounds.x - 0.9f);
-            _maxPositionX = screenBounds.x - 0.9f;
+            _minPositionX = -(screenBounds.x - 2f);
+            _maxPositionX = screenBounds.x - 2f;
             _posX = _minPositionX;
             _maxPosY = screenBounds.y + _model.OffsetVerticalPositionSpawn;
-            _minPosY = screenBounds.y + 0.4f;
+            _minPosY = screenBounds.y + 0.8f;
             GameLevel.Instance.CreateGameSession += OnCreateGameSession;
         }
 

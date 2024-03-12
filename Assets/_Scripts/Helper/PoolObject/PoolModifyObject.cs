@@ -13,11 +13,12 @@ namespace TouchFall.Helper.PoolObject
         public override void InitPool()
         {
             int step = _count / _fallObjectsPrefab.Length;
+            Debug.Log(step);
             int j = 0;
-            for (int i = 0; i < _count; i++)
+            for (int i = 0; i <= _count; i++)
             {
                 InitIobject(_fallObjectsPrefab[j]);
-
+                if (i == 0) i++;
                 if (i > 0)
                 {
                     if (_fallObjectsPrefab.Length > 0 && i % step == 0 && j < _fallObjectsPrefab.Length)
